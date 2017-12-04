@@ -1,5 +1,7 @@
 package com.weatheryoulikeit.application;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,5 +24,12 @@ public class FlightData {
         FlightData that = (FlightData) o;
 
         return flights.equals(that.flights);
+    }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        String flightDataJson = gson.toJson(this.flights);
+        System.out.println(flightDataJson);
+        return flightDataJson;
     }
 }

@@ -1,6 +1,9 @@
 package com.weatheryoulikeit.application;
 
 import com.google.gson.Gson;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -8,13 +11,22 @@ import java.time.LocalDate;
 @RestController
 public class WebController {
 
-    public String getFlightResults(String origin, String startDate, String endDate, int tempMin, int tempMax) {
+
+    @GetMapping("/getFlightResults")
+    public String getFlightResults(@RequestParam(value="origin", required=false) String origin,
+                                   @RequestParam(value="startDate", required=false) String startDate,
+                                   @RequestParam(value="endDate", required=false) String endDate,
+                                   @RequestParam(value="tempMin", required=false, defaultValue="0")int tempMin,
+                                   @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) {
+        tempMax = 0;
+        tempMin = 0;
+
         FlightData flightData = new FlightData();
-//        flightData.addFlight(new Flight(origin, "CDG", "SAS", 25000.0,
-//                LocalDate.parse(startDate), LocalDate.parse(endDate), "www.expedia.com"));
-        Gson gson = new Gson();
-        String flightDataJson = gson.toJson(flightData);
-        System.out.println(flightDataJson);
-        return flightDataJson;
+        flightData.addFlight(new Flight("ARN","LAX","SAS",2300, LocalDate.parse("2017-01-01"),LocalDate.parse("2017-01-05"),"http://"));
+
+        return flightData.toJson();
     }
+
+
+
 }
