@@ -22,7 +22,7 @@ public class WebControllerTests {
     @Test
     public void getFlightResults() {
         FlightData flightData = new FlightData();
-        assertEquals(flightData, sut.getFlightResults("ARN", "2018-01-01", "2018-01-05", 20, 30));
+        assertEquals("{\"flights\":[]}", sut.getFlightResults("ARN", "2018-01-01", "2018-01-05", 20, 30));
     }
 
 }
