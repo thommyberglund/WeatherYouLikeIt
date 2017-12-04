@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <title>Weather you like it</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
     <link rel="stylesheet" href="style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 </head>
@@ -13,37 +14,65 @@
     <p>The content is {{greeting.content}}</p>
 </div>
 <div class="header"><img src="logo.png"><h4>"Find flights to the weather you like for a price that you love."</h4></div>
-<div class="search"><div class="container"></div><form>
-    <input type="text" value="Origin" autofocus>
-    <input type="text" value="Max price"><br>
+<div class="search">
+    <div class="form-group">
+        <form>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" value="Origin" id="origin" autofocus>
+                </div>
+                <div class="col">
 
-    <input type="date" value="from">
-    <input type="date" value="to"><label><input type="checkbox" value="directflight"> Direct flights</label><br>
-    <p>Desired temperature:</p>
-    <input type="range" value="temperature"><br>
-    <select name="adults">
-        <option value="" disabled selected>Adults</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-    </select>
-    <select name="children">
-        <option value="" disabled selected>Children</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-    </select><br>
-    <input type="button" value="Search"></form></div></div>
+                    <input type="text" class="form-control" id="maxprice" value="Max price">
+                </div>
+            </div>
+                <div class="row"><div class="col">
+                <input type="date" class="form-control" id="calendar" value="from">
+                </div><div class="col">
+                    <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"> Direct flights</label>
+
+                </div></div>
+
+<div class="row"><div class="col">
+                <p>Desired temperature:</p>
+                <section class="range-slider">
+                    <span class="rangeValues" id="temperature"></span>
+
+                    <input value="5" min="-15" max="35" step="1" class="form-control" type="range">
+                    <input value="25" min="-15" max="35" step="1" class="form-control" type="range">
+                </section></div></div>
+
+                <select name="adults" id="adults">
+                    <option value="" disabled selected>Adults</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <select name="children" id="children">
+                    <option value="" disabled selected>Children</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <input type="button" class="form-control" id="searchBtn" value="Search">
+        </form>
+    </div>
+</div>
+<div class="waveone"></div>
 <div class="results"><h1>Results</h1>
-Hejsan</div>
+    Hejsan
+</div>
+<div class="wavetwo"></div>
 <div class="about"><h1>Our idea</h1>
-Whatup boi</div>
+    Whatup boi
+</div>
+<div class="wavethree"></div>
 <div class="footer">
     <a href="http://www.facebook.com" target="blank"><img src="facebook.png"/></a>
     <a href="http://www.instagram.com" target="blank"><img src="instagram.png"/></a>
@@ -51,7 +80,9 @@ Whatup boi</div>
 </div>
 
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <script src="app.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+<script src="app.js"></script>
 </body>
 </html>
