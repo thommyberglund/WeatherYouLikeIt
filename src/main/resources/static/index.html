@@ -7,6 +7,8 @@
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
     <link rel="stylesheet" href="style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+<!--    <script src="angular-sanitize.js"></script>-->
 </head>
 <body ng-app="demo">
 <div ng-controller="Hello">
@@ -14,35 +16,33 @@
     <p>The content is {{greeting.content}}</p>
 </div>
 <div class="header"><img src="logo.png"><h4>"Find flights to the weather you like for a price that you love."</h4></div>
-<div class="search">
+<div ng-controller="search">
+    <div class="search">
     <div class="form-group">
-        <form>
+        <form ng-submit="sendToBackEnd()">
             <div class="row">
                 <div class="col">
-                    <input type="text" class="form-control" value="Origin" id="origin" autofocus>
+                    <input type="text" ng-model="data.origin" name="origin" class="form-control" placeholder="Origin" id="origin" autofocus/>
                 </div>
                 <div class="col">
-
-                    <input type="text" class="form-control" id="maxprice" value="Max price">
+                    <input type="text" ng-model="data.maxprice" name="maxprice"  class="form-control" id="maxprice" placeholder="Max price"/>
                 </div>
             </div>
                 <div class="row"><div class="col">
-                <input type="date" class="form-control" id="calendar" value="from">
+                <input type="date" ng-model="data.fromdate" name="fromdate" class="form-control" id="calendar"/>
                 </div><div class="col">
-                    <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"> Direct flights</label>
-
+                    <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"/> Direct flights</label>
                 </div></div>
 
 <div class="row"><div class="col">
                 <p>Desired temperature:</p>
                 <section class="range-slider">
                     <span class="rangeValues" id="temperature"></span>
-
-                    <input value="5" min="-15" max="35" step="1" class="form-control" type="range">
-                    <input value="25" min="-15" max="35" step="1" class="form-control" type="range">
+                    <input value="5" min="-15" max="35" step="1" ng-model="data.mintemp" name="mintemp" class="form-control" type="range">
+                    <input value="25" min="-15" max="35" step="1" ng-model="data.maxtemp" name="maxtemp" class="form-control" type="range">
                 </section></div></div>
 
-                <select name="adults" id="adults">
+                <select name="adults" ng-model="data.noadults" name="noadults"  id="adults">
                     <option value="" disabled selected>Adults</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -51,7 +51,7 @@
                     <option value="5">5</option>
                     <option value="6">6</option>
                 </select>
-                <select name="children" id="children">
+                <select name="children" ng-model="data.nochildren" name="nochildren" id="children">
                     <option value="" disabled selected>Children</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -60,13 +60,14 @@
                     <option value="5">5</option>
                     <option value="6">6</option>
                 </select>
-                <input type="button" class="form-control" id="searchBtn" value="Search">
+                <input type="submit" class="form-control" id="searchBtn" value="Search">
         </form>
     </div>
-</div>
-<div class="waveone"></div>
-<div class="results"><h1>Results</h1>
-    Hejsan
+    </div>
+    <div class="waveone"></div>
+    <div class="results"><h1>Results</h1>
+        <div ng-bind-html="myHTML"></div>
+    </div>
 </div>
 <div class="wavetwo"></div>
 <div class="about"><h1>Our idea</h1>

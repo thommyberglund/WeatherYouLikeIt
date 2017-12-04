@@ -1,0 +1,26 @@
+{
+  "name": "weatheryoulikeit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.6.7",
+    "angular-sanitize": "^1.6.7"
+  },
+  "devDependencies": {
+    "@types/angular": "^1.6.39"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/backmari/WeatherYouLikeIt.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/backmari/WeatherYouLikeIt/issues"
+  },
+  "homepage": "https://github.com/backmari/WeatherYouLikeIt#readme"
+}
