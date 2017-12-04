@@ -18,11 +18,9 @@ public class WebController {
                                    @RequestParam(value="endDate", required=false) String endDate,
                                    @RequestParam(value="tempMin", required=false, defaultValue="0")int tempMin,
                                    @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) {
-        tempMax = 0;
-        tempMin = 0;
 
         FlightData flightData = new FlightData();
-        flightData.addFlight(new Flight("ARN","LAX","SAS",2300, LocalDate.parse("2017-01-01"),LocalDate.parse("2017-01-05"),"http://"));
+        flightData.addFlight(new Flight("ARN","LAX","SAS",2300,"http://"));
 
         return flightData.toJson();
     }

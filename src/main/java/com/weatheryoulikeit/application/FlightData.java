@@ -29,7 +29,6 @@ public class FlightData {
     public String toJson() {
         Gson gson = new Gson();
         String flightDataJson = gson.toJson(this.flights);
-        System.out.println(flightDataJson);
         return flightDataJson;
     }
 }

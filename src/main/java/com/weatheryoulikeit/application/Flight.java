@@ -8,17 +8,13 @@ public class Flight implements FlightModel{
     private String destination;
     private String company;
     private double price;
-    private LocalDate startDate;
-    private LocalDate endDate;
     private String refUrl;
 
-    public Flight(String origin, String destination, String company, double price, LocalDate startDate, LocalDate endDate, String refUrl) {
+    public Flight(String origin, String destination, String company, double price, String refUrl) {
         this.destination = destination;
         this.origin = origin;
         this.company = company;
         this.price = price;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.refUrl = refUrl;
     }
 
@@ -33,8 +29,6 @@ public class Flight implements FlightModel{
         if (!origin.equals(flight.origin)) return false;
         if (!destination.equals(flight.destination)) return false;
         if (!company.equals(flight.company)) return false;
-        if (!startDate.equals(flight.startDate)) return false;
-        if (!endDate.equals(flight.endDate)) return false;
         return refUrl.equals(flight.refUrl);
     }
 
@@ -47,8 +41,6 @@ public class Flight implements FlightModel{
         result = 31 * result + company.hashCode();
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + startDate.hashCode();
-        result = 31 * result + endDate.hashCode();
         result = 31 * result + refUrl.hashCode();
         return result;
     }
@@ -84,22 +76,6 @@ public class Flight implements FlightModel{
 
     public void setPrice(long price) {
         this.price = price;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
     }
 
     public String getRefUrl() {
