@@ -1,12 +1,106 @@
 body {
     background-color: #33afcc;
     color: #ffffff;
-    top:0;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     margin-right: auto;
     margin-left: auto;
+    height: 100%
+
+}
+
+.waveone {
+
+    height: 50px;
+    position: relative;
+}
+
+.waveone::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 10px;
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, #028ea7 13px);
+}
+
+.waveone::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 15px;
+    background-size: 40px 20px;
+    background-image: radial-gradient(circle at 10px 15px, #028ea7 12px, transparent 13px);
+}
+
+.wavetwo {
+
+    height: 50px;
+    position: relative;
+    background-color: #028ea7;
+}
+
+.wavetwo::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 10px;
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, #02778b 13px);
+}
+
+.wavetwo::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 15px;
+    background-size: 40px 20px;
+    background-image: radial-gradient(circle at 10px 15px, #02778b 12px, transparent 13px);
+}
+
+.wavethree {
+
+    height: 50px;
+    position: relative;
+    background-color: #02778b;
+}
+
+.wavethree::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 10px;
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, #ffe067 13px);
+}
+
+.wavethree::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 15px;
+    background-size: 40px 20px;
+    background-image: radial-gradient(circle at 10px 15px, #ffe067 12px, transparent 13px);
 }
 
 .header {
@@ -16,36 +110,101 @@ body {
 
 .search {
     padding-bottom: 20px;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 30%;
+    padding-right: 30%;
     text-align: center;
-}
-
-.container {
-    width: 100%;
-    clear: both;
+    border-radius: 10px;
 }
 
 .results {
     background-color: #028ea7;
     padding-top: 20px;
     padding-bottom: 20px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 .about {
     background-color: #02778b;
     padding-top: 20px;
     padding-bottom: 20px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
-.footer{
+.footer {
     background-color: #ffe067;
     color: #02778b;
     padding-top: 20px;
     text-align: center;
+}
+
+section.range-slider {
+    position: relative;
+    margin: 0 auto;
+    width: 500px;
+    height: 50px;
+    text-align: center;
+    outline: none;
+}section.range-slider:focus {
+    position: relative;
+    margin: 0 auto;
+    width: 500px;
+    height: 50px;
+    text-align: center;
+    outline: none;
+}
+
+
+section.range-slider input {
+    pointer-events: none;
+    position: absolute;
+    overflow: hidden;
+    top: 15px;
+text-align: center;
+    width: 500px;
+    outline: none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+section.range-slider input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: none;
+}
+
+section.range-slider input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    -moz-appearance: none;
+    width: 9px;
+    outline: none;
+
+}
+
+section.range-slider input::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    background-color: rgba(0, 0, 0, 1);
+    border: 0;
+    outline: none;
+
+}
+
+section.range-slider input:last-of-type::-moz-range-track {
+    -moz-appearance: none;
+    background: none transparent;
+    border: 0;
+    outline: none;
+
+}
+
+section.range-slider input[type=range]::-moz-focus-outer {
+    border: 0;
+    outline: none;
 
 }
