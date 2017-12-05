@@ -1,5 +1,6 @@
 package com.weatheryoulikeit.application;
 
+ import com.google.gson.Gson;
  import org.springframework.web.bind.annotation.GetMapping;
  import org.springframework.web.bind.annotation.RequestParam;
  import org.springframework.web.bind.annotation.RestController;
@@ -27,19 +28,14 @@ public class WebController {
 
         FlightSearchData fsd = new FlightSearchData(origin, LocalDate.parse(startDate), LocalDate.parse(endDate),tempMin,tempMax);
 
-        FlightData flightData = new FlightData();
-        flightData.addFlight(new Flight("ARN","LAX","SAS",2300,"http://"));
-
-        //return flightData.toJson();
-
         return getExternalFlights(fsd);
     }
 
-    public String getExternalFlights(FlightSearchData fsd) {
+    private String getExternalFlights(FlightSearchData fsd) {
         String urlReturnData = "";
         String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/extensive-search" +
-                "?apikey=3t5NtG65HILsuQeEJqqC95xsA2WpArbF&origin=LAX&destination=LON&departure_date=" +
-                ""+ fsd.getStartDate() +"--"+ fsd.getEndDate() +"";
+                "?apikey=3t5NtG65HILsuQeEJqqC95xsA2WpArbF&origin="+ fsd.getOrigin() +"&destination=" + fsd.getDestination() + "&departure_date=" +
+                ""+ fsd.getStartDate() +"--"+ fsd.getEndDate() +"&aggregation_mode=DESTINATION";
         try {
             URL url = new URL(searchInput);
 
@@ -56,6 +52,7 @@ public class WebController {
         catch (IOException e) {
             System.out.println(e);
         }
+
         return urlReturnData;
     }
 }

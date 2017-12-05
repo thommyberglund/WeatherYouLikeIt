@@ -22,6 +22,10 @@ public class FlightSearchData {
         return origin;
     }
 
+    public String getDestination() {
+        return "LON"; // Placeholder until weatherdb returns possible destinations
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }

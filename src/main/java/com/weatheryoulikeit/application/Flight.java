@@ -1,57 +1,24 @@
 package com.weatheryoulikeit.application;
 
+
 import java.time.LocalDate;
 
-public class Flight implements FlightModel{
+public class Flight implements FlightModel {
 
     private String origin;
     private String destination;
-    private String company;
+    private String airline;
     private double price;
     private String refUrl;
+    LocalDate departure_date;
+    LocalDate return_date;
 
     public Flight(String origin, String destination, String company, double price, String refUrl) {
         this.destination = destination;
         this.origin = origin;
-        this.company = company;
+        this.airline = company;
         this.price = price;
         this.refUrl = refUrl;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Flight flight = (Flight) o;
-
-        if (Double.compare(flight.price, price) != 0) return false;
-        if (!origin.equals(flight.origin)) return false;
-        if (!destination.equals(flight.destination)) return false;
-        if (!company.equals(flight.company)) return false;
-        return refUrl.equals(flight.refUrl);
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = origin.hashCode();
-        result = 31 * result + destination.hashCode();
-        result = 31 * result + company.hashCode();
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + refUrl.hashCode();
-        return result;
-    }
-
-    public String getDestination() {
-
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
     }
 
     public String getOrigin() {
@@ -62,19 +29,27 @@ public class Flight implements FlightModel{
         this.origin = origin;
     }
 
-    public String getCompany() {
-        return company;
+    public String getDestination() {
+        return destination;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(long price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -84,5 +59,21 @@ public class Flight implements FlightModel{
 
     public void setRefUrl(String refUrl) {
         this.refUrl = refUrl;
+    }
+
+    public LocalDate getDeparture_date() {
+        return departure_date;
+    }
+
+    public void setDeparture_date(LocalDate departure_date) {
+        this.departure_date = departure_date;
+    }
+
+    public LocalDate getReturn_date() {
+        return return_date;
+    }
+
+    public void setReturn_date(LocalDate return_date) {
+        this.return_date = return_date;
     }
 }
