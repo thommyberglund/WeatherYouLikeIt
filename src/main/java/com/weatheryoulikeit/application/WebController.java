@@ -9,10 +9,8 @@ package com.weatheryoulikeit.application;
  import java.io.IOException;
  import java.io.InputStream;
  import java.io.InputStreamReader;
- import java.net.HttpURLConnection;
  import java.net.MalformedURLException;
  import java.net.URL;
- import java.net.URLConnection;
  import java.time.LocalDate;
 
 @RestController
@@ -35,7 +33,7 @@ public class WebController {
         String urlReturnData = "";
         String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/extensive-search" +
                 "?apikey=3t5NtG65HILsuQeEJqqC95xsA2WpArbF&origin="+ fsd.getOrigin() +"&destination=" + fsd.getDestination() + "&departure_date=" +
-                ""+ fsd.getStartDate() +"--"+ fsd.getEndDate() +"&aggregation_mode=DESTINATION";
+                ""+ fsd.getStartDate() +"--"+ fsd.getEndDate() +"&aggregation_mode=DESTINATION&one-way=true";
         try {
             URL url = new URL(searchInput);
 
@@ -53,6 +51,16 @@ public class WebController {
             System.out.println(e);
         }
 
-        return urlReturnData;
+        return trimJson(urlReturnData);
+    }
+
+    private String trimJson(String urlReturnData) {
+        urlReturnData = urlReturnData.replace("[","");
+        urlReturnData = urlReturnData.replace("]","");
+        urlReturnData = urlReturnData.replace(",  \"results\" :  {  ",",");
+        return removeLastChar(urlReturnData);
+    }
+    private String removeLastChar(String str) {
+        return str.substring(0, str.length() - 1);
     }
 }

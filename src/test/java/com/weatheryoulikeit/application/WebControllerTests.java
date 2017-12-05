@@ -32,3 +32,6 @@ public class WebControllerTests {
         assertEquals("", sut.getExternalFlights(fsd));
     }*/
 }
+
+
+//{  "origin" : "LAX",  "currency" : "USD",  "results" : [ {    "destination" : "LON",    "departure_date" : "2018-01-03",    "price" : "388.01",    "airline" : "WW"  } ]}
