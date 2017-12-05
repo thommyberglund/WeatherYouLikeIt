@@ -11,10 +11,6 @@
 <!--    <script src="angular-sanitize.js"></script>-->
 </head>
 <body ng-app="demo">
-<!--<div ng-controller="Hello">
-    <p>The ID is {{greeting.id}}</p>
-    <p>The content is {{greeting.content}}</p>
-</div>-->
 <div class="header"><img class="img-responsive" src="logo.png"><h4>"Find flights to the weather you like for a price that you love."</h4></div>
 <div ng-controller="search">
     <div class="search">
@@ -28,11 +24,12 @@
                     <input type="text" ng-model="data.maxprice" name="maxprice"  class="form-control" id="maxprice" placeholder="Max price"/>
                 </div>
             </div>
-                <div class="row"><div class="col">
-                <input type="date" ng-model="data.fromdate" name="fromdate" class="form-control" id="calendar"/>
-                </div><div class="col">
-                    <input type="date" ng-model="data.fromdate" name="todate" class="form-control" id="calendar"/>
-                </div></div><div class="row"><div class="col">
+                <div class="row">
+                    <div class="col">
+                <input type="date" ng-model="data.startDate" name="fromdate" class="form-control" id="calendar"/>
+                        <input type="date" ng-model="data.endDate" name="fromdate" class="form-control" />
+                </div>
+                    <div class="col">
                     <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"/> Direct flights</label>
                 </div></div>
 
@@ -46,6 +43,14 @@
             rz-slider-model="priceSlider.min"
             rz-slider-high="priceSlider.max"></rzslider>
 
+
+                <p>Desired temperature:</p>
+                <section class="range-slider">
+                    <span class="rangeValues" id="temperature">min temp: {{data.tempMin}} max temp:{{data.tempMax}}</span>
+
+                    <input value="5" min="-15" max="35" step="1" ng-model="data.tempMin" name="tempMin" class="form-control" type="range">
+                    <input value="25" min="-15" max="35" step="1" ng-model="data.tempMax" name="tempMax" class="form-control" type="range">
+                </section>
 </div></div>
 
                 <select name="adults" ng-model="data.noadults" name="noadults"  id="adults">
