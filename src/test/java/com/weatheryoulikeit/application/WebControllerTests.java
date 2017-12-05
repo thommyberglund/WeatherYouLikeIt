@@ -25,7 +25,7 @@ public class WebControllerTests {
 
     @Test
     public void getFlightResults() {
-       assertEquals("", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
+       assertEquals("\"origin\" : \"LAX\",  \"currency\" : \"USD\",  \"destination\" : \"LON\",    \"departure_date\" : \"2018-01-03\",    \"price\" : \"388.01\",    \"airline\" : \"WW\"  }", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
     }
 /*    @Test
     public void getFlightData() {
@@ -34,4 +34,3 @@ public class WebControllerTests {
 }
 
 
-//{  "origin" : "LAX",  "currency" : "USD",  "results" : [ {    "destination" : "LON",    "departure_date" : "2018-01-03",    "price" : "388.01",    "airline" : "WW"  } ]}

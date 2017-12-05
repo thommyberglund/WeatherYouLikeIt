@@ -17,7 +17,7 @@ package com.weatheryoulikeit.application;
 public class WebController {
 
 
-    @GetMapping("/getFlightResults")
+    @GetMapping(path="/getFlightResults", produces = "application/json")
     public String getFlightResults(@RequestParam(value="origin", required=false) String origin,
                                    @RequestParam(value="startDate", required=false) String startDate,
                                    @RequestParam(value="endDate", required=false) String endDate,
