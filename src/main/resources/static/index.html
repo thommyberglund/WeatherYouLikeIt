@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Weather you like it</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
     <link rel="stylesheet" href="style.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+
 <!--    <script src="angular-sanitize.js"></script>-->
 </head>
 <body ng-app="demo">
-<div ng-controller="Hello">
+<!--<div ng-controller="Hello">
     <p>The ID is {{greeting.id}}</p>
     <p>The content is {{greeting.content}}</p>
-</div>
+</div>-->
 <div class="header"><img src="logo.png"><h4>"Find flights to the weather you like for a price that you love."</h4></div>
 <div ng-controller="search">
     <div class="search">
@@ -38,6 +38,7 @@
                 <p>Desired temperature:</p>
                 <section class="range-slider">
                     <span class="rangeValues" id="temperature"></span>
+
                     <input value="5" min="-15" max="35" step="1" ng-model="data.mintemp" name="mintemp" class="form-control" type="range">
                     <input value="25" min="-15" max="35" step="1" ng-model="data.maxtemp" name="maxtemp" class="form-control" type="range">
                 </section></div></div>
@@ -80,10 +81,12 @@
     <a href="mailto:admin@weatheryoulikeit.com" target="blank"><img src="mail.png"/></a>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
