@@ -11,6 +11,12 @@ body {
 
 }
 
+.img-responsive {
+    max-width: 100%;
+}
+
+
+
 .waveone {
 
     height: 50px;
@@ -108,6 +114,8 @@ body {
     padding-bottom: 20px;
 }
 
+
+
 .search {
     padding-bottom: 20px;
     padding-left: 30%;
@@ -116,12 +124,24 @@ body {
     border-radius: 10px;
 }
 
+span {
+    display: inline-block;
+    width: 33%;
+}
 .results {
     background-color: #028ea7;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 20%;
     padding-right: 20%;
+}
+.results div:nth-of-type(even)
+{
+    background-color: #33afcc;
+}
+.results div:nth-of-type(odd)
+{
+    background-color: #028ea7;
 }
 
 .about {

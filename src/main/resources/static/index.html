@@ -15,7 +15,7 @@
     <p>The ID is {{greeting.id}}</p>
     <p>The content is {{greeting.content}}</p>
 </div>-->
-<div class="header"><img src="logo.png"><h4>"Find flights to the weather you like for a price that you love."</h4></div>
+<div class="header"><img class="img-responsive" src="logo.png"><h4>"Find flights to the weather you like for a price that you love."</h4></div>
 <div ng-controller="search">
     <div class="search">
     <div class="form-group">
@@ -31,17 +31,22 @@
                 <div class="row"><div class="col">
                 <input type="date" ng-model="data.fromdate" name="fromdate" class="form-control" id="calendar"/>
                 </div><div class="col">
+                    <input type="date" ng-model="data.fromdate" name="todate" class="form-control" id="calendar"/>
+                </div></div><div class="row"><div class="col">
                     <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"/> Direct flights</label>
                 </div></div>
 
 <div class="row"><div class="col">
-                <p>Desired temperature:</p>
-                <section class="range-slider">
-                    <span class="rangeValues" id="temperature"></span>
+                <p>Desired temperature: </p>
 
-                    <input value="5" min="-15" max="35" step="1" ng-model="data.mintemp" name="mintemp" class="form-control" type="range">
-                    <input value="25" min="-15" max="35" step="1" ng-model="data.maxtemp" name="maxtemp" class="form-control" type="range">
-                </section></div></div>
+
+    <rzslider
+            rz-slider-floor="priceSlider.floor"
+            rz-slider-ceil="priceSlider.ceil"
+            rz-slider-model="priceSlider.min"
+            rz-slider-high="priceSlider.max"></rzslider>
+
+</div></div>
 
                 <select name="adults" ng-model="data.noadults" name="noadults"  id="adults">
                     <option value="" disabled selected>Adults</option>
@@ -61,24 +66,25 @@
                     <option value="5">5</option>
                     <option value="6">6</option>
                 </select>
-                <input type="submit" class="form-control" id="searchBtn" value="Search">
+                <input type="submit" class="form-control"  id="searchBtn" value="Search">
         </form>
     </div>
     </div>
     <div class="waveone"></div>
-    <div class="results"><h1>Results</h1>
+    <div class="results" id="">
         <div ng-bind-html="myHTML"></div>
     </div>
 </div>
 <div class="wavetwo"></div>
 <div class="about"><h1>Our idea</h1>
-    Whatup boi
+Imagine spending lots and lots of money on a trip, but due to the bad weather all you do is sitting on your hotel room watching re-runs of some 90's soap opera. Sounds terrible, right?
+To avoid this scenario we figured that you should not only be able to search for cheap flights, but also filter the possible destinations by telling us which temperature you would like.
+    No more winter jackets on a summer holiday! No more ski trips without snow! Let us help you find the Weather you like it!
+
 </div>
 <div class="wavethree"></div>
 <div class="footer">
-    <a href="http://www.facebook.com" target="blank" class="fb-icon"><img src="facebook.png"/></a>
-    <a href="http://www.instagram.com" target="blank" class="insta-icon"><img src="instagram.png"/></a>
-    <a href="mailto:admin@weatheryoulikeit.com" target="blank" class="mail-icon"><img src="mail.png"/></a>
+    © Weather You Like It 2017 -
 </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
