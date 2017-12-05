@@ -11,6 +11,12 @@ body {
 
 }
 
+.row {
+    margin-top: 15px;
+}
+
+
+
 .waveone {
 
     height: 50px;
@@ -112,8 +118,18 @@ body {
     padding-bottom: 20px;
     padding-left: 30%;
     padding-right: 30%;
-    text-align: center;
     border-radius: 10px;
+}
+
+.temp-text {
+    text-align: center;
+}
+
+.btn{
+    margin-right: 15px;
+    background-color: white;
+    border-color: white;
+    color: #495057;
 }
 
 .results {
