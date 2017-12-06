@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "angular": "^1.6.7",
-    "angular-sanitize": "^1.6.7"
+    "angular-sanitize": "^1.6.7",
+    "angularjs-rzslider": "^0.1.4"
   },
   "devDependencies": {
     "@types/angular": "^1.6.39"
