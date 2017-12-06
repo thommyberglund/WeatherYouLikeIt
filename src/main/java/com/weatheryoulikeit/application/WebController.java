@@ -59,7 +59,7 @@ public class WebController {
             for (String city : cityISO) {
                 String jsonBuilder = "";
                 String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/extensive-search" +
-                        "?apikey=3t5NtG65HILsuQeEJqqC95xsA2WpArbF&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
+                        "?apikey=&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
                         "" + fsd.getStartDate() + "--" + fsd.getEndDate() + "&aggregation_mode=DESTINATION&one-way=true";
                 try {
 
@@ -83,12 +83,12 @@ public class WebController {
         urlReturnData += "]";
         return trimJson(urlReturnData);*/
     String urlReturnData = "[" +
-            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Los Angeles\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"29\"}," +
-            "{\"origin\":\"Stockholm Bromma\",\"destination\":\"Las Palmas\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
-            "{\"origin\":\"Göteborg Landvetter\",\"destination\":\"Sydney\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
-            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Miami\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
-            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Kapstaden\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
-            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Rom\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}" +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Los Angeles\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"61\"}," +
+            "{\"origin\":\"Stockholm Bromma\",\"destination\":\"Las Palmas\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"33\"}," +
+            "{\"origin\":\"Göteborg Landvetter\",\"destination\":\"Sydney\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"34\"}," +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Miami\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"26\"}," +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Kapstaden\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"34\"}," +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Rom\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"43\"}" +
             "]";
     return urlReturnData;
     }
