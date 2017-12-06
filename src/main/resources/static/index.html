@@ -12,15 +12,12 @@
     <!--    <script src="angular-sanitize.js"></script>-->
 </head>
 <body ng-app="demo">
-<div class="header"><img class="img-responsive" src="logo.png"><h4>"Find flights to the weather you like for a price
-    that you love."</h4></div>
 <!--<div ng-controller="Hello">
     <p>The ID is {{greeting.id}}</p>
     <p>The content is {{greeting.content}}</p>
 </div>-->
 <div class="header"><img class="img-responsive" src="logo.png">
     <h1>"Find flights to the weather you like for a price that you love."</h1></div>
->>>>>>> Add styling to range slider, change logo size, add our idea text, change font
 <div ng-controller="search">
     <div class="search">
         <div class="form-group">
@@ -50,7 +47,6 @@
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col">
                         <p>Desired temperature: </p>
@@ -62,50 +58,37 @@
                         </section>
 
 
-                        <p>Desired temperature:</p>
-                        <section class="range-slider">
-                            <span class="rangeValues" id="temperature">min temp: {{data.tempMin}} max temp:{{data.tempMax}}</span>
-
-                            <input value="5" min="-15" max="35" step="1" ng-model="data.tempMin" name="tempMin"
-                                   class="form-control" type="range">
-                            <input value="25" min="-15" max="35" step="1" ng-model="data.tempMax" name="tempMax"
-                                   class="form-control" type="range">
-                        </section>
                     </div>
                 </div>
-                =======
+
+                <select name="adults" ng-model="data.noadults" name="noadults" id="adults">
+                    <option value="" disabled selected>Adults</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <select name="children" ng-model="data.nochildren" name="nochildren" id="children">
+                    <option value="" disabled selected>Children</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <input type="submit" class="form-control" id="searchBtn" value="Search"><input type="reset"
+                                                                                               class="form-control"
+                                                                                               value="Clear">
+            </form>
         </div>
     </div>
-    >>>>>>> Add styling to range slider, change logo size, add our idea text, change font
-
-    <select name="adults" ng-model="data.noadults" name="noadults" id="adults">
-        <option value="" disabled selected>Adults</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-    </select>
-    <select name="children" ng-model="data.nochildren" name="nochildren" id="children">
-        <option value="" disabled selected>Children</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-    </select>
-    <input type="submit" class="form-control" id="searchBtn" value="Search"><input type="reset"
-                                                                                   class="form-control"
-                                                                                   value="Clear">
-    </form>
-</div>
-</div>
-<div class="waveone"></div>
-<div class="results" id="">
-    <div ng-bind-html="myHTML"></div>
-</div>
+    <div class="waveone"></div>
+    <div class="results" id="">
+        <div ng-bind-html="myHTML"></div>
+    </div>
 </div>
 <div class="wavetwo"></div>
 <div class="about"><h1>Our idea</h1>
