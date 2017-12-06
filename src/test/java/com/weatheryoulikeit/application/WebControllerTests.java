@@ -27,12 +27,12 @@ public class WebControllerTests {
     @Before
     public void setup() {
         sut = new WebController();
-        fsd = new FlightSearchData("LAX",LocalDate.parse("2018-01-01"),LocalDate.parse("2018-01-04"),20,40);
+        fsd = new FlightSearchData("LAX","2018-01-01","2018-01-04",20,40);
     }
 
     @Test
     public void getFlightResults() {
-       assertEquals("\"origin\" : \"LAX\",  \"currency\" : \"USD\",  \"destination\" : \"LON\",    \"departure_date\" : \"2018-01-03\",    \"price\" : \"388.01\",    \"airline\" : \"WW\"  }", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
+       assertEquals("{  \"origin\" : \"LAX\",  \"currency\" : \"USD\",  \"destination\" : \"LON\",    \"departure_date\" : \"2018-01-03\",    \"price\" : \"388.01\",    \"airline\" : \"WW\"  } ", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
     }
 
     @Test
@@ -52,6 +52,33 @@ public class WebControllerTests {
         correctCountries.add("PRY");
         List<String> countries = fdr.getCountriesByTemperatureRange(1, 27, 30);
         assertEquals(correctCountries, countries);
+    }
+
+    @Test
+    public void getCityByISOfromDatabase() {
+        assertEquals("Frankfurt/Main Int'l Airport", fdr.convertCountrytoCity("FRA"));
+    }
+
+    @Test
+    public void testTempRange() {
+        fsd = new FlightSearchData("LAX","2018-01-01","2018-01-04",20,40);
+
+        int month = Integer.parseInt(fsd.getStartDate().substring(6,7));
+        List<String> filteredCountries = fdr.getCountriesByTemperatureRange(month,fsd.getTempMin(),fsd.getTempMax());
+        assertEquals("",filteredCountries);
+
+    }
+    @Test
+    public void testISOtoCountryName() {
+        assertEquals("Belgium",fdr.convertISOtoCountryName("BEL"));
+    }
+    @Test
+    public void convertCounrytoCity() {
+        assertEquals("",fdr.convertCountrytoCity("Poland"));
+    }
+    @Test
+    public void testISOConvert() {
+        assertEquals("",sut.getExternalFlights(new FlightSearchData("LAX","2018-01-01","2018-01-04",20,40)));
     }
 
 }

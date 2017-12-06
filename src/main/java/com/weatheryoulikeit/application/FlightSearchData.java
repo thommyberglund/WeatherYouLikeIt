@@ -29,6 +29,7 @@ public class FlightSearchData {
     }
 
     public void setOrigin(String origin) {
+
         this.origin = origin;
     }
 
