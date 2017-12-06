@@ -1,10 +1,7 @@
 package com.weatheryoulikeit.application;
 
  import com.google.gson.Gson;
- import org.springframework.web.bind.annotation.GetMapping;
- import org.springframework.web.bind.annotation.PostMapping;
- import org.springframework.web.bind.annotation.RequestParam;
- import org.springframework.web.bind.annotation.RestController;
+ import org.springframework.web.bind.annotation.*;
 
  import java.io.BufferedReader;
  import java.io.IOException;
@@ -27,7 +24,7 @@ public class WebController {
                                    @RequestParam(value="tempMin", required=false, defaultValue="0")int tempMin,
                                    @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) {
 
-        FlightSearchData fsd = new FlightSearchData(origin, LocalDate.parse(startDate), LocalDate.parse(endDate),tempMin,tempMax);
+        FlightSearchData fsd = new FlightSearchData(origin, startDate, endDate, tempMin, tempMax);
 
         return getExternalFlights(fsd);
     }
@@ -39,10 +36,17 @@ public class WebController {
                                    @RequestParam(value="tempMin", required=false, defaultValue="0")int tempMin,
                                    @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) {
 
-        FlightSearchData fsd = new FlightSearchData(origin, LocalDate.parse(startDate), LocalDate.parse(endDate),tempMin,tempMax);
+        FlightSearchData fsd = new FlightSearchData(origin, startDate, endDate, "" +tempMin, "" +tempMax);
 
         return getExternalFlights(fsd);
     }
+
+    @PostMapping(path="/search", consumes = "application/json", produces = "application/json")
+    public @ResponseBody String searchFlights(@RequestBody FlightSearchData fsd) {
+        System.out.println(fsd.getDestination());
+        return getExternalFlights(fsd);
+    }
+
     private String getExternalFlights(FlightSearchData fsd) {
         String urlReturnData = "";
         String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/extensive-search" +
@@ -65,7 +69,9 @@ public class WebController {
             System.out.println(e);
         }
 
-        return trimJson(urlReturnData);
+        String tmp = trimJson(urlReturnData);
+        System.out.println("Resultat: " + tmp);
+        return "[ " + tmp + "," + tmp + "]";
     }
 
     private String trimJson(String urlReturnData) {

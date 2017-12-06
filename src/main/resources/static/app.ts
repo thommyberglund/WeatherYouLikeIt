@@ -6,7 +6,8 @@ angmodule.controller('search', function ($scope, $http) {
 
         function splitTheString(date) {
             var dateFormat = (JSON.stringify(date));
-            var noSnuffs = dateFormat.replace('"', '');
+            var noSnuffs = dateFormat.replace('"','' );
+            noSnuffs = noSnuffs.replace('"','' );
             var splitDate = noSnuffs.split('T');
             date = splitDate[0];
             return date;
@@ -17,10 +18,11 @@ angmodule.controller('search', function ($scope, $http) {
 
         console.log(JSON.stringify($scope.data));
 
-        // $http.post('https://weatheryoulikeit.herokuapp.com/getFlightResults', $scope.data).then(function (response) {
-        $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+        $http.post('search', $scope.data).then(function (response) {
+        //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
-            // let data = response.data;
+            let data = response.data;
+            console.log(data);
 
             let data = [
                 {country: "Muffinland", degrees: 21, price: 1025},
@@ -39,9 +41,9 @@ angmodule.controller('search', function ($scope, $http) {
             data.forEach((d) => {
                 htmlResult +=
                     '<div class="resultDiv">' +
-                    '<span>' + d.country + '</span>' +
-                    '<span>' + d.degrees + '</span>' +
+                    '<span>' + d.destination + '</span>' +
                     '<span>' + d.price + '</span>' +
+                    '<span>' + d.currency + '</span>' +
                     '</div>';
             });
 
