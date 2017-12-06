@@ -28,6 +28,7 @@ public class WebControllerTests {
     public void setup() {
         sut = new WebController();
         fsd = new FlightSearchData("LAX","2018-01-01","2018-01-04",20,40);
+
     }
 
     @Test

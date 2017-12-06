@@ -1,30 +1,21 @@
 var angmodule = angular.module('demo', ['ngSanitize']);
-
-
 angmodule.controller('search', function ($scope, $http) {
-    $scope.sendToBackEnd = () => {
-
+    $scope.sendToBackEnd = function () {
         function splitTheString(date) {
             var dateFormat = (JSON.stringify(date));
-            var noSnuffs = dateFormat.replace('"','' );
-            noSnuffs = noSnuffs.replace('"','' );
+            var noSnuffs = dateFormat.replace('"', '');
+            noSnuffs = noSnuffs.replace('"', '');
             var splitDate = noSnuffs.split('T');
             date = splitDate[0];
             return date;
         }
-
         $scope.data.startDate = splitTheString($scope.data.startDate);
         $scope.data.endDate = splitTheString($scope.data.endDate);
-
         console.log(JSON.stringify($scope.data));
-
         $http.post('search', $scope.data).then(function (response) {
-        //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
-
-            let data = response.data;
+            //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+            var data = response.data;
             console.log(data);
-
-
             // let data = [
             //     {country: "Muffinland", degrees: 21, price: 1025},
             //     {country: "Kaninland", degrees: 27, price: 2750},
@@ -37,33 +28,25 @@ angmodule.controller('search', function ($scope, $http) {
             //     {country: "Minland", degrees: 56, price: 2687},
             //     {country: "Minland", degrees: 50, price: 1560}
             // ];
-
-            let htmlResult = "";
-            data.forEach((d) => {
+            var htmlResult = "";
+            data.forEach(function (d) {
                 htmlResult +=
                     '<div class="resultDiv">' +
-                    '<span>' + d.destination + '</span>' +
-                    '<span>' + '24' + '</span>' +
-                    '<span>' + d.price + '</span>' +
-                    '<span>' + d.currency + '</span>' +
-                    '</div>';
+                        '<span>' + d.destination + '</span>' +
+                        '<span>' + '24' + '</span>' +
+                        '<span>' + d.price + '</span>' +
+                        '<span>' + d.currency + '</span>' +
+                        '</div>';
             });
-
-            let result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' + '<h4>' +
+            var result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' + '<h4>' +
                 '<span>Destination</span>' +
                 '<span>Average temperature</span>' +
                 '<span>Price</span>' +
                 '<span>Currency</span>' + '</h4>';
-
             $scope.myHTML = result + htmlResult;
-
         });
-
     };
-
-
 });
-
 function getVals() {
     // Get slider values
     var parent = this.parentNode;
@@ -76,11 +59,9 @@ function getVals() {
         slide2 = slide1;
         slide1 = tmp;
     }
-
     var displayElement = parent.getElementsByClassName("rangeValues")[0];
     displayElement.innerHTML = "Min: " + slide1 + " °C" + " Max: " + slide2 + " °C";
 }
-
 window.onload = function () {
     // Initialize Sliders
     var sliderSections = document.getElementsByClassName("range-slider");
@@ -95,4 +76,4 @@ window.onload = function () {
         }
     }
 };
-
+//# sourceMappingURL=app.js.map
