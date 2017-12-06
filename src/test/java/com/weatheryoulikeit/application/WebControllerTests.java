@@ -76,6 +76,10 @@ public class WebControllerTests {
     public void convertCounrytoCity() {
         assertEquals("",fdr.convertCountrytoCity("Poland"));
     }
+    @Test
+    public void testISOConvert() {
+        assertEquals("",sut.getExternalFlights(new FlightSearchData("LAX","2018-01-01","2018-01-04",20,40)));
+    }
 
 }
 
