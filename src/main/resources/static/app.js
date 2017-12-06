@@ -1,25 +1,20 @@
 var angmodule = angular.module('demo', ['ngSanitize']);
-/*module.controller('Hello', function ($scope, $http) {
-    $http.get('http://rest-service.guides.spring.io/greeting').then(function (response) {
-        $scope.greeting = response.data;
-    });
-});*/
 angmodule.controller('search', function ($scope, $http) {
     $scope.sendToBackEnd = function () {
+        function splitTheString(date) {
+            var dateFormat = (JSON.stringify(date));
+            var noSnuffs = dateFormat.replace('"', '');
+            var splitDate = noSnuffs.split('T');
+            date = splitDate[0];
+            return date;
+        }
+        $scope.data.startDate = splitTheString($scope.data.startDate);
+        $scope.data.endDate = splitTheString($scope.data.endDate);
         console.log(JSON.stringify($scope.data));
-        //        $http.post('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
-        $http.get('http://rest-service.guides.spring.io/greeting').then(function (response) {
-            //let data = response.data;
+        // $http.post('https://weatheryoulikeit.herokuapp.com/getFlightResults', $scope.data).then(function (response) {
+        $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+            // let data = response.data;
             var data = [
-                { country: "Muffinland", degrees: 21, price: 1025 },
-                { country: "Kaninland", degrees: 27, price: 2750 },
-                { country: "Minland", degrees: 56, price: 2687 },
-                { country: "Muffinland", degrees: 21, price: 1025 },
-                { country: "Kaninland", degrees: 27, price: 2750 },
-                { country: "Minland", degrees: 56, price: 2687 },
-                { country: "Muffinland", degrees: 21, price: 1025 },
-                { country: "Kaninland", degrees: 27, price: 2750 },
-                { country: "Minland", degrees: 56, price: 2687 },
                 { country: "Muffinland", degrees: 21, price: 1025 },
                 { country: "Kaninland", degrees: 27, price: 2750 },
                 { country: "Minland", degrees: 56, price: 2687 },
@@ -40,10 +35,10 @@ angmodule.controller('search', function ($scope, $http) {
                         '<span>' + d.price + '</span>' +
                         '</div>';
             });
-            var result = '<h1>We found ' + data.length + ' trips!</h1>' + '<h3>' +
+            var result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' + '<h4>' +
                 '<span>Destination</span>' +
                 '<span>Average temperature</span>' +
-                '<span>Price</span>' + '</h3>';
+                '<span>Price</span>' + '</h4>';
             $scope.myHTML = result + htmlResult;
         });
     };
@@ -61,7 +56,7 @@ function getVals() {
         slide1 = tmp;
     }
     var displayElement = parent.getElementsByClassName("rangeValues")[0];
-    displayElement.innerHTML = slide1 + " - " + slide2;
+    displayElement.innerHTML = "Min temp: " + slide1 + " Max temp: " + slide2;
 }
 window.onload = function () {
     // Initialize Sliders

@@ -16,7 +16,7 @@
     <p>The ID is {{greeting.id}}</p>
     <p>The content is {{greeting.content}}</p>
 </div>-->
-<div class="header"><img class="img-responsive" src="logo.png">
+<div class="header"><img class="img-responsive" src="logo.png" alt="Weather You Like It">
     <h1>"Find flights to the weather you like for a price that you love."</h1></div>
 <div ng-controller="search">
     <div class="search">
@@ -34,10 +34,10 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <input type="date" ng-model="data.fromdate" name="fromdate" class="form-control" id="calendar"/>
+                        <input type="date" ng-model="data.startDate" name="fromdate" class="form-control"/>
                     </div>
                     <div class="col">
-                        <input type="date" ng-model="data.fromdate" name="todate" class="form-control" id="calendar"/>
+                        <input type="date" ng-model="data.endDate" name="todate" class="form-control"/>
                     </div>
                 </div>
                 <div class="row">
@@ -49,12 +49,15 @@
 
                 <div class="row">
                     <div class="col">
-                        <p>Desired temperature: </p>
+                        <h1>Desired temperature:</h1>
+
                         <section class="range-slider">
                             <span class="rangeValues" id="temperature"></span>
-                            <input value="5" min="-15" max="35" step="1" class="form-control" type="range">
-                            <input value="15" min="-15" max="35" step="1" class="form-control" type="range">
 
+                            <input value="10" min="-10" max="30" step="1" ng-model="data.tempMin" name="tempMin"
+                                   class="form-control" type="range">
+                            <input value="10" min="-10" max="30" step="1" ng-model="data.tempMax" name="tempMax"
+                                   class="form-control" type="range">
                         </section>
 
 

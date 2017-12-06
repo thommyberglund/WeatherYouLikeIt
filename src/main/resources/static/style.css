@@ -172,7 +172,7 @@ span {
 section.range-slider {
     position: relative;
     margin: 0 auto;
-    height: 50px;
+    height: 80px;
     text-align: center;
     outline: none;
 }
@@ -180,7 +180,7 @@ section.range-slider {
 section.range-slider:focus {
     position: relative;
     margin: 0 auto;
-    height: 50px;
+    height: 60px;
     text-align: center;
     outline: none;
 }
@@ -189,7 +189,7 @@ section.range-slider input {
     pointer-events: none;
     position: absolute;
     overflow: hidden;
-    top: 20px;
+    top: 30px;
     text-align: center;
     outline: none;
     height: 18px;
@@ -249,14 +249,14 @@ section.range-slider input[type=range]::-moz-focus-outer {
 input[type=range]::-webkit-slider-runnable-track {
     -webkit-appearance: none;
     background: rgb(51, 175, 204);
-    background: -moz-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(0, 17, 185)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
-    background: -webkit-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: -o-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: -ms-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -moz-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(2, 119, 139)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
+    background: -webkit-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -o-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -ms-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
-    height: 10px;
+    height: 12px;
 }
 
 input[type=range]:focus {
@@ -266,30 +266,28 @@ input[type=range]:focus {
 input[type=range]::-moz-range-track {
     -moz-appearance: none;
     background: rgb(51, 175, 204);
-    background: -moz-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(0, 17, 185)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
-    background: -webkit-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: -o-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: -ms-linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
-    background: linear-gradient(45deg, rgb(0, 17, 185) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -moz-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(2, 119, 139)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
+    background: -webkit-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -o-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -ms-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
-    height: 10px;
+    height: 12px;
 }
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     border: 2px solid;
     border-radius: 50%;
-    bottom: 11px;
+    bottom: 5px;
 }
 
 input[type=range]::-moz-range-thumb {
     -moz-appearance: none;
-    border: 2px solid;
-    border-radius: 50%;
+
     position: relative;
-    bottom: 11px;
+    bottom: 5px;
     -moz-transition: border 1000ms ease;
     transition: border 1000ms ease;
 }
-
