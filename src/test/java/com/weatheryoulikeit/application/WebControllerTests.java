@@ -32,7 +32,7 @@ public class WebControllerTests {
 
     @Test
     public void getFlightResults() {
-       assertEquals("\"origin\" : \"LAX\",  \"currency\" : \"USD\",  \"destination\" : \"LON\",    \"departure_date\" : \"2018-01-03\",    \"price\" : \"388.01\",    \"airline\" : \"WW\"  }", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
+       assertEquals("{  \"origin\" : \"LAX\",  \"currency\" : \"USD\",  \"destination\" : \"LON\",    \"departure_date\" : \"2018-01-03\",    \"price\" : \"388.01\",    \"airline\" : \"WW\"  } ", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
     }
 
     @Test
@@ -52,6 +52,11 @@ public class WebControllerTests {
         correctCountries.add("PRY");
         List<String> countries = fdr.getCountriesByTemperatureRange(1, 27, 30);
         assertEquals(correctCountries, countries);
+    }
+
+    @Test
+    public void getCityByISOfromDatabase() {
+        assertEquals("Frankfurt/Main Int'l Airport", fdr.convertISOtoName("FRA"));
     }
 
 }

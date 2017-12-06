@@ -50,4 +50,22 @@ public class FlightDataRepository {
         }
         return null;
     }
+
+    public String convertISOtoName(String isoCode) {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT CITY FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE CODE = ?")) {
+                pstmt.setString(1, isoCode);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    String returnData = "";
+                    while(rs.next()) {
+                         returnData = rs.getString("CITY");
+                    }
+                    return returnData;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
