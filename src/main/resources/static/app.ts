@@ -1,32 +1,30 @@
 var angmodule = angular.module('demo', ['ngSanitize']);
 
 
-/*module.controller('Hello', function ($scope, $http) {
-    $http.get('http://rest-service.guides.spring.io/greeting').then(function (response) {
-        $scope.greeting = response.data;
-    });
-});*/
-
-
 angmodule.controller('search', function ($scope, $http) {
     $scope.sendToBackEnd = () => {
+
+        function splitTheString(date) {
+            var dateFormat = (JSON.stringify(date));
+            var noSnuffs = dateFormat.replace('"','' );
+            noSnuffs = noSnuffs.replace('"','' );
+            var splitDate = noSnuffs.split('T');
+            date = splitDate[0];
+            return date;
+        }
+
+        $scope.data.startDate = splitTheString($scope.data.startDate);
+        $scope.data.endDate = splitTheString($scope.data.endDate);
+
         console.log(JSON.stringify($scope.data));
 
-//        $http.post('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
-        $http.get('http://rest-service.guides.spring.io/greeting').then(function (response) {
+        $http.post('search', $scope.data).then(function (response) {
+        //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
-            //let data = response.data;
+            let data = response.data;
+            console.log(data);
 
             let data = [
-                {country: "Muffinland", degrees: 21, price: 1025},
-                {country: "Kaninland", degrees: 27, price: 2750},
-                {country: "Minland", degrees: 56, price: 2687},
-                {country: "Muffinland", degrees: 21, price: 1025},
-                {country: "Kaninland", degrees: 27, price: 2750},
-                {country: "Minland", degrees: 56, price: 2687},
-                {country: "Muffinland", degrees: 21, price: 1025},
-                {country: "Kaninland", degrees: 27, price: 2750},
-                {country: "Minland", degrees: 56, price: 2687},
                 {country: "Muffinland", degrees: 21, price: 1025},
                 {country: "Kaninland", degrees: 27, price: 2750},
                 {country: "Minland", degrees: 56, price: 2687},
@@ -43,19 +41,18 @@ angmodule.controller('search', function ($scope, $http) {
             data.forEach((d) => {
                 htmlResult +=
                     '<div class="resultDiv">' +
-                    '<span>' + d.country + '</span>' +
-                    '<span>' + d.degrees + '</span>' +
+                    '<span>' + d.destination + '</span>' +
                     '<span>' + d.price + '</span>' +
+                    '<span>' + d.currency + '</span>' +
                     '</div>';
             });
 
-            let result = '<h1>We found ' + data.length + ' trips!</h1>' + '<h6>' +
+            let result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' + '<h4>' +
                 '<span>Destination</span>' +
-                '<span>Avgerage temperature</span>' +
-                '<span>Price</span>' + '</h6>';
+                '<span>Average temperature</span>' +
+                '<span>Price</span>' + '</h4>';
 
             $scope.myHTML = result + htmlResult;
-            
 
         });
 
@@ -63,3 +60,35 @@ angmodule.controller('search', function ($scope, $http) {
 
 
 });
+
+function getVals() {
+    // Get slider values
+    var parent = this.parentNode;
+    var slides = parent.getElementsByTagName("input");
+    var slide1 = parseFloat(slides[0].value);
+    var slide2 = parseFloat(slides[1].value);
+    // Neither slider will clip the other, so make sure we determine which is larger
+    if (slide1 > slide2) {
+        var tmp = slide2;
+        slide2 = slide1;
+        slide1 = tmp;
+    }
+
+    var displayElement = parent.getElementsByClassName("rangeValues")[0];
+    displayElement.innerHTML = "Min temp: " + slide1 + " Max temp: " + slide2;
+}
+
+window.onload = function () {
+    // Initialize Sliders
+    var sliderSections = document.getElementsByClassName("range-slider");
+    for (var x = 0; x < sliderSections.length; x++) {
+        var sliders = sliderSections[x].getElementsByTagName("input");
+        for (var y = 0; y < sliders.length; y++) {
+            if (sliders[y].type === "range") {
+                sliders[y].oninput = getVals;
+                // Manually trigger event first time to display values
+                sliders[y].oninput();
+            }
+        }
+    }
+};

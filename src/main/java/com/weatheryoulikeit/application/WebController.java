@@ -1,6 +1,7 @@
 package com.weatheryoulikeit.application;
 
  import com.google.gson.Gson;
+
  import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.web.bind.annotation.GetMapping;
  import org.springframework.web.bind.annotation.PostMapping;
@@ -29,11 +30,16 @@ public class WebController {
                                    @RequestParam(value="tempMin", required=false, defaultValue="0")int tempMin,
                                    @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) {
 
-        FlightSearchData fsd = new FlightSearchData(origin, startDate, endDate,tempMin,tempMax);
+        FlightSearchData fsd = new FlightSearchData(origin, startDate, endDate, tempMin, tempMax);
 
         return getExternalFlights(fsd);
     }
-
+    @PostMapping(path="/search", consumes = "application/json", produces = "application/json")
+    public @ResponseBody String searchFlights(@RequestBody FlightSearchData fsd) {
+        System.out.println(fsd.getDestination());
+        return getExternalFlights(fsd);
+    }
+  
     @PostMapping(path="/getFlightResults", produces = "application/json")
     public String postFlightResults(@RequestParam(value="origin", required=false) String origin,
                                    @RequestParam(value="startDate", required=false) String startDate,
@@ -78,6 +84,8 @@ public class WebController {
         //urlReturnData = removeLastChar(urlReturnData);
         urlReturnData += "]";
         return trimJson(urlReturnData);
+
+
     }
 
     private String trimJson(String urlReturnData) {

@@ -7,15 +7,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
     <link rel="stylesheet" href="style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Sans" rel="stylesheet">
 
-<!--    <script src="angular-sanitize.js"></script>-->
+    <!--    <script src="angular-sanitize.js"></script>-->
 </head>
 <body ng-app="demo">
 <!--<div ng-controller="Hello">
     <p>The ID is {{greeting.id}}</p>
     <p>The content is {{greeting.content}}</p>
 </div>-->
-<div class="header"><img class="img-responsive" src="logo.png"><h4>"Find flights to the weather you like for a price that you love."</h4></div>
+<div class="header"><img class="img-responsive" src="logo.png" alt="Weather You Like It">
+    <h1>"Find flights to the weather you like for a price that you love."</h1></div>
 <div ng-controller="search">
     <div class="search">
     <div class="form-group">
@@ -24,31 +26,43 @@
                 <div class="col">
                     <input type="text" ng-model="data.origin" name="origin" class="form-control" placeholder="Origin" id="origin" autofocus/>
                 </div>
-                <div class="col">
-                    <input type="text" ng-model="data.maxprice" name="maxprice"  class="form-control" id="maxprice" placeholder="Max price"/>
-                </div>
+                <!--<div class="col">-->
+                    <!--<input type="text" ng-model="data.maxprice" name="maxprice"  class="form-control" id="maxprice" placeholder="Max price"/>-->
+                <!--</div>-->
             </div>
-                <div class="row"><div class="col">
-                <input type="date" ng-model="data.fromdate" name="fromdate" class="form-control" id="calendar"/>
-                </div><div class="col">
-                    <input type="date" ng-model="data.fromdate" name="todate" class="form-control" id="calendar"/>
-                </div></div><div class="row"><div class="col">
-                    <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"/> Direct flights</label>
-                </div></div>
+                <div class="row">
+                    <div class="col">
+                        <input type="date" ng-model="data.startDate" name="fromdate" class="form-control"/>
+                    </div>
+                    <div class="col">
+                        <input type="date" ng-model="data.endDate" name="todate" class="form-control"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"/>
+                            Direct flights</label>
+                    </div>
+                </div>
 
-<div class="row"><div class="col">
-                <p>Desired temperature: </p>
+                <div class="row">
+                    <div class="col">
+                        <h1>Desired temperature:</h1>
+
+                        <section class="range-slider">
+                            <span class="rangeValues" id="temperature"></span>
+
+                            <input value="10" min="-10" max="30" step="1" ng-model="data.tempMin" name="tempMin"
+                                   class="form-control" type="range">
+                            <input value="10" min="-10" max="30" step="1" ng-model="data.tempMax" name="tempMax"
+                                   class="form-control" type="range">
+                        </section>
 
 
-    <rzslider
-            rz-slider-floor="priceSlider.floor"
-            rz-slider-ceil="priceSlider.ceil"
-            rz-slider-model="priceSlider.min"
-            rz-slider-high="priceSlider.max"></rzslider>
+                    </div>
+                </div>
 
-</div></div>
-
-                <select name="adults" ng-model="data.noadults" name="noadults"  id="adults">
+                <select name="adults" ng-model="data.noadults" name="noadults" id="adults">
                     <option value="" disabled selected>Adults</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -66,9 +80,11 @@
                     <option value="5">5</option>
                     <option value="6">6</option>
                 </select>
-                <input type="submit" class="form-control"  id="searchBtn" value="Search">
-        </form>
-    </div>
+                <input type="submit" class="form-control" id="searchBtn" value="Search"><input type="reset"
+                                                                                               class="form-control"
+                                                                                               value="Clear">
+            </form>
+        </div>
     </div>
     <div class="waveone"></div>
     <div class="results" id="">
@@ -77,9 +93,12 @@
 </div>
 <div class="wavetwo"></div>
 <div class="about"><h1>Our idea</h1>
-Imagine spending lots and lots of money on a trip, but due to the bad weather all you do is sitting on your hotel room watching re-runs of some 90's soap opera. Sounds terrible, right?
-To avoid this scenario we figured that you should not only be able to search for cheap flights, but also filter the possible destinations by telling us which temperature you would like.
-    No more winter jackets on a summer holiday! No more ski trips without snow! Let us help you find the Weather you like it!
+    Imagine spending lots and lots of money on a trip, but due to the bad weather all you do is sitting on your hotel
+    room watching re-runs of some 90's soap opera. Sounds terrible, right?
+    To avoid this scenario we figured that you should not only be able to search for cheap flights, but also filter the
+    possible destinations by telling us which temperature you would like.
+    No more winter jackets on a summer holiday! No more ski trips without snow! Let us help you find the Weather you
+    like it!
 
 </div>
 <div class="wavethree"></div>
