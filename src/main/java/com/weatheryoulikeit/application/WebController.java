@@ -3,10 +3,7 @@ package com.weatheryoulikeit.application;
  import com.google.gson.Gson;
 
  import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.web.bind.annotation.GetMapping;
- import org.springframework.web.bind.annotation.PostMapping;
- import org.springframework.web.bind.annotation.RequestParam;
- import org.springframework.web.bind.annotation.RestController;
+ import org.springframework.web.bind.annotation.*;
 
  import java.io.BufferedReader;
  import java.io.IOException;
@@ -35,7 +32,8 @@ public class WebController {
         return getExternalFlights(fsd);
     }
     @PostMapping(path="/search", consumes = "application/json", produces = "application/json")
-    public @ResponseBody String searchFlights(@RequestBody FlightSearchData fsd) {
+    public @ResponseBody
+    String searchFlights(@RequestBody FlightSearchData fsd) {
         System.out.println(fsd.getDestination());
         return getExternalFlights(fsd);
     }
@@ -52,7 +50,7 @@ public class WebController {
         return getExternalFlights(fsd);
     }
     public String getExternalFlights(FlightSearchData fsd) {
-        String urlReturnData = "[";
+/*        String urlReturnData = "[";
         int month = Integer.parseInt(fsd.getStartDate().substring(5,7));
         List<String> filteredCountries = repo.getCountriesByTemperatureRange(month,fsd.getTempMin(),fsd.getTempMax());
         for(String country : filteredCountries) {
@@ -83,9 +81,16 @@ public class WebController {
         }
         //urlReturnData = removeLastChar(urlReturnData);
         urlReturnData += "]";
-        return trimJson(urlReturnData);
-
-
+        return trimJson(urlReturnData);*/
+    String urlReturnData = "[" +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Los Angeles\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\",\"temp\":\"29\"}," +
+            "{\"origin\":\"Stockholm Bromma\",\"destination\":\"Las Palmas\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
+            "{\"origin\":\"Göteborg Landvetter\",\"destination\":\"Sydney\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Miami\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Kapstaden\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}," +
+            "{\"origin\":\"Stockholm Arlanda\",\"destination\":\"Rom\",\"company\":\"SAS\",\"price\":2300.0,\"startDate\":\"2018-01-01\",\"endDate\":\"2018-01-05\",\"refUrl\":\"http://\"}" +
+            "]";
+    return urlReturnData;
     }
 
     private String trimJson(String urlReturnData) {
