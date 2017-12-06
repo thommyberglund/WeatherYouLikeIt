@@ -22,3 +22,9 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Secret files ###
+application.properties
+app.js
+app.js.map
+
