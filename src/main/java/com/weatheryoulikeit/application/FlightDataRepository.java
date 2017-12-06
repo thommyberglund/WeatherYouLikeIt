@@ -51,14 +51,32 @@ public class FlightDataRepository {
         return null;
     }
 
-    public String convertISOtoName(String isoCode) {
+    public List<String> convertCountrytoCity(String country) {
         try (Connection conn = dataSource.getConnection();) {
-            try (PreparedStatement pstmt = conn.prepareStatement("SELECT CITY FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE CODE = ?")) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT CODE FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE COUNTRY = ?")) {
+                pstmt.setString(1, country);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    List<String> cities = new ArrayList<>();
+                    while(rs.next()) {
+                         cities.add(rs.getString("CODE"));
+                    }
+                    return cities;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String convertISOtoCountryName(String isoCode) {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT NAME FROM [Academy_Projekt2].[dbo].[country] WHERE ISO3 = ?")) {
                 pstmt.setString(1, isoCode);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     String returnData = "";
                     while(rs.next()) {
-                         returnData = rs.getString("CITY");
+                        returnData = rs.getString("name");
                     }
                     return returnData;
                 }
@@ -68,4 +86,5 @@ public class FlightDataRepository {
         }
         return "";
     }
+
 }

@@ -1,16 +1,14 @@
 package com.weatheryoulikeit.application;
 
-import java.time.LocalDate;
-
 public class FlightSearchData {
 
     private String origin;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String startDate;
+    private String endDate;
     private int tempMin;
     private int tempMax;
 
-    public FlightSearchData(String origin, LocalDate startDate, LocalDate endDate, int tempMin, int tempMax) {
+    public FlightSearchData(String origin, String startDate, String endDate, int tempMin, int tempMax) {
         this.origin = origin;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -26,11 +24,11 @@ public class FlightSearchData {
         return "LON"; // Placeholder until weatherdb returns possible destinations
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 

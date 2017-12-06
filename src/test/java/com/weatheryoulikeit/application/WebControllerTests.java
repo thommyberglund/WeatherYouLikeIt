@@ -27,7 +27,7 @@ public class WebControllerTests {
     @Before
     public void setup() {
         sut = new WebController();
-        fsd = new FlightSearchData("LAX",LocalDate.parse("2018-01-01"),LocalDate.parse("2018-01-04"),20,40);
+        fsd = new FlightSearchData("LAX","2018-01-01","2018-01-04",20,40);
     }
 
     @Test
@@ -56,7 +56,25 @@ public class WebControllerTests {
 
     @Test
     public void getCityByISOfromDatabase() {
-        assertEquals("Frankfurt/Main Int'l Airport", fdr.convertISOtoName("FRA"));
+        assertEquals("Frankfurt/Main Int'l Airport", fdr.convertCountrytoCity("FRA"));
+    }
+
+    @Test
+    public void testTempRange() {
+        fsd = new FlightSearchData("LAX","2018-01-01","2018-01-04",20,40);
+
+        int month = Integer.parseInt(fsd.getStartDate().substring(6,7));
+        List<String> filteredCountries = fdr.getCountriesByTemperatureRange(month,fsd.getTempMin(),fsd.getTempMax());
+        assertEquals("",filteredCountries);
+
+    }
+    @Test
+    public void testISOtoCountryName() {
+        assertEquals("Belgium",fdr.convertISOtoCountryName("BEL"));
+    }
+    @Test
+    public void convertCounrytoCity() {
+        assertEquals("",fdr.convertCountrytoCity("Poland"));
     }
 
 }
