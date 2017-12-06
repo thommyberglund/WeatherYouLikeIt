@@ -8,6 +8,8 @@
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
     <link rel="stylesheet" href="style.css"/>
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Sans" rel="stylesheet">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <!--    <script src="angular-sanitize.js"></script>-->
 </head>
@@ -20,16 +22,18 @@
     <h1>"Find flights to the weather you like for a price that you love."</h1></div>
 <div ng-controller="search">
     <div class="search">
-    <div class="form-group">
-        <form ng-submit="sendToBackEnd()">
-            <div class="row">
-                <div class="col">
-                    <input type="text" ng-model="data.origin" name="origin" class="form-control" placeholder="Origin" id="origin" autofocus/>
+        <div class="form-group">
+            <form ng-submit="sendToBackEnd()">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" ng-model="data.origin" name="origin" class="form-control"
+                               placeholder="Origin" id="origin" autofocus/>
+                    </div>
+                    <div class="col">
+                        <input type="text" ng-model="data.maxprice" name="maxprice" class="form-control" id="maxprice"
+                               placeholder="Max price" disabled/>
+                    </div>
                 </div>
-                <!--<div class="col">-->
-                    <!--<input type="text" ng-model="data.maxprice" name="maxprice"  class="form-control" id="maxprice" placeholder="Max price"/>-->
-                <!--</div>-->
-            </div>
                 <div class="row">
                     <div class="col">
                         <input type="date" ng-model="data.startDate" name="fromdate" class="form-control"/>
@@ -40,49 +44,64 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"/>
+                        <select name="adults" ng-model="data.noadults" class="form-control" name="noadults" id="adults"
+                                disabled>
+                            <option value="" disabled selected>Adults</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select></div>
+                    <div class="col">
+                        <select name="children" ng-model="data.nochildren" class="form-control" name="nochildren"
+                                id="children" disabled>
+                            <option value="" disabled selected>Children</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"
+                                      disabled/>
                             Direct flights</label>
+                    </div>
+                    <div class="col">
+                        <label><input type="checkbox" class="checkbox-inline" id="roundtrip" value="roundtrip"
+                                      disabled/>
+                            Round Trip</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col">
-                        <h1>Desired temperature:</h1>
+                        <h1>
 
-                        <section class="range-slider">
-                            <span class="rangeValues" id="temperature"></span>
+                            <section class="range-slider">
+                                <span class="rangeValues" id="temperature"></span>
 
-                            <input value="10" min="-10" max="30" step="1" ng-model="data.tempMin" name="tempMin"
-                                   class="form-control" type="range">
-                            <input value="10" min="-10" max="30" step="1" ng-model="data.tempMax" name="tempMax"
-                                   class="form-control" type="range">
-                        </section>
-
+                                <input value="10" min="-10" max="30" step="1" ng-model="data.tempMin" name="tempMin"
+                                       class="form-control" type="range">
+                                <input value="10" min="-10" max="30" step="1" ng-model="data.tempMax" name="tempMax"
+                                       class="form-control" type="range">
+                            </section>
+                        </h1>
 
                     </div>
                 </div>
-
-                <select name="adults" ng-model="data.noadults" name="noadults" id="adults">
-                    <option value="" disabled selected>Adults</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
-                <select name="children" ng-model="data.nochildren" name="nochildren" id="children">
-                    <option value="" disabled selected>Children</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
-                <input type="submit" class="form-control" id="searchBtn" value="Search"><input type="reset"
-                                                                                               class="form-control"
-                                                                                               value="Clear">
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" class="form-control" id="searchBtn" value="Search">
+                    </div>
+                    <div class="col"><input type="reset" class="form-control" id="clearBtn" value="Clear">
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -103,15 +122,20 @@
 </div>
 <div class="wavethree"></div>
 <div class="footer">
-    © Weather You Like It 2017 -
-</div>
+    <div class="col"><a href="https://www.facebook.com"><img src="facebook.png" alt="Visit our Facebook"
+                                                             class="img-footer"></a> <a
+            href="https://www.instagram.com"><img src="instagram.png" alt="Visit our Instagram" class="img-footer"></a>
+    </div>
+    <div class="col">
+        © Weather You Like It 2017 -
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-        crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
-<script src="app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
