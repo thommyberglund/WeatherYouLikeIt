@@ -16,6 +16,13 @@ angmodule.controller('search', function ($scope, $http) {
         $scope.data.startDate = splitTheString($scope.data.startDate);
         $scope.data.endDate = splitTheString($scope.data.endDate);
 
+        console.log(JSON.stringify($scope.data));
+
+        if ($scope.data.tempMin > $scope.data.tempMax) {
+             var tmp = $scope.data.tempMin;
+             $scope.data.tempMin = $scope.data.tempMax;
+             $scope.data.tempMax = tmp;
+        }
 
         console.log(JSON.stringify($scope.data));
 
@@ -77,11 +84,11 @@ function getVals() {
     var slide1 = parseFloat(slides[0].value);
     var slide2 = parseFloat(slides[1].value);
     // Neither slider will clip the other, so make sure we determine which is larger
-    if (slide1 > slide2) {
-        var tmp = slide2;
-        slide2 = slide1;
-        slide1 = tmp;
-    }
+    // if (slide1 > slide2) {
+    //     var tmp = slide2;
+    //     slide2 = slide1;
+    //     slide1 = tmp;
+    // }
 
     var displayElement = parent.getElementsByClassName("rangeValues")[0];
     displayElement.innerHTML = "Min: " + slide1 + " °C" + " Max: " + slide2 + " °C";
