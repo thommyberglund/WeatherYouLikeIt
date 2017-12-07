@@ -16,6 +16,7 @@ angmodule.controller('search', function ($scope, $http) {
         $scope.data.startDate = splitTheString($scope.data.startDate);
         $scope.data.endDate = splitTheString($scope.data.endDate);
 
+
         console.log(JSON.stringify($scope.data));
 
         $http.post('search', $scope.data).then(function (response) {
@@ -49,11 +50,11 @@ angmodule.controller('search', function ($scope, $http) {
                     '</div>';
             });
 
-            let result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' + '<h4>' +
+            let result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' +
                 '<span>Destination</span>' +
                 '<span>Average temperature</span>' +
                 '<span>Price</span>' +
-                '<span>Currency</span>' + '</h4>';
+                '<span>Currency</span>';
 
             $scope.myHTML = result + htmlResult;
 
@@ -96,3 +97,25 @@ window.onload = function () {
     }
 };
 
+window.smoothScroll = function(target) {
+    var scrollContainer = target;
+    do { //find scroll container
+        scrollContainer = scrollContainer.parentNode;
+        if (!scrollContainer) return;
+        scrollContainer.scrollTop += 1;
+    } while (scrollContainer.scrollTop == 0);
+
+    var targetY = 0;
+    do { //find the top of target relatively to the container
+        if (target == scrollContainer) break;
+        targetY += target.offsetTop;
+    } while (target = target.offsetParent);
+
+    scroll = function(c, a, b, i) {
+        i++; if (i > 30) return;
+        c.scrollTop = a + (b - a) / 30 * i;
+        setTimeout(function(){ scroll(c, a, b, i); }, 10);
+    }
+    // start scrolling
+    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+}

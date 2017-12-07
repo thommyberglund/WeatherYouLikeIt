@@ -38,11 +38,11 @@ angmodule.controller('search', function ($scope, $http) {
                         '<span>' + d.currency + '</span>' +
                         '</div>';
             });
-            var result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' + '<h4>' +
+            var result = '<h1>Yay! We found ' + data.length + ' trips!</h1>' +
                 '<span>Destination</span>' +
                 '<span>Average temperature</span>' +
                 '<span>Price</span>' +
-                '<span>Currency</span>' + '</h4>';
+                '<span>Currency</span>';
             $scope.myHTML = result + htmlResult;
         });
     };
@@ -75,5 +75,29 @@ window.onload = function () {
             }
         }
     }
+};
+window.smoothScroll = function (target) {
+    var scrollContainer = target;
+    do {
+        scrollContainer = scrollContainer.parentNode;
+        if (!scrollContainer)
+            return;
+        scrollContainer.scrollTop += 1;
+    } while (scrollContainer.scrollTop == 0);
+    var targetY = 0;
+    do {
+        if (target == scrollContainer)
+            break;
+        targetY += target.offsetTop;
+    } while (target = target.offsetParent);
+    scroll = function (c, a, b, i) {
+        i++;
+        if (i > 30)
+            return;
+        c.scrollTop = a + (b - a) / 30 * i;
+        setTimeout(function () { scroll(c, a, b, i); }, 10);
+    };
+    // start scrolling
+    scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
 };
 //# sourceMappingURL=app.js.map
