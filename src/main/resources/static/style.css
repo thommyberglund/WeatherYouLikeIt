@@ -83,10 +83,6 @@ span {
     transform: scale(1.3);
 }
 
-.facebook {
-    background: url("facebook.png");
-}
-
 .header {
     text-align: center;
     padding-bottom: 20px;
@@ -130,6 +126,8 @@ span {
 
 .changeSearch {
     margin-top: 20px;
+    background-color: #028ea7;
+
 }
 
 .footer {
@@ -348,3 +346,4 @@ input[type=range]::-moz-range-track {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
     height: 12px;
 }
+
