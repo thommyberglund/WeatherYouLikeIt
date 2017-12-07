@@ -31,7 +31,7 @@ public class FlightDataRepository {
 
     private Random rand = new Random();
 
-    public double getTemperature(String country, int month) throws SQLException {
+    public double getTemperature(String country, int month) {
 
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT TEMP FROM historical_temp_data WHERE COUNTRY = ? AND MONTH = ?");) {
@@ -111,9 +111,9 @@ public class FlightDataRepository {
         List<String> filteredCountries = getCountriesByTemperatureRange(month,fsd.getTempMin(),fsd.getTempMax());
         List<String> selectedCountries = nRandomItems(filteredCountries, 5);
 
-        for(String country : selectedCountries) {
+        for(String countryISO : selectedCountries) {
 
-            country = convertISOtoCountryName(country);
+            String country = convertISOtoCountryName(countryISO);
             List<String> cityISO = getCitiesInCountry(country);
             if (cityISO.isEmpty())
                 continue;
@@ -145,6 +145,7 @@ public class FlightDataRepository {
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
                 jsonObject.addProperty("destination", city);
+                jsonObject.addProperty("temperature", getTemperature(countryISO, month));
                 urlReturnData += jsonObject.toString() + ",";
             }
         }

@@ -45,7 +45,7 @@ angmodule.controller('search', function ($scope, $http) {
                 htmlResult +=
                     '<div class="resultDiv">' +
                     '<span>' + d.destination + '</span>' +
-                    '<span>' + '24' + '</span>' +
+                    '<span>' + d.temperature + '</span>' +
                     '<span>' + d.price + '</span>' +
                     '<span>' + d.currency + '</span>' +
                     '</div>';

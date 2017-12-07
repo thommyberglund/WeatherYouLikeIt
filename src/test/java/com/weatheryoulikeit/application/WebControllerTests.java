@@ -48,12 +48,8 @@ public class WebControllerTests {
 
     @Test
     public void getTemperatureFromDatabase() {
-        try {
-            double temp = fdr.getTemperature("ALB", 1);
-            assertEquals(2.02, temp, 0.01);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        double temp = fdr.getTemperature("ALB", 1);
+        assertEquals(2.02, temp, 0.01);
     }
 
     @Test
