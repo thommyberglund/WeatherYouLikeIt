@@ -13,6 +13,25 @@ body {
     font-size: 1.2vw;
 }
 
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+div.footer a {
+    text-decoration: none;
+    color: #02778b;
+}
+div.footer a:hover {
+    text-decoration: underline;
+    color: #02778b;
+
+}
+
 .form-control {
    margin-bottom: 17px;
 }
@@ -32,7 +51,7 @@ h1 {
     font-family: 'Amatic SC', cursive;
     font-weight: 700;
     line-height: 46px;
-    font-size: 46px;
+    font-size: 2.5vw;
     margin: 0 0 23px 0;
 }
 
@@ -112,7 +131,10 @@ span {
     background-color: #ffe067;
     color: #02778b;
     padding-top: 20px;
+    padding-bottom: 10px;
     text-align: center;
+    font-size: 0.7vw;
+
 }
 
 /*Styling to wave divs*/

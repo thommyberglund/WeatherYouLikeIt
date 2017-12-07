@@ -9,7 +9,8 @@
     "angularjs-rzslider": "^0.1.4"
   },
   "devDependencies": {
-    "@types/angular": "^1.6.39"
+    "@types/angular": "^1.6.39",
+    "@types/jquery": "^3.2.16"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

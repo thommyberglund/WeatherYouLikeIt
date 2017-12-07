@@ -97,7 +97,8 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <input type="submit" class="form-control" id="searchBtn" value="Search">
+                        <input type="submit" class="form-control"
+                               id="searchBtn" value="Search" onclick="smoothScroll(document.getElementById('scroll'))">
                     </div>
                     <div class="col"><input type="reset" class="form-control" id="clearBtn" value="Clear">
                     </div>
@@ -106,7 +107,7 @@
         </div>
     </div>
     <div class="waveone"></div>
-    <div class="results" id="">
+    <div class="results" id="scroll">
         <div ng-bind-html="myHTML"></div>
     </div>
 </div>
@@ -123,19 +124,22 @@
 <div class="wavethree"></div>
 <div class="footer">
     <div class="col"><a href="https://www.facebook.com"><img src="facebook.png" alt="Visit our Facebook"
-                                                             class="img-footer"></a> <a
-            href="https://www.instagram.com"><img src="instagram.png" alt="Visit our Instagram" class="img-footer"></a>
+                                                             class="img-footer"></a>
+        <a href="https://www.instagram.com"><img src="instagram.png" alt="Visit our Instagram" class="img-footer"></a>
+        <a href="mailto:info@weatheryoulikeit.com"><img src="mail.png" alt="Send a mail" class="img-footer"></a>
     </div>
+    <div class="col"><a href="mailto:info@weatheryoulikeit.com">info@weatheryoulikeit.com</a></div>
     <div class="col">
         © Weather You Like It 2017 -
     </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
-    <script src="app.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
