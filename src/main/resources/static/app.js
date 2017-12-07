@@ -43,7 +43,8 @@ angmodule.controller('search', function ($scope, $http) {
                 '<span>Average temperature</span>' +
                 '<span>Price</span>' +
                 '<span>Currency</span>';
-            $scope.myHTML = result + htmlResult;
+            var changeSearch = '<div class="changeSearch">' + '<a href=\"#\">Change search</a>' + '</div>';
+            $scope.myHTML = result + htmlResult + changeSearch;
         });
     };
 });
@@ -95,7 +96,9 @@ window.smoothScroll = function (target) {
         if (i > 30)
             return;
         c.scrollTop = a + (b - a) / 30 * i;
-        setTimeout(function () { scroll(c, a, b, i); }, 10);
+        setTimeout(function () {
+            scroll(c, a, b, i);
+        }, 10);
     };
     // start scrolling
     scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);

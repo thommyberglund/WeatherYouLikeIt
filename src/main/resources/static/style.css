@@ -22,10 +22,12 @@ a:hover {
     text-decoration: underline;
     color: #fff;
 }
+
 div.footer a {
     text-decoration: none;
     color: #02778b;
 }
+
 div.footer a:hover {
     text-decoration: underline;
     color: #02778b;
@@ -33,18 +35,19 @@ div.footer a:hover {
 }
 
 .form-control {
-   margin-bottom: 17px;
+    margin-bottom: 17px;
 }
 
 #searchBtn {
     color: #ffffff;
     background-color: #028EA7;
-    display:inline-block;
+    display: inline-block;
 }
+
 #clearBtn {
     color: #ffffff;
     background-color: #028EA7;
-    display:inline-block;
+    display: inline-block;
 }
 
 h1 {
@@ -80,14 +83,8 @@ span {
     transform: scale(1.3);
 }
 
-
-
 .facebook {
     background: url("facebook.png");
-}
-
-.facebook:hover {
-    background: url("facebookhover.png");
 }
 
 .header {
@@ -125,6 +122,10 @@ span {
 
 .results div:nth-of-type(odd) {
     background-color: #028ea7;
+}
+
+.changeSearch {
+    margin-top: 20px;
 }
 
 .footer {
@@ -232,14 +233,14 @@ span {
 
 /*Styling to range slider*/
 
-
 .rangeValues {
- width: 100%;
+    width: 100%;
 }
 
 #directflight {
     margin-bottom: 50px;
 }
+
 section.range-slider {
     position: relative;
     margin: 0 auto;
@@ -273,15 +274,19 @@ section.range-slider input::-webkit-slider-thumb {
     position: relative;
     z-index: 1;
     outline: none;
+    height: 20px;
+    width: 20px;
+    bottom: 5px;
 }
 
 section.range-slider input::-moz-range-thumb {
     pointer-events: all;
     position: relative;
     z-index: 10;
-    -moz-appearance: none;
-    width: 9px;
+    width: 20px;
     outline: none;
+    height: 20px;
+    bottom: 5px;
 
 }
 
@@ -295,7 +300,6 @@ section.range-slider input::-moz-range-track {
 }
 
 section.range-slider input:last-of-type::-moz-range-track {
-    -moz-appearance: none;
     background: none transparent;
     border: 0;
     outline: none;
@@ -309,8 +313,6 @@ section.range-slider input[type=range]::-moz-focus-outer {
 }
 
 .range {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -330,10 +332,6 @@ input[type=range]::-webkit-slider-runnable-track {
     height: 12px;
 }
 
-input[type=range]:focus {
-    outline: none;
-}
-
 input[type=range]::-moz-range-track {
     -moz-appearance: none;
     background: rgb(51, 175, 204);
@@ -345,20 +343,4 @@ input[type=range]::-moz-range-track {
     background: linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
     height: 12px;
-}
-
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: 2px solid;
-    border-radius: 50%;
-    bottom: 5px;
-}
-
-input[type=range]::-moz-range-thumb {
-    -moz-appearance: none;
-
-    position: relative;
-    bottom: 5px;
-    -moz-transition: border 1000ms ease;
-    transition: border 1000ms ease;
 }

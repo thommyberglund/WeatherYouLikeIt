@@ -6,8 +6,8 @@ angmodule.controller('search', function ($scope, $http) {
 
         function splitTheString(date) {
             var dateFormat = (JSON.stringify(date));
-            var noSnuffs = dateFormat.replace('"','' );
-            noSnuffs = noSnuffs.replace('"','' );
+            var noSnuffs = dateFormat.replace('"', '');
+            noSnuffs = noSnuffs.replace('"', '');
             var splitDate = noSnuffs.split('T');
             date = splitDate[0];
             return date;
@@ -20,7 +20,7 @@ angmodule.controller('search', function ($scope, $http) {
         console.log(JSON.stringify($scope.data));
 
         $http.post('search', $scope.data).then(function (response) {
-        //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+            //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
             let data = response.data;
             console.log(data);
@@ -39,6 +39,7 @@ angmodule.controller('search', function ($scope, $http) {
             //     {country: "Minland", degrees: 50, price: 1560}
             // ];
 
+
             let htmlResult = "";
             data.forEach((d) => {
                 htmlResult +=
@@ -56,9 +57,13 @@ angmodule.controller('search', function ($scope, $http) {
                 '<span>Price</span>' +
                 '<span>Currency</span>';
 
-            $scope.myHTML = result + htmlResult;
+            let changeSearch = '<div class="changeSearch">' + '<a href=\"#\">Change search</a>' + '</div>';
+
+
+            $scope.myHTML = result + htmlResult + changeSearch;
 
         });
+
 
     };
 
@@ -97,7 +102,7 @@ window.onload = function () {
     }
 };
 
-window.smoothScroll = function(target) {
+window.smoothScroll = function (target) {
     var scrollContainer = target;
     do { //find scroll container
         scrollContainer = scrollContainer.parentNode;
@@ -111,11 +116,15 @@ window.smoothScroll = function(target) {
         targetY += target.offsetTop;
     } while (target = target.offsetParent);
 
-    scroll = function(c, a, b, i) {
-        i++; if (i > 30) return;
+    scroll = function (c, a, b, i) {
+        i++;
+        if (i > 30) return;
         c.scrollTop = a + (b - a) / 30 * i;
-        setTimeout(function(){ scroll(c, a, b, i); }, 10);
+        setTimeout(function () {
+            scroll(c, a, b, i);
+        }, 10);
     }
     // start scrolling
     scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
 }
+
