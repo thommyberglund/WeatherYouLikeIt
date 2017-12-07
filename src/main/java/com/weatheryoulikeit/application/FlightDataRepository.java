@@ -104,6 +104,24 @@ public class FlightDataRepository {
         return "";
     }
 
+    public String convertISOtoCityName(String isoCode) {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT City FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE Code = ?")) {
+                pstmt.setString(1, isoCode);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    String returnData = "";
+                    rs.next();
+                    returnData = rs.getString(1);
+                    return returnData;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+
+    }
+
     public String getExternalFlights(FlightSearchData fsd) {
 
         String urlReturnData = "[";
@@ -144,7 +162,7 @@ public class FlightDataRepository {
                 }
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
-                jsonObject.addProperty("destination", city);
+                jsonObject.addProperty("destination", convertISOtoCityName(city));
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
                 urlReturnData += jsonObject.toString() + ",";
             }

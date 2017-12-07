@@ -82,6 +82,11 @@ public class WebControllerTests {
     }
 
     @Test
+    public void testISOtoCityName() {
+        assertEquals("Belgium", fdr.convertISOtoCityName("BZE"));
+    }
+
+    @Test
     public void convertCounrytoCity() {
         assertEquals("", fdr.getCitiesInCountry("Poland"));
     }
