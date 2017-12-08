@@ -32,7 +32,7 @@ public class WebController {
 
     }
 
-    @GetMapping(path="/getjson")
+    @GetMapping(path="/getjson", produces = "application/json")
     public String getJson() {
         return jsonArray;
     }

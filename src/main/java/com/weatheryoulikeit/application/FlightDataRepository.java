@@ -36,11 +36,10 @@ public class FlightDataRepository {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT City, Country FROM [dbo].[iata_codes] ");) {
                 try (ResultSet rs = pstmt.executeQuery()) {
                     rs.next();
-                    String returnArray = "[ \"";
+                    String returnArray = "[ \n\"";
                     returnArray += rs.getString("City") + "/" + rs.getString("Country") + "\"";
                     while(rs.next()) {
-                        returnArray += ",\"" + rs.getString("City").replace("\"","") + "/" + rs.getString("Country") + "\"";
-                        returnArray += "\n";
+                        returnArray += ",\n\"" + rs.getString("City").replace("\"","") + "/" + rs.getString("Country") + "\"";
                     }
                     returnArray += " ]";
                     return returnArray;

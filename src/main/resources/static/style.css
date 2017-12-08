@@ -348,3 +348,7 @@ input[type=range]::-moz-range-track {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
     height: 12px;
 }
+
+.autocomplete {
+    color: black;
+}
