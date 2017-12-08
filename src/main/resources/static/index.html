@@ -31,8 +31,8 @@
                                placeholder="Origin" id="origin" autofocus/>
                     </div>
                     <div class="col">
-                        <input type="text" ng-model="data.maxprice" name="maxprice" class="form-control" id="maxprice"
-                               placeholder="Max price" disabled/>
+                        <input type="number" step=100 min=0 ng-model="data.priceMax" name="priceMax"
+                               class="form-control" id="priceMax" placeholder="Max price"/>
                     </div>
                 </div>
                 <div class="row">
