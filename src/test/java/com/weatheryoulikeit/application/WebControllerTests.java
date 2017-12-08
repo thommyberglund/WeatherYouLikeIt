@@ -127,6 +127,11 @@ public class WebControllerTests {
         System.out.println(jsonObject.toString());
     }
 
+    @Test
+    public void testCitytoISO() {
+        assertEquals("STO",fdr.convertCitytoISO("Stockholm"));
+    }
+
     private String amadeusResult = "\n" +
             "{\n" +
             "  \"currency\" : \"USD\",\n" +

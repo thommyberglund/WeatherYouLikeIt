@@ -86,6 +86,22 @@ public class FlightDataRepository {
         return null;
     }
 
+    public String convertCitytoISO(String city) {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT CODE FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE City LIKE ?")) {
+                pstmt.setString(1, city+"%");
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    rs.next();
+                    String returnCity = rs.getString(1);
+                    return returnCity;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String convertISOtoCountryName(String isoCode) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT NAME FROM [Academy_Projekt2].[dbo].[country] WHERE ISO3 = ?")) {
@@ -109,10 +125,8 @@ public class FlightDataRepository {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT City FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE Code = ?")) {
                 pstmt.setString(1, isoCode);
                 try (ResultSet rs = pstmt.executeQuery()) {
-                    String returnData = "";
                     rs.next();
-                    returnData = rs.getString(1);
-                    return returnData;
+                    return rs.getString(1);
                 }
             }
         } catch (SQLException e) {
@@ -136,6 +150,10 @@ public class FlightDataRepository {
             if (cityISO.isEmpty())
                 continue;
             List<String> selectedCities = nRandomItems(cityISO, 1);
+
+            if(fsd.getOrigin().length() > 3) {
+                fsd.setOrigin(convertCitytoISO(fsd.getOrigin()));
+            }
 
             for (String city : selectedCities) {
                 String jsonBuilder = "";
