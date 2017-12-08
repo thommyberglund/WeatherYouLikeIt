@@ -162,7 +162,7 @@ public class FlightDataRepository {
                 }
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
-                jsonObject.addProperty("destination", convertISOtoCityName(city));
+                jsonObject.addProperty("destination", country + "/" + convertISOtoCityName(city));
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
                 urlReturnData += jsonObject.toString() + ",";
             }
