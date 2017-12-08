@@ -128,6 +128,10 @@ public class WebControllerTests {
     }
 
     @Test
+    public void testReturnArray() {
+        assertEquals("",fdr.populateJsonArray());
+    }
+    @Test
     public void testCitytoISO() {
         assertEquals("STO",fdr.convertCitytoISO("Stockholm"));
     }

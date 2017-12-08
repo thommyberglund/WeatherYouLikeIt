@@ -31,6 +31,27 @@ public class FlightDataRepository {
 
     private Random rand = new Random();
 
+    public String populateJsonArray() {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT City, Country FROM [dbo].[iata_codes] ");) {
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    rs.next();
+                    String returnArray = "[ \"";
+                    returnArray += rs.getString("City") + "/" + rs.getString("Country") + "\"";
+                    while(rs.next()) {
+                        returnArray += ",\"" + rs.getString("City").replace("\"","") + "/" + rs.getString("Country") + "\"";
+                        returnArray += "\n";
+                    }
+                    returnArray += " ]";
+                    return returnArray;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public double getTemperature(String country, int month) {
 
         try (Connection conn = dataSource.getConnection();) {
