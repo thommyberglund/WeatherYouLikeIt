@@ -180,7 +180,7 @@ public class FlightDataRepository {
                 String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?" +
                         "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
                         "" + fsd.getStartDate() + "&number_of_results=10";
-                try {
+               /* try {
 
                     URL url = new URL(searchInput);
 
@@ -197,7 +197,7 @@ public class FlightDataRepository {
                 } catch (IOException e) {
                     System.out.println(e);
                     continue;
-                }
+                }*/
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
                 jsonObject.addProperty("destination", country + "/" + convertISOtoCityName(city));

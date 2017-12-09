@@ -110,6 +110,8 @@
             </form>
         </div>
     </div>
+    <div ng-class="loader"></div>
+    <div id="textloop"></div>
     <div class="waveone"></div>
     <div class="results" id="scroll">
         <div ng-bind-html="myHTML"></div>
@@ -145,8 +147,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
 <script src="app.js"></script>
-<script>
-    fuzzyAutocomplete($('#origin'), '/list.json');
-</script>
 </body>
 </html>
