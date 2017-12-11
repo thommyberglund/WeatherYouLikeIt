@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width"/>
@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="rzslider.css"/>
     <link rel="stylesheet" href="style.css"/>
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Sans" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -34,15 +35,15 @@
                 </div>
                 <div class="searchMaxPrice item">
                     <input type="number" step=100 min=0 ng-model="data.priceMax" name="priceMax"
-                               class="form-control" id="priceMax" placeholder="Max price"/>
+                           class="form-control" id="priceMax" placeholder="Max price"/>
 
                 </div>
                 <div class="searchStartDate item">
-                    <input type="date" ng-model="data.startDate" id="fromdate" name="fromdate"
+                    <input type="date" ng-model="data.startDateTime" id="fromdate" name="fromdate"
                            class="form-control"/>
                 </div>
                 <div class="searchEndDate item">
-                    <input type="date" ng-model="data.endDate" id="todate" name="todate" class="form-control"/>
+                    <input type="date" ng-model="data.endDateTime" id="todate" name="todate" class="form-control"/>
                 </div>
                 <div class="searchAdults item">
                     <select name="adults" ng-model="data.noadults" class="form-control" name="noadults" id="adults">
@@ -77,19 +78,17 @@
                 </div>
 
                 <div class="searchTemperatureRange item">
-                    <section class="range-slider">
-                        <h1><span class="rangeValues" id="temperature"></span></h1>
-
-                        <input value="10" min="-10" max="30" step="1" ng-model="data.tempMax" name="tempMin"
-                               class="form-control" type="range">
-                        <input value="10" min="-10" max="30" step="1" ng-model="data.tempMin" name="tempMax"
-                               class="form-control" type="range">
-                    </section>
+                    <h1>
+                        <span class="rangeValues" id="temperature"></span>
+                        <rzslider
+                                rz-slider-model="slider.min"
+                                rz-slider-high="slider.max"
+                                rz-slider-options="slider.options"></rzslider>
+                    </h1>
                 </div>
                 <div class="searchNoRain item"><label><input type="checkbox" class="checkbox-inline" id="noRain"
                                                              checked disabled/>
                     No rain</label></div>
-
 
                 <div class="searchSunSafe item"><label><input type="checkbox" class="checkbox-inline"
                                                               id="SunSafe"
@@ -155,6 +154,7 @@
         crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+<script src="rzslider.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

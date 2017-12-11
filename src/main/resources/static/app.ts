@@ -1,8 +1,40 @@
-var angmodule = angular.module('demo', ['ngSanitize']);
+var angmodule = angular.module('demo', ['ngSanitize', 'rzModule']);
+
+angmodule.controller('search', function ($scope, $http, $filter, $interval) {
 
 
-angmodule.controller('search', function ($scope, $http, $interval) {
+
+    $scope.slider = {
+        min: 20,
+        max: 27,
+        options: {
+            floor: -10,
+            ceil: 45,
+            draggableRangeOnly: true,
+            onChange: function () {
+                var displayElement = document.getElementsByClassName("rangeValues")[0];
+                displayElement.innerHTML = "Min: " + $scope.slider.min + " °C" + " Max: " + $scope.slider.max + " °C";
+            },
+            hidePointerLabels: true,
+            hideLimitLabels: true,
+            showTicks: 3,
+            getTickColor: function (value) {
+                if (value < 15)
+                    return 'red';
+                if (value < 30)
+                    return 'orange';
+                if (value < 45)
+                    return 'yellow';
+                return '#2AE02A';
+            }
+        }
+    };
+
+    var displayElement = document.getElementsByClassName("rangeValues")[0];
+    displayElement.innerHTML = "Min: " + $scope.slider.min + " °C" + " Max: " + $scope.slider.max + " °C";
+
     $scope.sendToBackEnd = () => {
+
         $scope.loader = 'loader';
         let arr = ['Digging a hole!','Starting Engines!','Preparing drinks','Feeding the cat','Booking the rooms','Shoveling snow'];
         var index = 0;
@@ -12,36 +44,21 @@ angmodule.controller('search', function ($scope, $http, $interval) {
                 index = 0
 
         }, 2000);
-        function splitTheString(date) {
-            var dateFormat = (JSON.stringify(date));
-            var noSnuffs = dateFormat.replace('"', '');
-            noSnuffs = noSnuffs.replace('"', '');
-            var splitDate = noSnuffs.split('T');
-            date = splitDate[0];
-            return date;
-        }
 
-        $scope.data.startDate = splitTheString($scope.data.startDate);
-        $scope.data.endDate = splitTheString($scope.data.endDate);
+        $scope.data.tempMin = $scope.slider.min;
+        $scope.data.tempMax = $scope.slider.max;
+        $scope.data.startDate = $filter('date')($scope.data.startDateTime, 'yyyy-MM-dd');
+        $scope.data.endDate = $filter('date')($scope.data.endDateTime, 'yyyy-MM-dd');
 
-        console.log(JSON.stringify($scope.data));
+        console.log($scope.data);
 
-        if ($scope.data.tempMin > $scope.data.tempMax) {
-            var tmp = $scope.data.tempMin;
-            $scope.data.tempMin = $scope.data.tempMax;
-            $scope.data.tempMax = tmp;
-        }
+        $http.post('search', JSON.stringify($scope.data)).then(function (response) {
+            //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
-        console.log(JSON.stringify($scope.data));
-
-        // $http.post('search', $scope.data).then(function (response) {
-        $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
-            // let data = response.data;
+            let data = response.data;
             console.log(data);
 
-
-
-            let data = [
+/*            let data = [
                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
@@ -52,7 +69,7 @@ angmodule.controller('search', function ($scope, $http, $interval) {
                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
                 {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
-            ];
+            ];*/
 
             let htmlResult = "";
             data.forEach((d) => {
@@ -87,44 +104,8 @@ angmodule.controller('search', function ($scope, $http, $interval) {
             document.getElementById('textloop').innerText = '';
 
         });
-
-
     };
-
-
 });
-
-function getVals() {
-    // Get slider values
-    var parent = this.parentNode;
-    var slides = parent.getElementsByTagName("input");
-    var slide1 = parseFloat(slides[0].value);
-    var slide2 = parseFloat(slides[1].value);
-    // Neither slider will clip the other, so make sure we determine which is larger
-    if (slide1 > slide2) {
-        var tmp = slide2;
-        slide2 = slide1;
-        slide1 = tmp;
-    }
-
-    var displayElement = parent.getElementsByClassName("rangeValues")[0];
-    displayElement.innerHTML = "Min: " + slide1 + " °C" + " Max: " + slide2 + " °C";
-}
-
-window.onload = function () {
-    // Initialize Sliders
-    var sliderSections = document.getElementsByClassName("range-slider");
-    for (var x = 0; x < sliderSections.length; x++) {
-        var sliders = sliderSections[x].getElementsByTagName("input");
-        for (var y = 0; y < sliders.length; y++) {
-            if (sliders[y].type === "range") {
-                sliders[y].oninput = getVals;
-                // Manually trigger event first time to display values
-                sliders[y].oninput();
-            }
-        }
-    }
-};
 
 window.smoothScroll = function (target) {
     var scrollContainer = target;
