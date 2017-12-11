@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+
     <title>Weather you like it</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
@@ -18,97 +20,90 @@
     <p>The ID is {{greeting.id}}</p>
     <p>The content is {{greeting.content}}</p>
 </div>-->
-<div class="header"><a href="" onclick="window.location.reload(true);">
-    <img class="img-responsive" src="logo.png" alt="Weather You Like It"></a>
-    <h1>"Find flights to the weather you like for a price that you love."</h1></div>
+<div class="headerLogo"><a href="" onclick="window.location.reload(true);">
+    <img class="img-responsive" src="logo.png" alt="Weather You Like It"></a></div>
+<div class="headerText"><h1>"Find flights to the weather you like for a price that you love."</h1></div>
 <div ng-controller="search">
     <div class="search">
-        <div class="form-group">
-            <form ng-submit="sendToBackEnd()">
-                <div class="row">
-                    <div class="col">
-                        <input type="text" ng-model="data.origin" name="origin" class="form-control"
-                               placeholder="Origin" id="origin" autofocus/>
-                    </div>
-                    <div class="col">
-                        <input type="number" step=100 min=0 ng-model="data.priceMax" name="priceMax"
+        <form ng-submit="sendToBackEnd()">
+            <div class="searchTable item">
+                <div class="searchOrigin item"><input type="text" ng-model="data.origin" name="origin"
+                                                      class="form-control"
+                                                      placeholder="Origin" id="origin" autofocus/>
+                </div>
+                <div class="searchMaxPrice item">
+                    <input type="number" step=100 min=0 ng-model="data.priceMax" name="priceMax"
                                class="form-control" id="priceMax" placeholder="Max price"/>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <input type="date" ng-model="data.startDate" name="fromdate" class="form-control"/>
-                    </div>
-                    <div class="col">
-                        <input type="date" ng-model="data.endDate" name="todate" class="form-control"/>
-                    </div>
+                <div class="searchStartDate item">
+                    <input type="date" ng-model="data.startDate" id="fromdate" name="fromdate"
+                           class="form-control"/>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <select name="adults" ng-model="data.noadults" class="form-control" name="noadults" id="adults"
-                                disabled>
-                            <option value="" disabled selected>Adults</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                        </select></div>
-                    <div class="col">
-                        <select name="children" ng-model="data.nochildren" class="form-control" name="nochildren"
-                                id="children" disabled>
-                            <option value="" disabled selected>Children</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                        </select></div>
+                <div class="searchEndDate item">
+                    <input type="date" ng-model="data.endDate" id="todate" name="todate" class="form-control"/>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <label id="direct"><input type="checkbox" class="checkbox-inline" id="directflight" value="directflight"
-                                      disabled/>
-                            Direct flights</label>
-                        <label id="round"><input type="checkbox" class="checkbox-inline" id="roundtrip" value="roundtrip"
-                                      disabled/>
-                            Round Trip</label>
-                    </div>
-                    <!--<div class="col">-->
-                        <!--<label><input type="checkbox" class="checkbox-inline" id="roundtrip" value="roundtrip"-->
-                                      <!--disabled/>-->
-                            <!--Round Trip</label>-->
-                    <!--</div>-->
+                <div class="searchAdults item">
+                    <select name="adults" ng-model="data.noadults" class="form-control" name="noadults" id="adults">
+                        <option value="" disabled selected>Adults</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select></div>
+                <div class="searchChildren item">
+                    <select name="children" ng-model="data.nochildren" class="form-control" name="nochildren"
+                            id="children" disabled>
+                        <option value="" disabled selected>Children</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select></div>
+
+                <div class="searchDirectFlight item">
+                    <label id="direct"><input type="checkbox" class="checkbox-inline" value="directflight"
+                                              disabled/>
+                        Direct flights</label></div>
+                <div class="searchRoundTrip item">
+                    <label id="round"><input type="checkbox" class="checkbox-inline" id="roundtrip"
+                                             checked disabled/>
+                        Round Trip</label>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <h1>
+                <div class="searchTemperatureRange item">
+                    <section class="range-slider">
+                        <h1><span class="rangeValues" id="temperature"></span></h1>
 
-                            <section class="range-slider">
-                                <span class="rangeValues" id="temperature"></span>
-
-                                <input value="10" min="-10" max="30" step="1" ng-model="data.tempMin" name="tempMin"
-                                       class="form-control" type="range">
-                                <input value="10" min="-10" max="30" step="1" ng-model="data.tempMax" name="tempMax"
-                                       class="form-control" type="range">
-                            </section>
-                        </h1>
-
-                    </div>
+                        <input value="10" min="-10" max="30" step="1" ng-model="data.tempMax" name="tempMin"
+                               class="form-control" type="range">
+                        <input value="10" min="-10" max="30" step="1" ng-model="data.tempMin" name="tempMax"
+                               class="form-control" type="range">
+                    </section>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <input type="submit" class="form-control"
-                               id="searchBtn" value="Search" onclick="smoothScroll(document.getElementById('scroll'))">
-                    </div>
-                    <div class="col"><input type="reset" class="form-control" id="clearBtn" value="Clear">
-                    </div>
+                <div class="searchNoRain item"><label><input type="checkbox" class="checkbox-inline" id="noRain"
+                                                             checked disabled/>
+                    No rain</label></div>
+
+
+                <div class="searchSunSafe item"><label><input type="checkbox" class="checkbox-inline"
+                                                              id="SunSafe"
+                                                              disabled/>
+                    Lots of sun</label>
+
                 </div>
-            </form>
-        </div>
+
+                <div class="searchSubmit item">
+                    <input type="submit" class="form-control"
+                           id="searchBtn" value="Search" onclick="smoothScroll(document.getElementById('scroll'))">
+                </div>
+                <div class="searchClear item"><input type="reset" class="form-control" id="clearBtn" value="Clear">
+                </div>
+            </div>
+        </form>
     </div>
     <div class="waveone"></div>
     <div class="results" id="scroll">
@@ -116,14 +111,26 @@
     </div>
 </div>
 <div class="wavetwo"></div>
-<div class="about"><h1>Our idea</h1>
-    Imagine spending lots and lots of money on a trip, but due to the bad weather all you do is sitting on your hotel
-    room watching re-runs of some 90's soap opera. Sounds terrible, right?
-    To avoid this scenario we figured that you should not only be able to search for cheap flights, but also filter the
-    possible destinations by telling us which temperature you would like.
-    No more winter jackets on a summer holiday! No more ski trips without snow! Let us help you find the Weather you
-    like it!
+<div class="about">
+    <h1>How it works</h1>
 
+    <div class="aboutTable">
+        <div class="aboutOne item"><h1>1</h1>Fill out the form with the regular travel search engine stuff
+            such as origin, travel dates and max price. You know the drill. But hey... Isn't one of the regular input
+            fields missing?
+        </div>
+        <div class="aboutTwo item"><h1>2</h1>Yeah, you're right! No destination! Instead, let us find new, exciting and
+            cheap travels to places with a weather exactly how you like it. Choose temperature, amount of rain
+            (who likes rain?) and so on.
+
+        </div>
+        <div class="aboutThree item"><h1>Awesome!</h1>Our advanced algorithm now looks at historical weather data
+            in the
+            whole world. We look at thing such as average temperatures, precipitation and hours of sun per day. And of
+            course, the cheapest flights availiable.
+        </div>
+
+    </div>
 </div>
 <div class="wavethree"></div>
 <div class="footer">

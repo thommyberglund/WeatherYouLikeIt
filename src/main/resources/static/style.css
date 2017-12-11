@@ -1,16 +1,12 @@
 body {
-    background-color: #33afcc;
-    color: #ffffff;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    background: #33afcc;
+    color: #fff;
     margin-right: auto;
     margin-left: auto;
     height: 100%;
     font-family: 'Amatic SC', cursive;
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 1.2vw;
+    font-size: 22px;
 }
 
 a {
@@ -31,40 +27,55 @@ div.footer a {
 div.footer a:hover {
     text-decoration: underline;
     color: #02778b;
-
-}
-
-.form-control {
-    margin-bottom: 17px;
 }
 
 #searchBtn {
-    color: #ffffff;
-    background-color: #028EA7;
+    color: #fff;
+    background: #028EA7;
     display: inline-block;
 }
 
-#clearBtn {
-    color: #ffffff;
-    background-color: #028EA7;
+.btn {
+    color: #fff;
+    background: #028EA7;
     display: inline-block;
+    border: 1px solid #fff;
+}
+
+.btn:hover {
+    background: #02778B;
+    cursor: pointer;
+    border: 1px solid #fff;
+}
+
+#searchBtn:hover {
+    background: #02778B;
+    cursor: pointer;
+}
+
+#clearBtn {
+    color: #fff;
+    background: #99D7E6;
+    display: inline-block;
+}
+
+#clearBtn:hover {
+    background: #028EA7;
+    cursor: pointer;
 }
 
 h1 {
     font-family: 'Amatic SC', cursive;
     font-weight: 700;
     line-height: 46px;
-    font-size: 2.5vw;
-    margin: 0 0 23px 0;
-}
-
-span {
-    display: inline-block;
-    width: 25%;
+    font-size: 46px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .img-responsive {
     max-width: 100%;
+    padding: 40px;
 }
 
 .img-footer {
@@ -83,29 +94,93 @@ span {
     transform: scale(1.3);
 }
 
-.facebook {
-    background: url("facebook.png");
+.headerLogo {
+    text-align: center;
 }
 
-.header {
+.headerText {
     text-align: center;
-    padding-bottom: 20px;
 }
 
 .search {
     padding-bottom: 20px;
     padding-left: 30%;
     padding-right: 30%;
-    /*text-align: center;*/
-    border-radius: 10px;
 }
 
-#direct {
-    margin-right: 67px;
+.searchTable {
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    width: 100%;
+    align-self: stretch;
+}
+
+.searchTable .item {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchOrigin {
+    flex: 0 0 50%;
+}
+
+.searchMaxPrice {
+    flex: 0 0 50%;
+}
+
+.searchStartDate {
+    flex: 0 0 50%;
+}
+
+.searchEndDate {
+    flex: 0 0 50%;
+}
+
+.searchDirectFlight {
+    flex: 0 0 50%;
+}
+
+.searchRoundTrip {
+    flex: 0 0 50%;
+}
+
+.searchAdults {
+    flex: 0 0 50%;
+}
+
+.searchChildren {
+    flex: 0 0 50%;
+}
+
+.searchTemperatureRange {
+    flex: 0 0 100%;
+}
+
+.searchNoRain {
+    flex: 0 0 50%;
+}
+
+/*.searchSnow {*/
+/*flex: 0 0 33%;*/
+/*}*/
+
+.searchSunSafe {
+    flex: 0 0 50%;
+}
+
+.searchSubmit {
+    flex: 0 0 50%;
+}
+
+.searchClear {
+    flex: 0 0 50%;
 }
 
 .about {
-    background-color: #02778b;
+    background: #02778b;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 20%;
@@ -113,38 +188,103 @@ span {
 }
 
 .results {
-    background-color: #028ea7;
     padding-top: 20px;
     padding-bottom: 20px;
+    background: #028ea7;
     padding-left: 20%;
     padding-right: 20%;
 }
 
-.results div:nth-of-type(even) {
-    background-color: #33afcc;
+.resultCity {
+    flex: 0 0 100%;
+    display: flex;
+    order: 1;
+    border: 1px solid #028ea7;
+    display: flex;
+    border-radius: 5px;
+    background: #33afcc;
+    padding: 10px;
+    align-items: center;
+    font-family: "Amatic SC", cursive;
+    font-weight: 700;
+    font-size: 40px;
 }
 
-.results div:nth-of-type(odd) {
-    background-color: #028ea7;
+.resultDurationTo {
+    order: 2;
+}
+
+.resultDurationFrom {
+    order: 3;
+}
+
+.resultTempToday {
+    order: 4;
+}
+
+.resultTemp {
+    order: 7;
+}
+
+.resultRain {
+    order: 6;
+}
+
+.resultSunHours {
+    order: 5;
+}
+
+.resultPrice {
+    order: 8;
+}
+
+.resultBuy {
+    order: 9;
+    justify-content: center;
+}
+
+.resultTable {
+    display: flex;
+    /* or inline-flex */
+
+    flex-direction: row;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 20px solid #028ea7;
+}
+
+.resultTable .item {
+    flex: 1 1 33%;
+    border: 1px solid #028ea7;
+    display: flex;
+    border-radius: 5px;
+    background: #33afcc;
+    padding: 10px;
+    align-items: center;
+}
+
+.resultTable img {
+    margin-left: auto;
 }
 
 .changeSearch {
     margin-top: 20px;
+    background: #028ea7;
 }
 
 .footer {
-    background-color: #ffe067;
+    background: #ffe067;
     color: #02778b;
     padding-top: 20px;
     padding-bottom: 10px;
     text-align: center;
-    font-size: 0.7vw;
-
+    font-size: .7vw;
 }
 
 /*Styling to wave divs*/
-.waveone {
 
+.waveone {
     height: 50px;
     position: relative;
 }
@@ -174,10 +314,39 @@ span {
 }
 
 .wavetwo {
-
     height: 50px;
     position: relative;
-    background-color: #028ea7;
+    background: #028ea7;
+}
+
+.wavetwo::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 10px;
+    background-size: 20px 20px;
+    background-image: radial-gradient(circle at 10px -5px, transparent 12px, #02778b 13px);
+}
+
+.wavetwo::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-repeat: repeat;
+    height: 15px;
+    background-size: 40px 20px;
+    background-image: radial-gradient(circle at 10px 15px, #02778b 12px, transparent 13px);
+}
+
+.wavetwo {
+    height: 50px;
+    position: relative;
+    background: #028ea7;
 }
 
 .wavetwo::before {
@@ -205,10 +374,9 @@ span {
 }
 
 .wavethree {
-
     height: 50px;
     position: relative;
-    background-color: #02778b;
+    background: #02778b;
 }
 
 .wavethree::before {
@@ -241,8 +409,217 @@ span {
     width: 100%;
 }
 
-#directflight {
-    margin-bottom: 50px;
+.range {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.aboutTable {
+    display: flex;
+}
+
+.aboutOne {
+    flex: 0 0 33%;
+}
+
+.aboutTwo {
+    flex: 0 0 33%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.aboutThree {
+    flex: 0 0 33%;
+}
+
+.aboutTable h1 {
+    text-align: center;
+}
+
+@media only screen and (max-width: 1000px) {
+    body {
+        font-size: 15px;
+    }
+
+    .headerLogo {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .headerText {
+        display: none;
+    }
+
+    .search {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .results {
+        padding-left: 5%;
+        padding-right: 5%;
+        font-size: 12px;
+    }
+
+    .aboutTable {
+        display: flex;
+        /* or inline-flex */
+
+        flex-direction: row;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .about {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .aboutTable .item {
+        flex: 0 0 100%;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .footer {
+        padding-left: 5%;
+        padding-right: 5%;
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .calendar {
+        display: inline-block;
+    }
+
+    .results {
+        background: #028ea7;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .resultTable img {
+        max-width: 20px;
+    }
+
+    .resultCity {
+        flex: 0 0 100%;
+        display: flex;
+        order: 1;
+        border: 1px solid #028ea7;
+        display: flex;
+        border-radius: 5px;
+        background: #33afcc;
+        padding: 10px;
+        align-items: center;
+        font-family: "Amatic SC", cursive;
+        font-weight: 700;
+        font-size: 25px;
+        margin-center: auto;
+    }
+
+    .resultPrice {
+        order: 5;
+    }
+
+    .resultTemp {
+        order: 3;
+    }
+
+    .resultTempToday {
+        order: 2;
+    }
+
+    .resultRain {
+        order: 4;
+    }
+
+    .resultBuy {
+        order: 6;
+        display: flex;
+        justify-content: center;
+    }
+
+    .resultTable {
+        display: flex;
+        flex-direction: row;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        background: #028ea7;
+        width: 100%;
+    }
+
+    .resultTable .item {
+        flex: 1 1 50%;
+        padding: 5px;
+        background: #33afcc;
+    }
+
+    .btn {
+        font-size: 10px;
+    }
+
+    .searchOrigin {
+        flex: 0 0 100%;
+    }
+
+    .searchMaxPrice {
+        flex: 0 0 100%;
+    }
+
+    .searchStartDate {
+        flex: 0 0 100%;
+    }
+
+    .searchEndDate {
+        flex: 0 0 100%;
+    }
+
+    .searchDirectFlight {
+        flex: 0 0 50%;
+    }
+
+    .searchRoundTrip {
+        flex: 0 0 50%;
+    }
+
+    .searchAdults {
+        flex: 0 0 50%;
+    }
+
+    .searchChildren {
+        flex: 0 0 50%;
+    }
+
+    .searchTemperatureRange {
+        flex: 0 0 100%;
+        display: flex;
+    }
+
+    .searchNoRain {
+        flex: 0 0 50%;
+    }
+
+    /*.searchSnow {*/
+    /*flex: 0 0 33%;*/
+    /*}*/
+    .searchSunSafe {
+        flex: 0 0 50%;
+    }
+
+    .searchSubmit {
+        flex: 0 0 50%;
+    }
+
+    .searchClear {
+        flex: 0 0 50%;
+    }
 }
 
 section.range-slider {
@@ -251,6 +628,7 @@ section.range-slider {
     height: 100px;
     text-align: center;
     outline: none;
+    width: 100%;
 }
 
 section.range-slider:focus {
@@ -265,7 +643,7 @@ section.range-slider input {
     pointer-events: none;
     position: absolute;
     overflow: hidden;
-    top: 60px;
+    top: 75px;
     text-align: center;
     outline: none;
     height: 18px;
@@ -291,40 +669,28 @@ section.range-slider input::-moz-range-thumb {
     outline: none;
     height: 20px;
     bottom: 5px;
-
 }
 
 section.range-slider input::-moz-range-track {
     position: relative;
     z-index: -1;
-    background-image: linear-gradient(top, #4F364C, #FFFFFF);
+    background-image: linear-gradient(top, #4F364C, #fff);
     border: 0;
     outline: none;
-
 }
 
 section.range-slider input:last-of-type::-moz-range-track {
     background: none transparent;
     border: 0;
     outline: none;
-
 }
 
 section.range-slider input[type=range]::-moz-focus-outer {
     border: 0;
     outline: none;
-
-}
-
-.range {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-    -webkit-appearance: none;
     background: rgb(51, 175, 204);
     background: -moz-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
     background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(2, 119, 139)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
@@ -337,7 +703,6 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 input[type=range]::-moz-range-track {
-    -moz-appearance: none;
     background: rgb(51, 175, 204);
     background: -moz-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
     background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(2, 119, 139)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
@@ -347,4 +712,28 @@ input[type=range]::-moz-range-track {
     background: linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
     height: 12px;
+}
+
+[type="date"] {
+    background: #fff url(inputcalendar.png) 97% 50% no-repeat;
+}
+
+[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+
+[type="text"] {
+    background: #fff url(inputorigin.png) 97% 50% no-repeat;
+}
+
+[type="text"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+[type="text"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
 }
