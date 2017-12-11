@@ -124,7 +124,7 @@ public class FlightDataRepository {
 
     public String getExternalFlights(FlightSearchData fsd) {
 
-        String urlReturnData = "[";
+        JsonArray returnData = new JsonArray();
         int month = Integer.parseInt(fsd.getStartDate().substring(5,7));
         List<String> filteredCountries = getCountriesByTemperatureRange(month,fsd.getTempMin(),fsd.getTempMax());
         List<String> selectedCountries = nRandomItems(filteredCountries, 5);
@@ -160,16 +160,23 @@ public class FlightDataRepository {
                     System.out.println(e);
                     continue;
                 }
+
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
                 jsonObject.addProperty("destination", convertISOtoCityName(city));
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
-                urlReturnData += jsonObject.toString() + ",";
+
+                String price = jsonToStringNoQuotes(jsonObject.get("price"));
+                if (Double.parseDouble(price) > fsd.getPriceMax()) {
+                    //Skip this result
+                    continue;
+                }
+
+                returnData.add(jsonObject);
             }
         }
-        urlReturnData = removeLastChar(urlReturnData);
-        urlReturnData += "]";
-        return urlReturnData;
+
+        return returnData.toString();
     }
 
     JsonObject parseAmadeusResult(String result) {
@@ -177,10 +184,10 @@ public class FlightDataRepository {
         JsonObject jobject = jelement.getAsJsonObject();
         JsonArray jarray = jobject.getAsJsonArray("results");
         JsonObject firstResult = jarray.get(0).getAsJsonObject();
-        String currency = jobject.getAsJsonPrimitive("currency").toString();
+        JsonElement currency = jobject.getAsJsonPrimitive("currency");
 
         JsonObject fareResult = firstResult.get("fare").getAsJsonObject();
-        String fare = fareResult.get("total_price").toString();
+        JsonElement fare = fareResult.getAsJsonPrimitive("total_price");
 
         JsonArray flightsResult = firstResult
                 .getAsJsonArray("itineraries")
@@ -188,27 +195,20 @@ public class FlightDataRepository {
                 .getAsJsonObject("outbound")
                 .getAsJsonArray("flights");
         JsonObject firstFlight = flightsResult.get(0).getAsJsonObject();
-        String departsAt = firstFlight.getAsJsonPrimitive("departs_at").toString();
-        String airline = firstFlight.getAsJsonPrimitive("marketing_airline").toString();
+        JsonElement departsAt = firstFlight.getAsJsonPrimitive("departs_at");
+        JsonElement airline = firstFlight.getAsJsonPrimitive("marketing_airline");
 
         JsonObject jsonResult = new JsonObject();
-        jsonResult.addProperty("price", fare.replaceAll("\"",""));
-        jsonResult.addProperty("currency", currency.replaceAll("\"",""));
-        jsonResult.addProperty("airline", airline.replaceAll("\"",""));
-        jsonResult.addProperty("departsAt", departsAt.replaceAll("\"",""));
+        jsonResult.add("price", fare);
+        jsonResult.add("currency", currency);
+        jsonResult.add("airline", airline);
+        jsonResult.add("departsAt", departsAt);
 
         return jsonResult;
     }
 
-    private String trimJson(String urlReturnData) {
-        urlReturnData = urlReturnData.replace("[","");
-        urlReturnData = urlReturnData.replace("]","");
-        urlReturnData = urlReturnData.replace(",  \"results\" :  {  ",",");
-        //return removeLastChar(urlReturnData);
-        return urlReturnData;
-    }
-    private String removeLastChar(String str) {
-        return str.substring(0, str.length() - 1);
+    private String jsonToStringNoQuotes(JsonElement json) {
+        return json.toString().replaceAll("\"", "");
     }
 
     private List<String> nRandomItems(List<String> list, int nItems) {

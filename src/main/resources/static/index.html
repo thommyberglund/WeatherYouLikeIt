@@ -32,15 +32,8 @@
                                                       placeholder="Origin" id="origin" autofocus/>
                 </div>
                 <div class="searchMaxPrice item">
-                    <select ng-model="data.maxprice" name="maxprice" placeholder="Max price" class="form-control"
-                            id="maxprice">
-                        <option value="" disabled selected>Max price</option>
-                        <option value="500">500 or lower</option>
-                        <option value="<1000">1000 or lower</option>
-                        <option value="<1500">1500 or lower</option>
-
-                    </select>
-
+                    <input type="number" step=100 min=0 ng-model="data.priceMax" name="priceMax"
+                               class="form-control" id="priceMax" placeholder="Max price"/>
                 </div>
                 <div class="searchStartDate item">
                     <input type="date" ng-model="data.startDate" id="fromdate" name="fromdate"
