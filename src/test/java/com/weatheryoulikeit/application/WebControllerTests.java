@@ -42,7 +42,7 @@ public class WebControllerTests {
     }
 
     @Test
-    public void getFlightResults() {
+    public void getFlightResults() throws InterruptedException {
         assertEquals("{  \"origin\" : \"LAX\",  \"currency\" : \"USD\",  \"destination\" : \"LON\",    \"departure_date\" : \"2018-01-03\",    \"price\" : \"388.01\",    \"airline\" : \"WW\"  } ", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
     }
 
@@ -125,6 +125,15 @@ public class WebControllerTests {
     public void testAmadeusParser() {
         JsonObject jsonObject = fdr.parseAmadeusResult(amadeusResult);
         System.out.println(jsonObject.toString());
+    }
+
+    @Test
+    public void testReturnArray() {
+        assertEquals("",fdr.populateJsonArray());
+    }
+    @Test
+    public void testCitytoISO() {
+        assertEquals("STO",fdr.convertCitytoISO("Stockholm"));
     }
 
     private String amadeusResult = "\n" +

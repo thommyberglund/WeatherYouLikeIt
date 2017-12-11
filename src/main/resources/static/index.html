@@ -25,15 +25,17 @@
 <div class="headerText"><h1>"Find flights to the weather you like for a price that you love."</h1></div>
 <div ng-controller="search">
     <div class="search">
+
         <form ng-submit="sendToBackEnd()">
             <div class="searchTable item">
                 <div class="searchOrigin item"><input type="text" ng-model="data.origin" name="origin"
                                                       class="form-control"
-                                                      placeholder="Origin" id="origin" autofocus/>
+                                                      placeholder="Origin" id="origin" autocomplete="off" autofocus/>
                 </div>
                 <div class="searchMaxPrice item">
                     <input type="number" step=100 min=0 ng-model="data.priceMax" name="priceMax"
                                class="form-control" id="priceMax" placeholder="Max price"/>
+
                 </div>
                 <div class="searchStartDate item">
                     <input type="date" ng-model="data.startDate" id="fromdate" name="fromdate"
@@ -105,6 +107,8 @@
             </div>
         </form>
     </div>
+    <div ng-class="loader"></div>
+    <div id="textloop"></div>
     <div class="waveone"></div>
     <div class="results" id="scroll">
         <div ng-bind-html="myHTML"></div>

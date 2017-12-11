@@ -31,6 +31,26 @@ public class FlightDataRepository {
 
     private Random rand = new Random();
 
+    public String populateJsonArray() {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT City, Country FROM [dbo].[iata_codes] ");) {
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    rs.next();
+                    String returnArray = "[ \n\"";
+                    returnArray += rs.getString("City") + "/" + rs.getString("Country") + "\"";
+                    while(rs.next()) {
+                        returnArray += ",\n\"" + rs.getString("City").replace("\"","") + "/" + rs.getString("Country") + "\"";
+                    }
+                    returnArray += " ]";
+                    return returnArray;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public double getTemperature(String country, int month) {
 
         try (Connection conn = dataSource.getConnection();) {
@@ -86,6 +106,22 @@ public class FlightDataRepository {
         return null;
     }
 
+    public String convertCitytoISO(String city) {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT CODE FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE City LIKE ?")) {
+                pstmt.setString(1, city+"%");
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    rs.next();
+                    String returnCity = rs.getString(1);
+                    return returnCity;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String convertISOtoCountryName(String isoCode) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT NAME FROM [Academy_Projekt2].[dbo].[country] WHERE ISO3 = ?")) {
@@ -109,10 +145,8 @@ public class FlightDataRepository {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT City FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE Code = ?")) {
                 pstmt.setString(1, isoCode);
                 try (ResultSet rs = pstmt.executeQuery()) {
-                    String returnData = "";
                     rs.next();
-                    returnData = rs.getString(1);
-                    return returnData;
+                    return rs.getString(1);
                 }
             }
         } catch (SQLException e) {
@@ -137,12 +171,21 @@ public class FlightDataRepository {
                 continue;
             List<String> selectedCities = nRandomItems(cityISO, 1);
 
+            if(fsd.getOrigin().length() > 3) {
+                String cityNameToCrop = fsd.getOrigin();
+                int positionOfSlash = cityNameToCrop.lastIndexOf('/');
+                cityNameToCrop = cityNameToCrop.substring(0,positionOfSlash);
+                cityNameToCrop = convertCitytoISO(cityNameToCrop);
+                fsd.setOrigin(cityNameToCrop);
+                System.out.println(cityNameToCrop);
+            }
+
             for (String city : selectedCities) {
                 String jsonBuilder = "";
                 String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?" +
                         "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
                         "" + fsd.getStartDate() + "&number_of_results=10";
-                try {
+               /* try {
 
                     URL url = new URL(searchInput);
 
@@ -159,11 +202,12 @@ public class FlightDataRepository {
                 } catch (IOException e) {
                     System.out.println(e);
                     continue;
-                }
+
+                }*/
 
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
-                jsonObject.addProperty("destination", convertISOtoCityName(city));
+                jsonObject.addProperty("destination", country + "/" + convertISOtoCityName(city));
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
 
                 String price = jsonToStringNoQuotes(jsonObject.get("price"));
