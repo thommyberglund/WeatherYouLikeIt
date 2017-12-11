@@ -42,7 +42,7 @@ public class WebController {
                                    @RequestParam(value="startDate", required=false) String startDate,
                                    @RequestParam(value="endDate", required=false) String endDate,
                                    @RequestParam(value="tempMin", required=false, defaultValue="0")int tempMin,
-                                   @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) {
+                                   @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) throws InterruptedException {
 
         FlightSearchData fsd = new FlightSearchData(origin, startDate, endDate, tempMin, tempMax);
 
@@ -51,7 +51,7 @@ public class WebController {
 
     @PostMapping(path="/search", consumes = "application/json", produces = "application/json")
     public @ResponseBody
-    String searchFlights(@RequestBody FlightSearchData fsd) {
+    String searchFlights(@RequestBody FlightSearchData fsd) throws InterruptedException {
         return repo.getExternalFlights(fsd);
     }
   
@@ -60,7 +60,7 @@ public class WebController {
                                    @RequestParam(value="startDate", required=false) String startDate,
                                    @RequestParam(value="endDate", required=false) String endDate,
                                    @RequestParam(value="tempMin", required=false, defaultValue="0")int tempMin,
-                                   @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) {
+                                   @RequestParam(value="tempMax", required=false, defaultValue="0")int tempMax) throws InterruptedException {
 
         FlightSearchData fsd = new FlightSearchData(origin, startDate, endDate,tempMin,tempMax);
 

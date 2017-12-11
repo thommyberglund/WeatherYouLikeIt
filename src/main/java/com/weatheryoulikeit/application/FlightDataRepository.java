@@ -172,7 +172,12 @@ public class FlightDataRepository {
             List<String> selectedCities = nRandomItems(cityISO, 1);
 
             if(fsd.getOrigin().length() > 3) {
-                fsd.setOrigin(convertCitytoISO(fsd.getOrigin()));
+                String cityNameToCrop = fsd.getOrigin();
+                int positionOfSlash = cityNameToCrop.lastIndexOf('/');
+                cityNameToCrop = cityNameToCrop.substring(0,positionOfSlash);
+                cityNameToCrop = convertCitytoISO(cityNameToCrop);
+                fsd.setOrigin(cityNameToCrop);
+                System.out.println(cityNameToCrop);
             }
 
             for (String city : selectedCities) {
