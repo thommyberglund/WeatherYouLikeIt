@@ -1,8 +1,9 @@
-var angmodule = angular.module('demo', ['ngSanitize', 'rzModule']);
+var angmodule = angular.module('demo', ['ngSanitize', 'rzModule', 'daterangepicker']);
 
-angmodule.controller('search', function ($scope, $http, $filter, $interval) {
+angmodule.controller('search', function ($scope, $http) {
 
-
+    $scope.datePicker = {};
+    $scope.datePicker.date = { startDate: null, endDate: null };
 
     $scope.slider = {
         min: 23,
@@ -85,8 +86,8 @@ angmodule.controller('search', function ($scope, $http, $filter, $interval) {
 
         $scope.data.tempMin = $scope.slider.min;
         $scope.data.tempMax = $scope.slider.max;
-        $scope.data.startDate = $filter('date')($scope.data.startDateTime, 'yyyy-MM-dd');
-        $scope.data.endDate = $filter('date')($scope.data.endDateTime, 'yyyy-MM-dd');
+        $scope.data.startDate = $scope.datePicker.date.startDate.format('YYYY-MM-DD');
+        $scope.data.endDate = $scope.datePicker.date.endDate.format('YYYY-MM-DD');
 
         console.log($scope.data);
 
