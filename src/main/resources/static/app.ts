@@ -91,8 +91,8 @@ angmodule.controller('search', function ($scope, $http) {
 
         console.log($scope.data);
 
-        // $http.post('search', JSON.stringify($scope.data)).then(function (response) {
-            $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+        $http.post('search', JSON.stringify($scope.data)).then(function (response) {
+           // $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
             let data = response.data;
             console.log(data);
@@ -122,7 +122,7 @@ angmodule.controller('search', function ($scope, $http) {
                     '<div class="item resultSunHours">' + 'Expected sunshine: ' +
                     '<br>7 hours per day' + '<img src="img/sun.png"/></div>' +
                     '<div class="item resultPrice">Price per person: $' + d.price +
-                    '<br>Total Price: $' + d.price * $scope.data.noadults + '<img src="img/price.png"/>' + '</div>' +
+                    '<br>Total Price: $' + d.price * $scope.data.noadilts + '<img src="img/price.png"/>' + '</div>' +
                     '<div class="item resultTemp">' + 'Expected temperature: ' +
                     '<br>' + d.temperature + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultTempToday">' + 'Temperature today: ' +

@@ -161,14 +161,16 @@ public class FlightDataRepository {
         JsonArray returnData = new JsonArray();
         int month = Integer.parseInt(fsd.getStartDate().substring(5,7));
         List<String> filteredCountries = getCountriesByTemperatureRange(month,fsd.getTempMin(),fsd.getTempMax());
-        List<String> selectedCountries = nRandomItems(filteredCountries, 5);
+        List<String> selectedCountries = nRandomItems(filteredCountries, 10);
 
         for(String countryISO : selectedCountries) {
 
             String country = convertISOtoCountryName(countryISO);
             List<String> cityISO = getCitiesInCountry(country);
-            if (cityISO.isEmpty())
+            if (cityISO.isEmpty()) {
+                System.out.println("Found no cities in " + country);
                 continue;
+            }
             List<String> selectedCities = nRandomItems(cityISO, 1);
 
             if(fsd.getOrigin().length() > 3) {
@@ -207,12 +209,14 @@ public class FlightDataRepository {
 
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
-                jsonObject.addProperty("destination", country + "/" + convertISOtoCityName(city));
+                jsonObject.addProperty("destination", convertISOtoCityName(city));
+                jsonObject.addProperty("country", country);
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
 
                 String price = jsonToStringNoQuotes(jsonObject.get("price"));
                 if (Double.parseDouble(price) > fsd.getPriceMax()) {
                     //Skip this result
+                    System.out.println("Price > maxprice");
                     continue;
                 }
 
