@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="style/daterangepicker.css"/>
     <link rel="stylesheet" href="style/rzslider.css"/>
     <link rel="stylesheet" href="style/style.css"/>
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Sans" rel="stylesheet">
@@ -43,14 +44,8 @@
                                class="form-control" id="priceMax" placeholder="Max price per passenger?"/>
                 </div>
                 <div class="searchStartDate item">
-                    <input type="date" ng-model="data.startDateTime" id="fromdate" name="fromdate"
-                           class="form-control"/>
+                    <input date-range-picker class="form-control date-picker" id="datepicker" type="text" ng-model="datePicker.date" />
                 </div>
-                <div class="searchEndDate item">
-                    <input type="date" ng-model="data.endDateTime" id="todate" name="todate" class="form-control"/>
-                </div>
-
-
 
                 <div class="searchDirectFlight item">
                     <label id="direct"><input type="checkbox" class="checkbox-inline" value="directflight"
@@ -139,6 +134,9 @@
         crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+<script src="moment.min.js"></script>
+<script src="daterangepicker.js"></script>
+<script src="angular-daterangepicker.min.js"></script>
 <script src="rzslider.min.js"></script>
 <script src="app.js"></script>
 </body>
