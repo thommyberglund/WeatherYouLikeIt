@@ -112,14 +112,14 @@
     left: 14px;
     width: 8px;
     height: 8px;
-    background: #fff;
+    background: #028EA7;
     border-radius: 50%;
     content: '';
     outline: none;
 }
 
 .rzslider .rz-pointer:hover:after {
-    background-color: #ffffff;
+    background-color: #028EA7;
 
 }
 
@@ -128,7 +128,7 @@
 }
 
 .rzslider .rz-pointer.rz-active:after {
-    background-color: #fff;
+    background-color: #028EA7;
 }
 
 .rzslider .rz-ticks {

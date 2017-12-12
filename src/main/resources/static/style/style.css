@@ -33,6 +33,7 @@ div.footer a:hover {
     color: #fff;
     background: #028EA7;
     display: inline-block;
+    text-indent: 0;
 }
 
 .btn {
@@ -57,6 +58,7 @@ div.footer a:hover {
     color: #fff;
     background: #99D7E6;
     display: inline-block;
+    text-indent: 0;
 }
 
 #clearBtn:hover {
@@ -125,7 +127,8 @@ h1 {
 }
 
 .searchOrigin {
-    flex: 0 0 100%;
+    flex: 0 0 50%;
+    padding-left: 3%;
 }
 
 .searchMaxPrice {
@@ -625,7 +628,11 @@ h1 {
 }
 
 .autocomplete:hover {
-    color: green;
+    color: #000;
+}
+element.style:hover {
+    background-color: #028EA7;
+
 }
 
 .loader {
@@ -661,31 +668,56 @@ div#textloop.fade {
     opacity:0;
 }
 
-[type="date"] {
-    background: #fff url(../img/inputcalendar.png) 97% 50% no-repeat;
+[id="datepicker"] {
+    background: #fff url(../img/inputcalendar.png) 3% 50% no-repeat;
 }
 
-[type="date"]::-webkit-inner-spin-button {
+[id="datepicker"]::-webkit-inner-spin-button {
     display: none;
 }
 
-[type="date"]::-webkit-calendar-picker-indicator {
+[id="datepicker"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+[id="adults"] {
+    background: #fff url(../img/inputpassenger.png) 3% 50% no-repeat;
+}
+
+[id="adults"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+[id="adults"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}[id="priceMax"] {
+    background: #fff url(../img/inputprice.png) 3% 50% no-repeat;
+}
+
+[id="priceMax"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+[id="priceMax"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 
-[type="text"] {
-    background: #fff url(../img/inputorigin.png) 97% 50% no-repeat;
+[name="origin"] {
+    background: #fff url(../img/inputorigin.png) 3% 50% no-repeat;
 }
 
-[type="text"]::-webkit-inner-spin-button {
+[name="origin"]::-webkit-inner-spin-button {
     display: none;
 }
 
-[type="text"]::-webkit-calendar-picker-indicator {
+[name="origin"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 
 .slider {
     width: 100%;
     text-align: center;
+}
+
+input{
+    text-indent: 10%;
 }

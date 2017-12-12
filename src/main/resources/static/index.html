@@ -34,18 +34,21 @@
                                                       class="form-control"
                                                       placeholder="Origin" id="origin" autocomplete="off" autofocus/>
                 </div>
-
+                <div class="searchStartDate item">
+                    <input date-range-picker class="form-control date-picker" placeholder="Travel dates?"
+                           id="datepicker" type="text" ng-model="datePicker.date"/>
+                </div>
                 <div class="searchAdults item">
-                    <input type="number" step="1" min="1" max="6"  name="noadults" class="form-control"ng-model="data.noadilts" id="adults" placeholder="How many passengers?"/>
-                   </div>
+                    <input type="number" step="1" min="1" max="6" name="noadults" class="form-control"
+                           ng-model="data.noadilts" id="adults" placeholder="How many passengers?"/>
+                </div>
+
                 <div class="searchMaxPrice item">
 
                     <input type="number" step="100" min=100 max=1500 ng-model="data.priceMax" name="priceMax"
-                               class="form-control" id="priceMax" placeholder="Max price per passenger?"/>
+                           class="form-control" id="priceMax" placeholder="Max price per passenger?"/>
                 </div>
-                <div class="searchStartDate item">
-                    <input date-range-picker class="form-control date-picker" id="datepicker" type="text" ng-model="datePicker.date" />
-                </div>
+
 
                 <div class="searchDirectFlight item">
                     <label id="direct"><input type="checkbox" class="checkbox-inline" value="directflight"
@@ -58,13 +61,15 @@
                 </div>
 
                 <div class="searchTemperatureRange item">
-                   <div class="slider"> <h1>
-                        <span class="rangeValues" id="temperature"></span>
-                        <rzslider
-                                rz-slider-model="slider.min"
-                                rz-slider-high="slider.max"
-                                rz-slider-options="slider.options"></rzslider>
-                       <span>Drag me!</span> </h1></div>
+                    <div class="slider">
+                        <h1>
+                            <span class="rangeValues" id="temperature"></span>
+                            <rzslider
+                                    rz-slider-model="slider.min"
+                                    rz-slider-high="slider.max"
+                                    rz-slider-options="slider.options"></rzslider>
+                            <span>Drag me!</span></h1>
+                    </div>
                 </div>
 
                 <div class="searchNoRain item"><label><input type="checkbox" class="checkbox-inline" id="noRain"
@@ -109,7 +114,8 @@
 
         </div>
         <div class="aboutThree item"><h1>Awesome!</h1>Our advanced algorithm now looks at historical weather data
-            from like everywhere. We look at thing such as average temperatures, precipitation and hours of sun per day. And of
+            from like everywhere. We look at thing such as average temperatures, precipitation and hours of sun per day.
+            And of
             course, the cheapest flights availiable.
         </div>
 
@@ -119,7 +125,8 @@
 <div class="footer">
     <div class="col"><a href="https://www.facebook.com"><img src="img/facebook.png" alt="Visit our Facebook"
                                                              class="img-footer"></a>
-        <a href="https://www.instagram.com"><img src="img/instagram.png" alt="Visit our Instagram" class="img-footer"></a>
+        <a href="https://www.instagram.com"><img src="img/instagram.png" alt="Visit our Instagram"
+                                                 class="img-footer"></a>
         <a href="mailto:info@weatheryoulikeit.com"><img src="img/mail.png" alt="Send a mail" class="img-footer"></a>
     </div>
     <div class="col"><a href="mailto:info@weatheryoulikeit.com">info@weatheryoulikeit.com</a></div>

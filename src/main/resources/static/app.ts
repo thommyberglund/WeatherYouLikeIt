@@ -75,7 +75,8 @@ angmodule.controller('search', function ($scope, $http) {
     $scope.sendToBackEnd = () => {
 
         $scope.loader = 'loader';
-        let arr = ['Building airplanes...','Dusting off the passport...','Talking to the weather gods...','Grabbing the thermometer...','Checking for rain...'];
+        document.getElementById('textloop').innerText = 'Calling the pilot...';
+        let arr = ['Bargain with the airlines...','Building airplanes...','Dusting off the passport...','Talking to the weather gods...','Grabbing the thermometer...','Checking for rain...'];
         var index = 0;
         var textLoop = setInterval(function() {
             document.getElementById('textloop').innerText = arr[index++];
@@ -96,7 +97,7 @@ angmodule.controller('search', function ($scope, $http) {
 
             let data = response.data;
             console.log(data);
-
+//
 // /*            let data = [
 //                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
 //                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
