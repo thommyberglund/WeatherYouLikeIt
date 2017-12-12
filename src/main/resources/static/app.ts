@@ -5,27 +5,65 @@ angmodule.controller('search', function ($scope, $http, $filter, $interval) {
 
 
     $scope.slider = {
-        min: 20,
+        min: 23,
         max: 27,
         options: {
-            floor: -10,
-            ceil: 45,
-            draggableRangeOnly: true,
+            floor: 15,
+            ceil: 35,
+            minRange: 4,
+            maxRange: 4,
+            pushRange: true,
             onChange: function () {
                 var displayElement = document.getElementsByClassName("rangeValues")[0];
                 displayElement.innerHTML = "Min: " + $scope.slider.min + " °C" + " Max: " + $scope.slider.max + " °C";
             },
             hidePointerLabels: true,
             hideLimitLabels: true,
-            showTicks: 3,
+            showTicks: 1,
+
             getTickColor: function (value) {
-                if (value < 15)
-                    return 'red';
-                if (value < 30)
-                    return 'orange';
-                if (value < 45)
-                    return 'yellow';
-                return '#2AE02A';
+                if (value == 15)
+                    return '#FFE067';
+                if (value == 16)
+                    return '#FAD764';
+                if (value == 17)
+                    return '#F5CE62';
+                if (value == 18)
+                    return '#F0C660';
+                if (value == 19)
+                    return '#ECBD5E';
+                if (value == 20)
+                    return '#E7B55C';
+                if (value == 21)
+                    return '#E2AC5A';
+                if (value == 22)
+                    return '#DEA358';
+                if (value == 23)
+                    return '#D99B56';
+                if (value == 24)
+                    return '#D49254';
+                if (value == 25)
+                    return '#D08A52';
+                if (value == 26)
+                    return '#CB8150';
+                if (value == 27)
+                    return '#C6794E';
+                if (value == 28)
+                    return '#C2704C';
+                if (value == 29)
+                    return '#BD674A';
+                if (value == 30)
+                    return '#B85F48';
+                if (value == 31)
+                    return '#B45646';
+                if (value == 32)
+                    return '#AF4E44';
+                if (value == 33)
+                    return '#AA4542';
+                if (value == 34)
+                    return '#AA4541';
+                if (value == 35)
+                    return '#A63D40';
             }
         }
     };
@@ -36,7 +74,7 @@ angmodule.controller('search', function ($scope, $http, $filter, $interval) {
     $scope.sendToBackEnd = () => {
 
         $scope.loader = 'loader';
-        let arr = ['Digging a hole!','Starting Engines!','Preparing drinks','Feeding the cat','Booking the rooms','Shoveling snow'];
+        let arr = ['Building airplanes...','Dusting off the passport...','Talking to the weather gods...','Grabbing the thermometer...','Checking for rain...'];
         var index = 0;
         var textLoop = setInterval(function() {
             document.getElementById('textloop').innerText = arr[index++];
@@ -52,24 +90,24 @@ angmodule.controller('search', function ($scope, $http, $filter, $interval) {
 
         console.log($scope.data);
 
-        $http.post('search', JSON.stringify($scope.data)).then(function (response) {
-            //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+        // $http.post('search', JSON.stringify($scope.data)).then(function (response) {
+            $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
             let data = response.data;
             console.log(data);
 
-/*            let data = [
-                {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-                {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-                {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-                {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-                {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-                {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-                {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-                {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-                {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-                {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
-            ];*/
+// /*            let data = [
+//                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+//                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+//                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+//                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+//                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+//                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+//                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+//                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+//                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+//                 {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
+//             ];*/
 
             let htmlResult = "";
             data.forEach((d) => {
@@ -77,19 +115,19 @@ angmodule.controller('search', function ($scope, $http, $filter, $interval) {
                     '<div class="resultTable">' +
                     '<div class="resultCity">' + d.destination + ', ' + d.country + '</div>' +
                     '<div class="item resultDurationTo">Duration ' + $scope.data.startDate + ': 4.30h' +
-                    '<br>Stops: ' + '1' + '<img src="time.png"/>' + '</div>' +
+                    '<br>Stops: ' + '1' + '<img src="img/time.png"/>' + '</div>' +
                     '<div class="item resultDurationFrom">Duration ' + $scope.data.startDate + ': 2.10h' +
-                    '<br>Stops: ' + '0' + '<img src="timefrom.png"/>' + '</div>' +
+                    '<br>Stops: ' + '0' + '<img src="img/timefrom.png"/>' + '</div>' +
                     '<div class="item resultSunHours">' + 'Expected sunshine: ' +
-                    '<br>7 hours per day' + '<img src="sun.png"/></div>' +
+                    '<br>7 hours per day' + '<img src="img/sun.png"/></div>' +
                     '<div class="item resultPrice">Price per person: $' + d.price +
-                    '<br>Total Price: $' + d.price * $scope.data.noadults + '<img src="price.png"/>' + '</div>' +
+                    '<br>Total Price: $' + d.price * $scope.data.noadults + '<img src="img/price.png"/>' + '</div>' +
                     '<div class="item resultTemp">' + 'Expected temperature: ' +
-                    '<br>' + d.temperature + '°C' + '<img src="thermometer.png"/>' + '</div>' +
+                    '<br>' + d.temperature + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultTempToday">' + 'Temperature today: ' +
-                    '<br>24' + '°C' + '<img src="thermometer.png"/>' + '</div>' +
+                    '<br>24' + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultRain">' + 'Expected precipitation:' +
-                    '<br>2 mm per day' + '<img src="rain.png"/>' + '</div>' +
+                    '<br>2 mm per day' + '<img src="img/rain.png"/>' + '</div>' +
                     '<div class="item resultBuy">' + '<a class="btn btn-info" role="button">More information</a>' + '</div></div>'
 
             });

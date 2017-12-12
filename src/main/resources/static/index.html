@@ -8,8 +8,8 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="rzslider.css"/>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style/rzslider.css"/>
+    <link rel="stylesheet" href="style/style.css"/>
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Josefin+Sans" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -22,7 +22,7 @@
     <p>The content is {{greeting.content}}</p>
 </div>-->
 <div class="headerLogo"><a href="" onclick="window.location.reload(true);">
-    <img class="img-responsive" src="logo.png" alt="Weather You Like It"></a></div>
+    <img class="img-responsive" src="img/logo.png" alt="Weather You Like It"></a></div>
 <div class="headerText"><h1>"Find flights to the weather you like for a price that you love."</h1></div>
 <div ng-controller="search">
     <div class="search">
@@ -33,10 +33,14 @@
                                                       class="form-control"
                                                       placeholder="Origin" id="origin" autocomplete="off" autofocus/>
                 </div>
-                <div class="searchMaxPrice item">
-                    <input type="number" step=100 min=0 ng-model="data.priceMax" name="priceMax"
-                           class="form-control" id="priceMax" placeholder="Max price"/>
 
+                <div class="searchAdults item">
+                    <input type="number" step="1" min="1" max="6"  name="noadults" class="form-control"ng-model="data.noadilts" id="adults" placeholder="How many passengers?"/>
+                   </div>
+                <div class="searchMaxPrice item">
+
+                    <input type="number" step="100" min=100 max=1500 ng-model="data.priceMax" name="priceMax"
+                               class="form-control" id="priceMax" placeholder="Max price per passenger?"/>
                 </div>
                 <div class="searchStartDate item">
                     <input type="date" ng-model="data.startDateTime" id="fromdate" name="fromdate"
@@ -45,27 +49,8 @@
                 <div class="searchEndDate item">
                     <input type="date" ng-model="data.endDateTime" id="todate" name="todate" class="form-control"/>
                 </div>
-                <div class="searchAdults item">
-                    <select name="adults" ng-model="data.noadults" class="form-control" name="noadults" id="adults">
-                        <option value="" disabled selected>Adults</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select></div>
-                <div class="searchChildren item">
-                    <select name="children" ng-model="data.nochildren" class="form-control" name="nochildren"
-                            id="children" disabled>
-                        <option value="" disabled selected>Children</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select></div>
+
+
 
                 <div class="searchDirectFlight item">
                     <label id="direct"><input type="checkbox" class="checkbox-inline" value="directflight"
@@ -78,14 +63,15 @@
                 </div>
 
                 <div class="searchTemperatureRange item">
-                    <h1>
+                   <div class="slider"> <h1>
                         <span class="rangeValues" id="temperature"></span>
                         <rzslider
                                 rz-slider-model="slider.min"
                                 rz-slider-high="slider.max"
                                 rz-slider-options="slider.options"></rzslider>
-                    </h1>
+                       <span>Drag me!</span> </h1></div>
                 </div>
+
                 <div class="searchNoRain item"><label><input type="checkbox" class="checkbox-inline" id="noRain"
                                                              checked disabled/>
                     No rain</label></div>
@@ -106,11 +92,11 @@
             </div>
         </form>
     </div>
-    <div ng-class="loader"></div>
-    <div id="textloop"></div>
     <div class="waveone"></div>
     <div class="results" id="scroll">
         <div ng-bind-html="myHTML"></div>
+        <div ng-class="loader"></div>
+        <div id="textloop"></div>
     </div>
 </div>
 <div class="wavetwo"></div>
@@ -128,8 +114,7 @@
 
         </div>
         <div class="aboutThree item"><h1>Awesome!</h1>Our advanced algorithm now looks at historical weather data
-            in the
-            whole world. We look at thing such as average temperatures, precipitation and hours of sun per day. And of
+            from like everywhere. We look at thing such as average temperatures, precipitation and hours of sun per day. And of
             course, the cheapest flights availiable.
         </div>
 
@@ -137,10 +122,10 @@
 </div>
 <div class="wavethree"></div>
 <div class="footer">
-    <div class="col"><a href="https://www.facebook.com"><img src="facebook.png" alt="Visit our Facebook"
+    <div class="col"><a href="https://www.facebook.com"><img src="img/facebook.png" alt="Visit our Facebook"
                                                              class="img-footer"></a>
-        <a href="https://www.instagram.com"><img src="instagram.png" alt="Visit our Instagram" class="img-footer"></a>
-        <a href="mailto:info@weatheryoulikeit.com"><img src="mail.png" alt="Send a mail" class="img-footer"></a>
+        <a href="https://www.instagram.com"><img src="img/instagram.png" alt="Visit our Instagram" class="img-footer"></a>
+        <a href="mailto:info@weatheryoulikeit.com"><img src="img/mail.png" alt="Send a mail" class="img-footer"></a>
     </div>
     <div class="col"><a href="mailto:info@weatheryoulikeit.com">info@weatheryoulikeit.com</a></div>
     <div class="col">
