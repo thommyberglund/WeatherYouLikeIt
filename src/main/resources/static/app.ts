@@ -74,6 +74,7 @@ angmodule.controller('search', function ($scope, $http, $filter, $interval) {
     $scope.sendToBackEnd = () => {
 
         $scope.loader = 'loader';
+        document.getElementById('textloop').innerText = 'Calling all airlines in the world...';
         let arr = ['Building airplanes...','Dusting off the passport...','Talking to the weather gods...','Grabbing the thermometer...','Checking for rain...'];
         var index = 0;
         var textLoop = setInterval(function() {
@@ -90,8 +91,8 @@ angmodule.controller('search', function ($scope, $http, $filter, $interval) {
 
         console.log($scope.data);
 
-        // $http.post('search', JSON.stringify($scope.data)).then(function (response) {
-            $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+        $http.post('search', JSON.stringify($scope.data)).then(function (response) {
+        //     $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
             let data = response.data;
             console.log(data);

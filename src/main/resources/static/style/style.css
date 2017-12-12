@@ -214,14 +214,18 @@ h1 {
 
 .resultDurationTo {
     order: 2;
+    color: #cdcdcd;
 }
 
 .resultDurationFrom {
     order: 3;
+    color: #cdcdcd;
 }
 
 .resultTempToday {
     order: 4;
+    color: #cdcdcd;
+
 }
 
 .resultTemp {
@@ -230,10 +234,13 @@ h1 {
 
 .resultRain {
     order: 6;
+    color: #cdcdcd;
 }
 
 .resultSunHours {
     order: 5;
+    color: #cdcdcd;
+
 }
 
 .resultPrice {
