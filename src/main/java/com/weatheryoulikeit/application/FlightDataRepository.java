@@ -222,7 +222,7 @@ public class FlightDataRepository {
                     System.out.println(e);
                 }
 
-                try {
+              try {
 
                     URL url = new URL(searchInput);
 
@@ -248,6 +248,7 @@ public class FlightDataRepository {
                 jsonObject.addProperty("country", country);
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
                 jsonObject.addProperty("precipitation", getPrecipitation(countryISO,month)/30);
+                jsonObject.addProperty("temperature", weatherObject.get("temperature").toString());
 
 
                 String price = jsonToStringNoQuotes(jsonObject.get("price"));
@@ -264,6 +265,17 @@ public class FlightDataRepository {
         return returnData.toString();
     }
 
+    private JsonObject parseWeather (String result) {
+        JsonElement jelement = new JsonParser().parse(result);
+        JsonObject jobject = jelement.getAsJsonObject();
+        JsonObject currently = jobject.getAsJsonObject("currently");
+        JsonElement temp = currently.getAsJsonPrimitive("temperature");
+
+        JsonObject jsonResult = new JsonObject();
+        jsonResult.add("temperature", temp);
+
+        return jsonResult;
+    }
     private JsonObject parseAmadeusResult(String result) {
         JsonElement jelement = new JsonParser().parse(result);
         JsonObject jobject = jelement.getAsJsonObject();

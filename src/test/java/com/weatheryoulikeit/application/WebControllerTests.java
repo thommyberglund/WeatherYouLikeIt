@@ -40,17 +40,17 @@ public class WebControllerTests {
         fsd = new FlightSearchData("LAX", "2018-01-01", "2018-01-04", 20, 40);
 
     }
-
+/*
     @Test
-    public void getFlightResults() throws InterruptedException {
-        assertEquals("{  \"origin\" : \"LAX\",  \"currency\" : \"USD\",  \"destination\" : \"LON\",    \"departure_date\" : \"2018-01-03\",    \"price\" : \"388.01\",    \"airline\" : \"WW\"  } ", sut.getFlightResults("LAX", "2018-01-01", "2018-01-04", 20, 30));
-    }
+    public void getWeather() throws InterruptedException {
+        assertEquals("",fdr.parseWeather("{\"latitude\":25.907,\"longitude\":-97.426,\"timezone\":\"America/Chicago\",\"currently\":{\"time\":1513169526,\"summary\":\"Clear\",\"icon\":\"clear-night\",\"nearestStormDistance\":1588,\"nearestStormBearing\":358,\"precipIntensity\":0,\"precipProbability\":0,\"temperature\":7.36,\"apparentTemperature\":6.27,\"dewPoint\":4.77,\"humidity\":0.84,\"pressure\":1022.34,\"windSpeed\":1.83,\"windGust\":1.79,\"windBearing\":288,\"cloudCover\":0.01,\"uvIndex\":0,\"visibility\":16.09,\"ozone\":259.42},\"offset\":-6}"));
+    }*/
 
-    @Test
+/*    @Test
     public void getTemperatureFromDatabase() {
         double temp = fdr.getTemperature("ALB", 1);
         assertEquals(2.02, temp, 0.01);
-    }
+    }*/
 /*
     @Test
     public void getCountriesByTemperatureFromDatabase() {
@@ -143,6 +143,11 @@ public class WebControllerTests {
         double returnData[] = new double[2];
         returnData = fdr.getLatLong("LWR");
         assertEquals("", returnData[0] );
+    }*/
+
+/*    @Test
+    public void testWeatherJson() {
+        assertEquals("",fdr.parseWeather("{\"latitude\":25.907,\"longitude\":-97.426,\"timezone\":\"America/Chicago\",\"currently\":{\"time\":1513169526,\"summary\":\"Clear\",\"icon\":\"clear-night\",\"nearestStormDistance\":1588,\"nearestStormBearing\":358,\"precipIntensity\":0,\"precipProbability\":0,\"temperature\":7.36,\"apparentTemperature\":6.27,\"dewPoint\":4.77,\"humidity\":0.84,\"pressure\":1022.34,\"windSpeed\":1.83,\"windGust\":1.79,\"windBearing\":288,\"cloudCover\":0.01,\"uvIndex\":0,\"visibility\":16.09,\"ozone\":259.42},\"offset\":-6}"));
     }*/
     private String amadeusResult = "\n" +
             "{\n" +
