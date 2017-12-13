@@ -1,6 +1,6 @@
 package com.weatheryoulikeit.application;
 
-public class FlightSearchData {
+public class FlightSearchData implements SearchData{
 
     private String origin;
     private String startDate;

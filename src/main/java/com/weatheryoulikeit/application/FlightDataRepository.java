@@ -31,26 +31,6 @@ public class FlightDataRepository {
 
     private Random rand = new Random();
 
-    public String populateJsonArray() {
-        try (Connection conn = dataSource.getConnection();) {
-            try (PreparedStatement pstmt = conn.prepareStatement("SELECT City, Country FROM [dbo].[iata_codes] ");) {
-                try (ResultSet rs = pstmt.executeQuery()) {
-                    rs.next();
-                    String returnArray = "[ \n\"";
-                    returnArray += rs.getString("City") + "/" + rs.getString("Country") + "\"";
-                    while(rs.next()) {
-                        returnArray += ",\n\"" + rs.getString("City").replace("\"","") + "/" + rs.getString("Country") + "\"";
-                    }
-                    returnArray += " ]";
-                    return returnArray;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
     public double getTemperature(String country, int month) {
 
         try (Connection conn = dataSource.getConnection();) {
@@ -68,7 +48,7 @@ public class FlightDataRepository {
         return 0.0;
     }
 
-    public List<String> getCountriesByTemperatureRange(int month, int tempMin, int tempMax) {
+    private List<String> getCountriesByTemperatureRange(int month, int tempMin, int tempMax) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT COUNTRY FROM historical_temp_data WHERE MONTH = ? AND TEMP BETWEEN ? AND ?");) {
                 pstmt.setInt(1, month);
@@ -88,7 +68,7 @@ public class FlightDataRepository {
         return null;
     }
 
-    public List<String> getCitiesInCountry(String country) {
+    private List<String> getCitiesInCountry(String country) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT CODE FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE COUNTRY = ?")) {
                 pstmt.setString(1, country);
@@ -106,7 +86,7 @@ public class FlightDataRepository {
         return null;
     }
 
-    public String convertCitytoISO(String city) {
+    private String convertCitytoISO(String city) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT CODE FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE City LIKE ?")) {
                 pstmt.setString(1, city+"%");
@@ -122,7 +102,7 @@ public class FlightDataRepository {
         return null;
     }
 
-    public String convertISOtoCountryName(String isoCode) {
+    private String convertISOtoCountryName(String isoCode) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT NAME FROM [Academy_Projekt2].[dbo].[country] WHERE ISO3 = ?")) {
                 pstmt.setString(1, isoCode);
@@ -140,7 +120,7 @@ public class FlightDataRepository {
         return "";
     }
 
-    public String convertISOtoCityName(String isoCode) {
+    private String convertISOtoCityName(String isoCode) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT City FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE Code = ?")) {
                 pstmt.setString(1, isoCode);
@@ -227,7 +207,7 @@ public class FlightDataRepository {
         return returnData.toString();
     }
 
-    JsonObject parseAmadeusResult(String result) {
+    private JsonObject parseAmadeusResult(String result) {
         JsonElement jelement = new JsonParser().parse(result);
         JsonObject jobject = jelement.getAsJsonObject();
         JsonArray jarray = jobject.getAsJsonArray("results");
