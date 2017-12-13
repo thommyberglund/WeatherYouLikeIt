@@ -29,6 +29,9 @@ public class FlightDataRepository {
     @Value("${apikey}")
     private String apikey;
 
+    @Value("${weatherkey}")
+    private String weatherkey;
+
     private Random rand = new Random();
     private double[] getLatLong(String isoCode) {
         try (Connection conn = dataSource.getConnection();) {
@@ -202,7 +205,7 @@ public class FlightDataRepository {
                         "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
                         "" + fsd.getStartDate() + "&number_of_results=10";
                 double[] latLong = getLatLong(city);
-                String weatherInput = "https://api.darksky.net/forecast/0909a777e8930b843f76968a40ced41a/"+ latLong[0]
+                String weatherInput = "https://api.darksky.net/forecast/"+ weatherkey +"/"+ latLong[0]
                         + "," + latLong[1] +"?units=si&exclude=hourly,minutely,daily,flags,alerts";
 
                     try {
