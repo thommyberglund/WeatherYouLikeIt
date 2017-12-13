@@ -30,11 +30,25 @@ public class FlightDataRepository {
     private String apikey;
 
     private Random rand = new Random();
-
-    private double getPrecipitation(String ISO3, int month) {
+    private double[] getLatLong(String isoCode) {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT lat,long FROM GlobalAirportDatabase WHERE ISO3 = ?");) {
+                pstmt.setString(1, isoCode);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    rs.next();
+                    double[] returnData = {rs.getDouble(1), rs.getDouble(2)};
+                    return returnData;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private double getPrecipitation(String isoCode, int month) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT PRECIP FROM historical_climate_data WHERE COUNTRY = ? AND MONTH = ?");) {
-                pstmt.setString(1, ISO3);
+                pstmt.setString(1, isoCode);
                 pstmt.setInt(2, month);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     rs.next();
@@ -47,7 +61,7 @@ public class FlightDataRepository {
         return 0.0;
     }
 
-    public double getTemperature(String country, int month) {
+    private double getTemperature(String country, int month) {
 
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT TEMP FROM historical_temp_data WHERE COUNTRY = ? AND MONTH = ?");) {
@@ -152,6 +166,14 @@ public class FlightDataRepository {
 
     }
 
+    private void cropCityName(FlightSearchData fsd) {
+        String cityNameToCrop = fsd.getOrigin();
+        int positionOfSlash = cityNameToCrop.lastIndexOf('/');
+        cityNameToCrop = cityNameToCrop.substring(0,positionOfSlash);
+        cityNameToCrop = convertCitytoISO(cityNameToCrop);
+        fsd.setOrigin(cityNameToCrop);
+    }
+
     public String getExternalFlights(FlightSearchData fsd) {
 
         JsonArray returnData = new JsonArray();
@@ -170,20 +192,37 @@ public class FlightDataRepository {
             List<String> selectedCities = nRandomItems(cityISO, 1);
 
             if(fsd.getOrigin().length() > 3) {
-                String cityNameToCrop = fsd.getOrigin();
-                int positionOfSlash = cityNameToCrop.lastIndexOf('/');
-                cityNameToCrop = cityNameToCrop.substring(0,positionOfSlash);
-                cityNameToCrop = convertCitytoISO(cityNameToCrop);
-                fsd.setOrigin(cityNameToCrop);
-                System.out.println(cityNameToCrop);
+                cropCityName(fsd);
             }
 
             for (String city : selectedCities) {
                 String jsonBuilder = "";
+                String weatherBuilder = "";
                 String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?" +
                         "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
                         "" + fsd.getStartDate() + "&number_of_results=10";
-               /* try {
+                double[] latLong = getLatLong(city);
+                String weatherInput = "https://api.darksky.net/forecast/0909a777e8930b843f76968a40ced41a/"+ latLong[0]
+                        + "," + latLong[1] +"?units=si&exclude=hourly,minutely,daily,flags,alerts";
+
+                    try {
+
+                    URL url2 = new URL(weatherInput);
+
+                    try(InputStream in = url2.openStream()) {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                        String inputBuffer;
+                        while ((inputBuffer = reader.readLine()) != null) {
+                            weatherBuilder += inputBuffer;
+                        }
+                    }
+                } catch (MalformedURLException e) {
+                    System.out.println(e);
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+
+                try {
 
                     URL url = new URL(searchInput);
 
@@ -201,9 +240,9 @@ public class FlightDataRepository {
                     System.out.println(e);
                     continue;
 
-                }*/
-
+                }
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
+                    JsonObject weatherObject = parseWeather(weatherBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
                 jsonObject.addProperty("destination", convertISOtoCityName(city));
                 jsonObject.addProperty("country", country);

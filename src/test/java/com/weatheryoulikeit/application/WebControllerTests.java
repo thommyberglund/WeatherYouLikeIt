@@ -138,6 +138,12 @@ public class WebControllerTests {
         assertEquals("STO",fdr.convertCitytoISO("Stockholm"));
     }*/
 
+/*    @Test
+    public void testLatLong() {
+        double returnData[] = new double[2];
+        returnData = fdr.getLatLong("LWR");
+        assertEquals("", returnData[0] );
+    }*/
     private String amadeusResult = "\n" +
             "{\n" +
             "  \"currency\" : \"USD\",\n" +
