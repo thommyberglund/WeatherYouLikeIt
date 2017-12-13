@@ -251,7 +251,7 @@ public class FlightDataRepository {
                 jsonObject.addProperty("country", country);
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
                 jsonObject.addProperty("precipitation", getPrecipitation(countryISO,month)/30);
-                jsonObject.addProperty("temperature", weatherObject.get("temperature").toString());
+                jsonObject.addProperty("temperatureToday", weatherObject.get("temperature").toString());
 
 
                 String price = jsonToStringNoQuotes(jsonObject.get("price"));
