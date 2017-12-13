@@ -89,7 +89,7 @@ public class FlightDataRepository {
                 pstmt.setInt(3, tempMax);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     List<String> countries = new ArrayList<>();
-                    while(rs.next()) {
+                    while (rs.next()) {
                         countries.add(rs.getString(1));
                     }
                     return countries;
@@ -107,8 +107,8 @@ public class FlightDataRepository {
                 pstmt.setString(1, country);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     List<String> cities = new ArrayList<>();
-                    while(rs.next()) {
-                         cities.add(rs.getString("CODE"));
+                    while (rs.next()) {
+                        cities.add(rs.getString("CODE"));
                     }
                     return cities;
                 }
@@ -122,7 +122,7 @@ public class FlightDataRepository {
     private String convertCitytoISO(String city) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT CODE FROM [Academy_Projekt2].[dbo].[iata_codes] WHERE City LIKE ?")) {
-                pstmt.setString(1, city+"%");
+                pstmt.setString(1, city + "%");
                 try (ResultSet rs = pstmt.executeQuery()) {
                     rs.next();
                     String returnCity = rs.getString(1);
@@ -141,7 +141,7 @@ public class FlightDataRepository {
                 pstmt.setString(1, isoCode);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     String returnData = "";
-                    while(rs.next()) {
+                    while (rs.next()) {
                         returnData = rs.getString("name");
                     }
                     return returnData;
@@ -180,11 +180,11 @@ public class FlightDataRepository {
     public String getExternalFlights(FlightSearchData fsd) {
 
         JsonArray returnData = new JsonArray();
-        int month = Integer.parseInt(fsd.getStartDate().substring(5,7));
-        List<String> filteredCountries = getCountriesByTemperatureRange(month,fsd.getTempMin(),fsd.getTempMax());
+        int month = Integer.parseInt(fsd.getStartDate().substring(5, 7));
+        List<String> filteredCountries = getCountriesByTemperatureRange(month, fsd.getTempMin(), fsd.getTempMax());
         List<String> selectedCountries = nRandomItems(filteredCountries, 10);
 
-        for(String countryISO : selectedCountries) {
+        for (String countryISO : selectedCountries) {
 
             String country = convertISOtoCountryName(countryISO);
             List<String> cityISO = getCitiesInCountry(country);
@@ -203,7 +203,7 @@ public class FlightDataRepository {
                 String weatherBuilder = "";
                 String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?" +
                         "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
-                        "" + fsd.getStartDate() + "&number_of_results=10";
+                        fsd.getStartDate() + "&number_of_results=10";
                 double[] latLong = getLatLong(city);
                 String weatherInput = "https://api.darksky.net/forecast/"+ weatherkey +"/"+ latLong[0]
                         + "," + latLong[1] +"?units=si&exclude=hourly,minutely,daily,flags,alerts";
@@ -227,9 +227,10 @@ public class FlightDataRepository {
 
               try {
 
+
                     URL url = new URL(searchInput);
 
-                    try(InputStream in = url.openStream()) {
+                    try (InputStream in = url.openStream()) {
                         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                         String inputBuffer;
                         while ((inputBuffer = reader.readLine()) != null) {
@@ -242,7 +243,6 @@ public class FlightDataRepository {
                 } catch (IOException e) {
                     System.out.println(e);
                     continue;
-
                 }
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                     JsonObject weatherObject = parseWeather(weatherBuilder);
@@ -282,29 +282,42 @@ public class FlightDataRepository {
     private JsonObject parseAmadeusResult(String result) {
         JsonElement jelement = new JsonParser().parse(result);
         JsonObject jobject = jelement.getAsJsonObject();
+
         JsonArray jarray = jobject.getAsJsonArray("results");
-        JsonObject firstResult = jarray.get(0).getAsJsonObject();
+        JsonObject cheapestResult = jarray.get(0).getAsJsonObject();
+
         JsonElement currency = jobject.getAsJsonPrimitive("currency");
 
-        JsonObject fareResult = firstResult.get("fare").getAsJsonObject();
+        JsonObject fareResult = cheapestResult.get("fare").getAsJsonObject();
         JsonElement fare = fareResult.getAsJsonPrimitive("total_price");
 
-        JsonArray flightsResult = firstResult
-                .getAsJsonArray("itineraries")
-                .get(0).getAsJsonObject()
-                .getAsJsonObject("outbound")
-                .getAsJsonArray("flights");
-        JsonObject firstFlight = flightsResult.get(0).getAsJsonObject();
-        JsonElement departsAt = firstFlight.getAsJsonPrimitive("departs_at");
-        JsonElement airline = firstFlight.getAsJsonPrimitive("marketing_airline");
+        JsonObject outboundFlight = getFirstFlightWithSeatsAvailable(cheapestResult, "outbound", nPassengers);
+        JsonObject inboundFlight = getFirstFlightWithSeatsAvailable(cheapestResult, "inbound");
+
+        JsonElement departsAt = outboundFlight.getAsJsonPrimitive("departs_at");
+        JsonElement airlineOut = outboundFlight.getAsJsonPrimitive("marketing_airline");
 
         JsonObject jsonResult = new JsonObject();
         jsonResult.add("price", fare);
         jsonResult.add("currency", currency);
-        jsonResult.add("airline", airline);
+        jsonResult.add("airline", airlineOut);
         jsonResult.add("departsAt", departsAt);
 
         return jsonResult;
+    }
+
+    private JsonObject getFirstFlightWithSeatsAvailable(JsonObject itinerary, String bound, int nPassengers) {
+
+        int availableSeats = 0;
+
+        while(availableSeats < nPassengers) {
+            JsonArray flights = itinerary
+                    .getAsJsonArray("itineraries")
+                    .get(0).getAsJsonObject()
+                    .getAsJsonObject(bound)
+                    .getAsJsonArray("flights");
+            return flights.get(0).getAsJsonObject();
+        }
     }
 
     private String jsonToStringNoQuotes(JsonElement json) {
@@ -319,4 +332,5 @@ public class FlightDataRepository {
         return randomList;
     }
 
+    private String amadeusResult = "{  \"currency\" : \"USD\",  \"results\" : [ {    \"itineraries\" : [ {      \"outbound\" : {        \"flights\" : [ {          \"departs_at\" : \"2018-03-19T09:40\",          \"arrives_at\" : \"2018-03-19T19:00\",          \"origin\" : {            \"airport\" : \"FRA\",            \"terminal\" : \"2\"          },          \"destination\" : {            \"airport\" : \"DXB\",            \"terminal\" : \"3\"          },          \"marketing_airline\" : \"EK\",          \"operating_airline\" : \"EK\",          \"flight_number\" : \"44\",          \"aircraft\" : \"388\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"B\",            \"seats_remaining\" : 9          }        }, {          \"departs_at\" : \"2018-03-19T23:25\",          \"arrives_at\" : \"2018-03-20T05:35\",          \"origin\" : {            \"airport\" : \"DXB\",            \"terminal\" : \"3\"          },          \"destination\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"A\"          },          \"marketing_airline\" : \"EK\",          \"operating_airline\" : \"EK\",          \"flight_number\" : \"767\",          \"aircraft\" : \"77W\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"B\",            \"seats_remaining\" : 9          }        }, {          \"departs_at\" : \"2018-03-20T06:40\",          \"arrives_at\" : \"2018-03-20T07:35\",          \"origin\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"B\"          },          \"destination\" : {            \"airport\" : \"MSU\"          },          \"marketing_airline\" : \"SA\",          \"operating_airline\" : \"4Z\",          \"flight_number\" : \"8050\",          \"aircraft\" : \"ER3\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"Q\",            \"seats_remaining\" : 8          }        } ]      }    } ],    \"fare\" : {      \"total_price\" : \"826.47\",      \"price_per_adult\" : {        \"total_fare\" : \"826.47\",        \"tax\" : \"372.47\"      },      \"restrictions\" : {        \"refundable\" : false,        \"change_penalties\" : true      }    }  }, {    \"itineraries\" : [ {      \"outbound\" : {        \"flights\" : [ {          \"departs_at\" : \"2018-03-19T16:05\",          \"arrives_at\" : \"2018-03-20T00:05\",          \"origin\" : {            \"airport\" : \"FRA\",            \"terminal\" : \"1\"          },          \"destination\" : {            \"airport\" : \"DOH\"          },          \"marketing_airline\" : \"QR\",          \"operating_airline\" : \"QR\",          \"flight_number\" : \"68\",          \"aircraft\" : \"77W\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"V\",            \"seats_remaining\" : 9          }        }, {          \"departs_at\" : \"2018-03-20T02:20\",          \"arrives_at\" : \"2018-03-20T10:05\",          \"origin\" : {            \"airport\" : \"DOH\"          },          \"destination\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"A\"          },          \"marketing_airline\" : \"QR\",          \"operating_airline\" : \"QR\",          \"flight_number\" : \"1363\",          \"aircraft\" : \"77W\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"V\",            \"seats_remaining\" : 9          }        }, {          \"departs_at\" : \"2018-03-20T15:00\",          \"arrives_at\" : \"2018-03-20T16:00\",          \"origin\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"B\"          },          \"destination\" : {            \"airport\" : \"MSU\"          },          \"marketing_airline\" : \"SA\",          \"operating_airline\" : \"4Z\",          \"flight_number\" : \"8062\",          \"aircraft\" : \"ER3\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"Q\",            \"seats_remaining\" : 8          }        } ]      }    } ],    \"fare\" : {      \"total_price\" : \"839.37\",      \"price_per_adult\" : {        \"total_fare\" : \"839.37\",        \"tax\" : \"287.37\"      },      \"restrictions\" : {        \"refundable\" : true,        \"change_penalties\" : true      }    }  }, {    \"itineraries\" : [ {      \"outbound\" : {        \"flights\" : [ {          \"departs_at\" : \"2018-03-19T20:45\",          \"arrives_at\" : \"2018-03-20T08:30\",          \"origin\" : {            \"airport\" : \"FRA\",            \"terminal\" : \"1\"          },          \"destination\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"A\"          },          \"marketing_airline\" : \"SA\",          \"operating_airline\" : \"SA\",          \"flight_number\" : \"261\",          \"aircraft\" : \"346\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"Q\",            \"seats_remaining\" : 9          }        }, {          \"departs_at\" : \"2018-03-20T09:40\",          \"arrives_at\" : \"2018-03-20T10:35\",          \"origin\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"B\"          },          \"destination\" : {            \"airport\" : \"MSU\"          },          \"marketing_airline\" : \"SA\",          \"operating_airline\" : \"4Z\",          \"flight_number\" : \"8052\",          \"aircraft\" : \"ER3\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"L\",            \"seats_remaining\" : 5          }        } ]      }    } ],    \"fare\" : {      \"total_price\" : \"978.84\",      \"price_per_adult\" : {        \"total_fare\" : \"978.84\",        \"tax\" : \"330.84\"      },      \"restrictions\" : {        \"refundable\" : false,        \"change_penalties\" : true      }    }  }, {    \"itineraries\" : [ {      \"outbound\" : {        \"flights\" : [ {          \"departs_at\" : \"2018-03-19T21:35\",          \"arrives_at\" : \"2018-03-20T06:25\",          \"origin\" : {            \"airport\" : \"FRA\",            \"terminal\" : \"1\"          },          \"destination\" : {            \"airport\" : \"ADD\",            \"terminal\" : \"2\"          },          \"marketing_airline\" : \"ET\",          \"operating_airline\" : \"ET\",          \"flight_number\" : \"707\",          \"aircraft\" : \"350\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"H\",            \"seats_remaining\" : 7          }        }, {          \"departs_at\" : \"2018-03-20T08:40\",          \"arrives_at\" : \"2018-03-20T13:05\",          \"origin\" : {            \"airport\" : \"ADD\",            \"terminal\" : \"2\"          },          \"destination\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"A\"          },          \"marketing_airline\" : \"ET\",          \"operating_airline\" : \"ET\",          \"flight_number\" : \"809\",          \"aircraft\" : \"350\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"M\",            \"seats_remaining\" : 7          }        }, {          \"departs_at\" : \"2018-03-20T15:00\",          \"arrives_at\" : \"2018-03-20T16:00\",          \"origin\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"B\"          },          \"destination\" : {            \"airport\" : \"MSU\"          },          \"marketing_airline\" : \"SA\",          \"operating_airline\" : \"4Z\",          \"flight_number\" : \"8062\",          \"aircraft\" : \"ER3\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"Q\",            \"seats_remaining\" : 8          }        } ]      }    } ],    \"fare\" : {      \"total_price\" : \"1131.82\",      \"price_per_adult\" : {        \"total_fare\" : \"1131.82\",        \"tax\" : \"373.82\"      },      \"restrictions\" : {        \"refundable\" : true,        \"change_penalties\" : true      }    }  }, {    \"itineraries\" : [ {      \"outbound\" : {        \"flights\" : [ {          \"departs_at\" : \"2018-03-19T20:45\",          \"arrives_at\" : \"2018-03-20T08:30\",          \"origin\" : {            \"airport\" : \"FRA\",            \"terminal\" : \"1\"          },          \"destination\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"A\"          },          \"marketing_airline\" : \"LH\",          \"operating_airline\" : \"SA\",          \"flight_number\" : \"9544\",          \"aircraft\" : \"346\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"Y\",            \"seats_remaining\" : 4          }        }, {          \"departs_at\" : \"2018-03-20T09:40\",          \"arrives_at\" : \"2018-03-20T10:35\",          \"origin\" : {            \"airport\" : \"JNB\",            \"terminal\" : \"B\"          },          \"destination\" : {            \"airport\" : \"MSU\"          },          \"marketing_airline\" : \"SA\",          \"operating_airline\" : \"4Z\",          \"flight_number\" : \"8052\",          \"aircraft\" : \"ER3\",          \"booking_info\" : {            \"travel_class\" : \"ECONOMY\",            \"booking_code\" : \"Y\",            \"seats_remaining\" : 9          }        } ]      }    } ],    \"fare\" : {      \"total_price\" : \"2682.61\",      \"price_per_adult\" : {        \"total_fare\" : \"2682.61\",        \"tax\" : \"401.61\"      },      \"restrictions\" : {        \"refundable\" : true,        \"change_penalties\" : true      }    }  } ]}";
 }
