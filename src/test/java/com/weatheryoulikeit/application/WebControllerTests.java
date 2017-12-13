@@ -1,6 +1,9 @@
 package com.weatheryoulikeit.application;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +40,7 @@ public class WebControllerTests {
     @Before
     public void setup() {
         sut = new WebController();
-        fsd = new FlightSearchData("LAX", "2018-01-01", "2018-01-04", 20, 40);
+        fsd = new FlightSearchData("LAX", "2018-01-01", "2018-01-04", 20, 40, 1500, 2, 0, 0);
 
     }
 /*
@@ -68,12 +71,9 @@ public class WebControllerTests {
 
     @Test
     public void testTempRange() {
-        fsd = new FlightSearchData("LAX", "2018-01-01", "2018-01-04", 20, 40);
-
         int month = Integer.parseInt(fsd.getStartDate().substring(6, 7));
         List<String> filteredCountries = fdr.getCountriesByTemperatureRange(month, fsd.getTempMin(), fsd.getTempMax());
         assertEquals("", filteredCountries);
-
     }
 
     @Test
@@ -93,7 +93,7 @@ public class WebControllerTests {
 
     @Test
     public void testISOConvert() {
-        String result = fdr.getExternalFlights(new FlightSearchData("LAX", "2018-01-01", "2018-01-04", 20, 40));
+        String result = fdr.getExternalFlights(fsd);
         System.out.println(result);
         assertEquals("", result);
     }
@@ -127,7 +127,6 @@ public class WebControllerTests {
         System.out.println(jsonObject.toString());
     }*/
 
-
 /*    @Test
     public void testPrecip() {
         assertEquals("",fdr.getPrecipitation("AFG",1)/30);
@@ -149,6 +148,35 @@ public class WebControllerTests {
     public void testWeatherJson() {
         assertEquals("",fdr.parseWeather("{\"latitude\":25.907,\"longitude\":-97.426,\"timezone\":\"America/Chicago\",\"currently\":{\"time\":1513169526,\"summary\":\"Clear\",\"icon\":\"clear-night\",\"nearestStormDistance\":1588,\"nearestStormBearing\":358,\"precipIntensity\":0,\"precipProbability\":0,\"temperature\":7.36,\"apparentTemperature\":6.27,\"dewPoint\":4.77,\"humidity\":0.84,\"pressure\":1022.34,\"windSpeed\":1.83,\"windGust\":1.79,\"windBearing\":288,\"cloudCover\":0.01,\"uvIndex\":0,\"visibility\":16.09,\"ozone\":259.42},\"offset\":-6}"));
     }*/
+
+    @Test
+    public void parseOneAmadeusFlight() {
+        JsonElement jelement = new JsonParser().parse(amadeusResult);
+        JsonObject jobject = jelement.getAsJsonObject();
+
+        JsonArray jarray = jobject.getAsJsonArray("results");
+        JsonObject cheapestResult = jarray.get(0).getAsJsonObject();
+
+        JsonObject flight = fdr.getFlightData(cheapestResult, "outbound");
+
+        assertEquals("2018-01-22", flight.get("date").toString().replaceAll("\"", ""));
+        assertEquals("11:40", flight.get("time").toString().replaceAll("\"", ""));
+    }
+
+    @Test
+    public void sortJsonFlightArrayByPrice() {
+        JsonArray jsonArray = new JsonArray();
+        for (int i = 5; i > 0; i--) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("price", i*100);
+            jsonObject.addProperty("foo", i);
+            jsonArray.add(jsonObject);
+        }
+        String sorted = fdr.sortFlightArray(jsonArray);
+        String correctResult = "[{\"price\":100,\"foo\":1},{\"price\":200,\"foo\":2},{\"price\":300,\"foo\":3},{\"price\":400,\"foo\":4},{\"price\":500,\"foo\":5}]";
+        assertEquals(correctResult, sorted);
+    }
+
     private String amadeusResult = "\n" +
             "{\n" +
             "  \"currency\" : \"USD\",\n" +

@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,11 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -202,8 +207,10 @@ public class FlightDataRepository {
                 String jsonBuilder = "";
                 String weatherBuilder = "";
                 String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?" +
-                        "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city + "&departure_date=" +
-                        fsd.getStartDate() + "&number_of_results=10";
+                        "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city +
+                        "&departure_date=" + fsd.getStartDate() + "&return_date=" + fsd.getEndDate() +
+                        "&number_of_results=5" + "&adults=" + fsd.getnAdults() + "&children=" + fsd.getnChildren() +
+                        "&infants=" + fsd.getnInfants();
                 double[] latLong = getLatLong(city);
                 String weatherInput = "https://api.darksky.net/forecast/"+ weatherkey +"/"+ latLong[0]
                         + "," + latLong[1] +"?units=si&exclude=hourly,minutely,daily,flags,alerts";
@@ -227,7 +234,6 @@ public class FlightDataRepository {
 
               try {
 
-
                     URL url = new URL(searchInput);
 
                     try (InputStream in = url.openStream()) {
@@ -244,6 +250,7 @@ public class FlightDataRepository {
                     System.out.println(e);
                     continue;
                 }
+
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
                     JsonObject weatherObject = parseWeather(weatherBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
@@ -257,7 +264,7 @@ public class FlightDataRepository {
                 String price = jsonToStringNoQuotes(jsonObject.get("price"));
                 if (Double.parseDouble(price) > fsd.getPriceMax()) {
                     //Skip this result
-                    System.out.println("Price > maxprice");
+                    System.out.println("Price " + price + " > maxprice");
                     continue;
                 }
 
@@ -265,7 +272,42 @@ public class FlightDataRepository {
             }
         }
 
-        return returnData.toString();
+        return sortFlightArray(returnData);
+    }
+
+    private String sortFlightArray(JsonArray jsonArray) {
+        List<JsonObject> jsonValues = new ArrayList<>();
+        JsonArray sortedJsonArray = new JsonArray();
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            jsonValues.add(jsonArray.get(i).getAsJsonObject());
+        }
+
+        Collections.sort(jsonValues, new Comparator<JsonObject>() {
+            private static final String KEY_NAME = "price";
+
+            @Override
+            public int compare(JsonObject o1, JsonObject o2) {
+                double valA = 0.0;
+                double valB = 0.0;
+
+                try {
+                    valA = o1.get(KEY_NAME).getAsDouble();
+                    valB = o2.get(KEY_NAME).getAsDouble();
+                }
+                catch (RuntimeException e) {
+                    //do something
+                }
+
+                return Double.compare(valA, valB);
+            }
+        });
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            sortedJsonArray.add(jsonValues.get(i));
+        }
+
+        return sortedJsonArray.toString();
     }
 
     private JsonObject parseWeather (String result) {
@@ -283,41 +325,52 @@ public class FlightDataRepository {
         JsonElement jelement = new JsonParser().parse(result);
         JsonObject jobject = jelement.getAsJsonObject();
 
+        JsonElement currency = jobject.getAsJsonPrimitive("currency");
+
         JsonArray jarray = jobject.getAsJsonArray("results");
         JsonObject cheapestResult = jarray.get(0).getAsJsonObject();
-
-        JsonElement currency = jobject.getAsJsonPrimitive("currency");
 
         JsonObject fareResult = cheapestResult.get("fare").getAsJsonObject();
         JsonElement fare = fareResult.getAsJsonPrimitive("total_price");
 
-        JsonObject outboundFlight = getFirstFlightWithSeatsAvailable(cheapestResult, "outbound", nPassengers);
-        JsonObject inboundFlight = getFirstFlightWithSeatsAvailable(cheapestResult, "inbound");
-
-        JsonElement departsAt = outboundFlight.getAsJsonPrimitive("departs_at");
-        JsonElement airlineOut = outboundFlight.getAsJsonPrimitive("marketing_airline");
+        JsonObject outboundFlight = getFlightData(cheapestResult, "outbound");
+        JsonObject inboundFlight = getFlightData(cheapestResult, "inbound");
 
         JsonObject jsonResult = new JsonObject();
         jsonResult.add("price", fare);
         jsonResult.add("currency", currency);
-        jsonResult.add("airline", airlineOut);
-        jsonResult.add("departsAt", departsAt);
+        jsonResult.add("outboundDepartureDate", outboundFlight.getAsJsonPrimitive("date"));
+        jsonResult.add("outboundDepartureTime", outboundFlight.getAsJsonPrimitive("time"));
+        jsonResult.add("outboundStops", outboundFlight.getAsJsonPrimitive("stops"));
+        jsonResult.add("inboundDepartureDate", inboundFlight.getAsJsonPrimitive("date"));
+        jsonResult.add("inboundDepartureTime", inboundFlight.getAsJsonPrimitive("time"));
+        jsonResult.add("inboundStops", inboundFlight.getAsJsonPrimitive("stops"));
 
         return jsonResult;
     }
 
-    private JsonObject getFirstFlightWithSeatsAvailable(JsonObject itinerary, String bound, int nPassengers) {
+    private JsonObject getFlightData(JsonObject itinerary, String bound) {
 
-        int availableSeats = 0;
+        JsonArray flights = itinerary
+                .getAsJsonArray("itineraries")
+                .get(0).getAsJsonObject()
+                .getAsJsonObject(bound)
+                .getAsJsonArray("flights");
 
-        while(availableSeats < nPassengers) {
-            JsonArray flights = itinerary
-                    .getAsJsonArray("itineraries")
-                    .get(0).getAsJsonObject()
-                    .getAsJsonObject(bound)
-                    .getAsJsonArray("flights");
-            return flights.get(0).getAsJsonObject();
-        }
+        JsonObject result = new JsonObject();
+
+        int nStops = flights.size();
+        result.add("stops", new JsonPrimitive(nStops));
+
+        JsonPrimitive dateTime = flights.get(0).getAsJsonObject().getAsJsonPrimitive("departs_at");
+        String dateTimeStr = jsonToStringNoQuotes(dateTime);
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String date = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDateTime);
+        String time = DateTimeFormatter.ofPattern("HH:mm").format(localDateTime);
+        result.add("date", new JsonPrimitive(date));
+        result.add("time", new JsonPrimitive(time));
+
+        return result;
     }
 
     private String jsonToStringNoQuotes(JsonElement json) {
