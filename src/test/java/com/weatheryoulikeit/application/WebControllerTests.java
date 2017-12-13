@@ -51,7 +51,7 @@ public class WebControllerTests {
         double temp = fdr.getTemperature("ALB", 1);
         assertEquals(2.02, temp, 0.01);
     }
-
+/*
     @Test
     public void getCountriesByTemperatureFromDatabase() {
         List<String> correctCountries = new ArrayList<>();
@@ -89,7 +89,7 @@ public class WebControllerTests {
     @Test
     public void convertCounrytoCity() {
         assertEquals("", fdr.getCitiesInCountry("Poland"));
-    }
+    }*/
 
     @Test
     public void testISOConvert() {
@@ -121,20 +121,22 @@ public class WebControllerTests {
         String urlReturnData = jsonBuilder + ",";
     }
 
-    @Test
+/*    @Test
     public void testAmadeusParser() {
         JsonObject jsonObject = fdr.parseAmadeusResult(amadeusResult);
         System.out.println(jsonObject.toString());
-    }
+    }*/
 
-    @Test
-    public void testReturnArray() {
-        assertEquals("",fdr.populateJsonArray());
-    }
-    @Test
+
+/*    @Test
+    public void testPrecip() {
+        assertEquals("",fdr.getPrecipitation("AFG",1)/30);
+    }*/
+
+/*    @Test
     public void testCitytoISO() {
         assertEquals("STO",fdr.convertCitytoISO("Stockholm"));
-    }
+    }*/
 
     private String amadeusResult = "\n" +
             "{\n" +

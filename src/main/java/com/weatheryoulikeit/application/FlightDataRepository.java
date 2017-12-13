@@ -31,6 +31,22 @@ public class FlightDataRepository {
 
     private Random rand = new Random();
 
+    private double getPrecipitation(String ISO3, int month) {
+        try (Connection conn = dataSource.getConnection();) {
+            try (PreparedStatement pstmt = conn.prepareStatement("SELECT PRECIP FROM historical_climate_data WHERE COUNTRY = ? AND MONTH = ?");) {
+                pstmt.setString(1, ISO3);
+                pstmt.setInt(2, month);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    rs.next();
+                    return rs.getDouble(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
     public double getTemperature(String country, int month) {
 
         try (Connection conn = dataSource.getConnection();) {
@@ -192,6 +208,8 @@ public class FlightDataRepository {
                 jsonObject.addProperty("destination", convertISOtoCityName(city));
                 jsonObject.addProperty("country", country);
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
+                jsonObject.addProperty("precipitation", getPrecipitation(countryISO,month)/30);
+
 
                 String price = jsonToStringNoQuotes(jsonObject.get("price"));
                 if (Double.parseDouble(price) > fsd.getPriceMax()) {
