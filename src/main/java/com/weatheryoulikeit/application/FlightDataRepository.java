@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -88,16 +89,21 @@ public class FlightDataRepository {
         return 0.0;
     }
 
-    private List<String> getCountriesByTemperatureRange(int month, int tempMin, int tempMax) {
+    private HashMap<String, String> getCountriesByTemperatureRange(int month, int tempMin, int tempMax) {
         try (Connection conn = dataSource.getConnection();) {
-            try (PreparedStatement pstmt = conn.prepareStatement("SELECT COUNTRY FROM historical_temp_data WHERE MONTH = ? AND TEMP BETWEEN ? AND ?");) {
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                    "SELECT COUNTRY, flag\n" +
+                            "FROM historical_climate_data\n" +
+                            "INNER JOIN dbo.country\n" +
+                            "ON historical_climate_data.COUNTRY = country.iso3\n" +
+                            "WHERE MONTH = ? AND TEMP BETWEEN ? AND ? AND flag IS NOT NULL");) {
                 pstmt.setInt(1, month);
                 pstmt.setInt(2, tempMin);
                 pstmt.setInt(3, tempMax);
                 try (ResultSet rs = pstmt.executeQuery()) {
-                    List<String> countries = new ArrayList<>();
+                    HashMap<String, String> countries = new HashMap<>();
                     while (rs.next()) {
-                        countries.add(rs.getString(1));
+                        countries.put(rs.getString(1), rs.getString(2));
                     }
                     return countries;
                 }
@@ -188,8 +194,9 @@ public class FlightDataRepository {
 
         JsonArray returnData = new JsonArray();
         int month = Integer.parseInt(fsd.getStartDate().substring(5, 7));
-        List<String> filteredCountries = getCountriesByTemperatureRange(month, fsd.getTempMin(), fsd.getTempMax());
-        List<String> selectedCountries = nUniqueRandomItems(filteredCountries, 10);
+        HashMap<String, String> filteredCountries = getCountriesByTemperatureRange(month, fsd.getTempMin(), fsd.getTempMax());
+        List<String> countryCodes = new ArrayList<String>(filteredCountries.keySet());
+        List<String> selectedCountries = nUniqueRandomItems(countryCodes, 10);
 
         for (String countryISO : selectedCountries) {
 
@@ -261,7 +268,7 @@ public class FlightDataRepository {
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
                 jsonObject.addProperty("precipitation", getPrecipitation(countryISO, month) / 30);
                 jsonObject.addProperty("temperatureToday", weatherObject.get("temperature").toString());
-
+                jsonObject.addProperty("flagUrl", filteredCountries.get(countryISO));
 
                 String price = jsonToStringNoQuotes(jsonObject.get("pricePerPerson"));
                 if (Double.parseDouble(price) > fsd.getPriceMax()) {
@@ -286,7 +293,7 @@ public class FlightDataRepository {
         }
 
         Collections.sort(jsonValues, new Comparator<JsonObject>() {
-            private static final String KEY_NAME = "price";
+            private static final String KEY_NAME = "priceTotal";
 
             @Override
             public int compare(JsonObject o1, JsonObject o2) {

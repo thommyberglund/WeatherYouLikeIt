@@ -276,6 +276,7 @@ h1 {
 }
 
 .resultTable img {
+    max-width: 50px;
     margin-left: auto;
 }
 
