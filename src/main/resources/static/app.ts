@@ -3,7 +3,7 @@ var angmodule = angular.module('demo', ['ngSanitize', 'rzModule', 'daterangepick
 angmodule.controller('search', function ($scope, $http) {
 
     $scope.datePicker = {};
-    $scope.datePicker.date = { startDate: null, endDate: null };
+    $scope.datePicker.date = {startDate: null, endDate: null};
 
     $scope.slider = {
         min: 23,
@@ -74,11 +74,15 @@ angmodule.controller('search', function ($scope, $http) {
 
     $scope.sendToBackEnd = () => {
 
+       if (document.getElementById("HTMLresult") != null) {
+           document.getElementById("HTMLresult").innerText = "";
+       }
+
         $scope.loader = 'loader';
         document.getElementById('textloop').innerText = 'Calling the pilot...';
-        let arr = ['Bargain with the airlines...','Building airplanes...','Dusting off the passport...','Talking to the weather gods...','Grabbing the thermometer...','Checking for rain...'];
+        let arr = ['Bargaining with the airlines...', 'Building airplanes...', 'Dusting off the passport...', 'Talking to the weather gods...', 'Grabbing the thermometer...', 'Turning off the rain...', 'Hiring pilots...', 'Polishing the runway...', 'Rehersing safety instructions...', 'Heating the tea water...' ];
         var index = 0;
-        var textLoop = setInterval(function() {
+        var textLoop = setInterval(function () {
             document.getElementById('textloop').innerText = arr[index++];
             if (index == arr.length)
                 index = 0
@@ -93,52 +97,47 @@ angmodule.controller('search', function ($scope, $http) {
         console.log($scope.data);
 
         $http.post('search', JSON.stringify($scope.data)).then(function (response) {
-           // $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+        //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
             let data = response.data;
             console.log(data);
-//
-// /*            let data = [
-//                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-//                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-//                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-//                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-//                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-//                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-//                 {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-//                 {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-//                 {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-//                 {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
-//             ];*/
+            //
+            // let data = [
+            //     {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+            //     {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+            //     {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+            //     {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+            //     {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+            //     {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+            //     {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+            //     {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+            //     {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+            //     {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
+            // ];
 
             let htmlResult = "";
             data.forEach((d) => {
                 htmlResult +=
                     '<div class="resultTable">' +
                     '<div class="resultCity">' + d.destination + ', ' + d.country + '</div>' +
-                    '<div class="item resultDurationTo">Duration ' + $scope.data.startDate + ': 4.30h' +
-                    '<br>Stops: ' + '1' + '<img src="img/time.png"/>' + '</div>' +
-                    '<div class="item resultDurationFrom">Duration ' + $scope.data.startDate + ': 2.10h' +
-                    '<br>Stops: ' + '0' + '<img src="img/timefrom.png"/>' + '</div>' +
-                    '<div class="item resultSunHours">' + 'Expected sunshine: ' +
-                    '<br>7 hours per day' + '<img src="img/sun.png"/></div>' +
-                    '<div class="item resultPrice">Price per person: $' + d.price +
-                    '<br>Total Price: $' + d.price * $scope.data.noadilts + '<img src="img/price.png"/>' + '</div>' +
+                    '<div class="item resultDurationTo">Outbound: ' + $scope.data.startDate +
+                    '<br>Stops: ' + '1' + '<img src="img/outbound.png"/>' + '</div>' +
+                    '<div class="item resultDurationFrom">Return: ' + $scope.data.startDate +
+                    '<br>Stops: ' + '0' + '<img src="img/return.png"/>' + '</div>' +
+                    '<div class="item resultPrice">Price per person: €' + Math.round(d.price) +
+                    '<br>Total Price: €' + Math.round(d.price) * $scope.data.noadults + '<img src="img/euro.png"/>' + '</div>' +
                     '<div class="item resultTemp">' + 'Expected temperature: ' +
-                    '<br>' + d.temperature + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
+                    '<br>' + Math.round(d.temperature) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultTempToday">' + 'Temperature today: ' +
-                    '<br>24' + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
+                    '<br>' + Math.round(d.temperatureToday) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultRain">' + 'Expected precipitation:' +
-                    '<br>2 mm per day' + '<img src="img/rain.png"/>' + '</div>' +
+                    '<br>' + Math.round(d.precipitation *10)/10 + ' mm per day' + '<img src="img/rain.png"/>' + '</div>' +
                     '<div class="item resultBuy">' + '<a class="btn btn-info" role="button">More information</a>' + '</div></div>'
-
             });
 
-            let result = '<h1>Yay! We found ' + data.length + ' trips from ' + $scope.data.origin + ' between ' + $scope.data.startDate + ' and ' + $scope.data.endDate + '!</h1>';
+            let result = '<h1>Yay! We found ' + data.length + ' trips from ' + $scope.data.origin + '!</h1>';
 
-            let changeSearch = '<div class="changeSearch">' + '<a href=\"#\">Change search</a>' + '</div>';
-
-            $scope.myHTML = result + htmlResult + changeSearch;
+            $scope.myHTML = result + htmlResult;
             $scope.loader = '';
             clearInterval(textLoop);
             document.getElementById('textloop').innerText = '';
@@ -160,8 +159,8 @@ angmodule.controller('search', function ($scope, $http) {
             $.ajax({
                 url: data,
                 type: 'GET',
-                success: function(data) {
-                    data.forEach(function(item) {
+                success: function (data) {
+                    data.forEach(function (item) {
                         dataList.push(item);
                     });
                 }
@@ -170,24 +169,25 @@ angmodule.controller('search', function ($scope, $http) {
             return;
         }
         // Fuzzy matching with regex
-        var matchData = function(input, dataList) {
+        var matchData = function (input, dataList) {
             /*var reg = new RegExp(input.split('').join('\\w*').replace(/\W/, ""), 'i');*/
-            if(input.length != 0){
-                var reg = new RegExp(('^'+input+'+').replace(/\W/, ""), 'i');
-                return dataList.filter(function(data) {
+            if (input.length != 0) {
+                var reg = new RegExp(('^' + input + '+').replace(/\W/, ""), 'i');
+                return dataList.filter(function (data) {
                     if (data.match(reg)) {
                         return data;
                     }
 
                 });
-            };
+            }
+            ;
         };
         // Change input value upon keyup
-        var changeInput = function(input, dataList) {
+        var changeInput = function (input, dataList) {
             var val = input.val();
             var inputAncestor = input.parent();
             var res = inputAncestor.find('.fuzzy-autocomplete-result');
-            while(res.length == 0) {
+            while (res.length == 0) {
                 inputAncestor = inputAncestor.parent();
                 res = inputAncestor.find('.fuzzy-autocomplete-result');
             }
@@ -196,28 +196,28 @@ angmodule.controller('search', function ($scope, $http) {
             if (val == "" || autoCompleteResult.length == 0) {
                 return;
             }
-            autoCompleteResult.forEach(function(e) {
+            autoCompleteResult.forEach(function (e) {
                 var p = $('<p class="autocomplete" />');
                 p.css({
                     'margin': '0px',
-                    'padding-left': parseInt(input.css('padding-left'),10) + parseInt(input.css('border-left-width'),10)
+                    'padding-left': parseInt(input.css('padding-left'), 10) + parseInt(input.css('border-left-width'), 10)
                 });
                 p.text(e);
-                p.click(function() {
+                p.click(function () {
                     input.val(p.text());
                     $scope.data.origin = p.text();
                     res.empty().hide();
                 })
-                p.mouseenter(function() {
+                p.mouseenter(function () {
                     $(this).css("background-color", "#BA9EB0");
-                }).mouseleave(function() {
+                }).mouseleave(function () {
                     $(this).css("background-color", "white");
                 });
                 res.append(p);
             });
             res.css({
                 'left': input.position().left,
-                'width': input.width() + parseFloat(input.css('padding-left'),10) + parseInt(input.css('border-left-width'),10) + 1,
+                'width': input.width() + parseFloat(input.css('padding-left'), 10) + parseInt(input.css('border-left-width'), 10) + 1,
                 'position': 'absolute',
                 'background-color': "white",
                 'border': '1px solid #dddddd',
@@ -225,18 +225,18 @@ angmodule.controller('search', function ($scope, $http) {
                 'overflow': 'scroll',
                 'overflow-x': 'hidden',
                 'font-family': input.css('font-family'),
-                'font-size' : input.css('font-size'),
-                'z-index' : '10'
+                'font-size': input.css('font-size'),
+                'z-index': '10'
             }).insertAfter(input).show();
         };
         // Create a div for collecting the results, and a container for enclosing the input element and result div
         var res = $("<div class='fuzzy-autocomplete-result' />");
         res.insertAfter(input);
-        input.keyup(function() {
+        input.keyup(function () {
             changeInput(input, dataList);
         });
         // Hide result div upon clicking anywhere outside the div
-        $(document).click(function(event) {
+        $(document).click(function (event) {
             if (!$(event.target).closest('.fuzzy-autocomplete-result').length) {
                 res.empty().hide();
             }

@@ -29,11 +29,14 @@ div.footer a:hover {
     color: #02778b;
 }
 
+.form-control {
+    margin-bottom: 17px;
+}
+
 #searchBtn {
     color: #fff;
     background: #028EA7;
     display: inline-block;
-    text-indent: 0;
 }
 
 .btn {
@@ -58,7 +61,6 @@ div.footer a:hover {
     color: #fff;
     background: #99D7E6;
     display: inline-block;
-    text-indent: 0;
 }
 
 #clearBtn:hover {
@@ -71,13 +73,11 @@ h1 {
     font-weight: 700;
     line-height: 46px;
     font-size: 46px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin: 0 0 23px;
 }
 
 .img-responsive {
     max-width: 100%;
-    padding: 40px;
 }
 
 .img-footer {
@@ -96,91 +96,39 @@ h1 {
     transform: scale(1.3);
 }
 
-.headerLogo {
+.header {
     text-align: center;
-}
-
-.headerText {
-    text-align: center;
+    padding-bottom: 20px;
 }
 
 .search {
     padding-bottom: 20px;
     padding-left: 30%;
     padding-right: 30%;
-    position: relative;
+    border-radius: 10px;
 }
 
 .searchTable {
-    display: flex;
+    display: flex; /* or inline-flex */
     flex-direction: row;
     flex-flow: row wrap;
+    justify-content: space-between;
     width: 100%;
-    align-self: stretch;
+    border-bottom: 20px solid #028ea7;
 }
 
 .searchTable .item {
+    flex: 1 1 33%;
+    border: 1px solid #028ea7;
     display: flex;
+    border-radius: 5px;
+    background: #33afcc;
     padding: 10px;
     align-items: center;
-    justify-content: center;
 }
 
-.searchOrigin {
-    flex: 0 0 50%;
-    padding-left: 3%;
-}
-
-.searchMaxPrice {
-    flex: 0 0 50%;
-}
-
-.searchStartDate {
-    flex: 0 0 50%;
-}
-
-.searchEndDate {
-    flex: 0 0 50%;
-}
-
-.searchDirectFlight {
-    flex: 0 0 50%;
-}
-
-.searchRoundTrip {
-    flex: 0 0 50%;
-}
-
-.searchAdults {
-    flex: 0 0 50%;
-}
-
-.searchChildren {
-    flex: 0 0 50%;
-}
-
-.searchTemperatureRange {
-    flex: 0 0 100%;
-}
-
-.searchNoRain {
-    flex: 0 0 50%;
-}
-
-/*.searchSnow {*/
-/*flex: 0 0 33%;*/
-/*}*/
-
-.searchSunSafe {
-    flex: 0 0 50%;
-}
-
-.searchSubmit {
-    flex: 0 0 50%;
-}
-
-.searchClear {
-    flex: 0 0 50%;
+#direct {
+    margin-right: 67px;
 }
 
 .about {
@@ -197,86 +145,51 @@ h1 {
     background: #028ea7;
     padding-left: 20%;
     padding-right: 20%;
-    position: relative;
 }
 
 .resultCity {
-    flex: 0 0 100%;
-    display: flex;
     order: 1;
-    border: 1px solid #028ea7;
-    display: flex;
-    border-radius: 5px;
-    background: #33afcc;
-    padding: 10px;
-    align-items: center;
-    font-family: "Amatic SC", cursive;
-    font-weight: 700;
-    font-size: 40px;
 }
 
-.resultDurationTo {
-    flex: 0 0 33.33%;
+.resultPrice {
     order: 2;
-}
-
-.resultDurationFrom {
-    order: 3;
-    flex: 0 0 33.33%;
-}
-
-.resultTempToday {
-    order: 4;
-    flex: 0 0 33.33%;
 }
 
 .resultTemp {
     order: 5;
-    flex: 0 0 33.33%;
+}
+
+.resultTempToday {
+    order: 4;
 }
 
 .resultRain {
     order: 6;
-    flex: 0 0 33.33%;
-}
 
-/*.resultSunHours {*/
-    /*order: 5;*/
-/*}*/
-
-.resultPrice {
-    order: 4;
-    flex: 0 0 33.33%;
 }
 
 .resultBuy {
-    order: 8;
+    order: 3;
     justify-content: center;
-    flex: 0 0 100%;
 }
 
 .resultTable {
-    display: flex;
-    /* or inline-flex */
-
+    display: flex; /* or inline-flex */
     flex-direction: row;
     flex-flow: row wrap;
     justify-content: space-between;
     width: 100%;
-    border-top: 20px solid #028ea7;
+    border-bottom: 20px solid #028ea7;
 }
 
 .resultTable .item {
+    flex: 1 1 33%;
     border: 1px solid #028ea7;
     display: flex;
     border-radius: 5px;
     background: #33afcc;
     padding: 10px;
     align-items: center;
-}
-
-.resultTable img {
-    margin-left: auto;
 }
 
 .changeSearch {
@@ -293,9 +206,13 @@ h1 {
     font-size: .7vw;
 }
 
-/*Styling to wave divs*/
+#directflight {
+    margin-bottom: 50px;
+}
 
+/*Styling to wave divs*/
 .waveone {
+
     height: 50px;
     position: relative;
 }
@@ -325,36 +242,7 @@ h1 {
 }
 
 .wavetwo {
-    height: 50px;
-    position: relative;
-    background: #028ea7;
-}
 
-.wavetwo::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-repeat: repeat;
-    height: 10px;
-    background-size: 20px 20px;
-    background-image: radial-gradient(circle at 10px -5px, transparent 12px, #02778b 13px);
-}
-
-.wavetwo::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-repeat: repeat;
-    height: 15px;
-    background-size: 40px 20px;
-    background-image: radial-gradient(circle at 10px 15px, #02778b 12px, transparent 13px);
-}
-
-.wavetwo {
     height: 50px;
     position: relative;
     background: #028ea7;
@@ -427,40 +315,14 @@ h1 {
     transform: translate(-50%, -50%);
 }
 
-.aboutTable {
-    display: flex;
-}
-
-.aboutOne {
-    flex: 0 0 33%;
-}
-
-.aboutTwo {
-    flex: 0 0 33%;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.aboutThree {
-    flex: 0 0 33%;
-}
-
-.aboutTable h1 {
-    text-align: center;
-}
-
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 500px) {
     body {
         font-size: 15px;
     }
 
-    .headerLogo {
+    .header {
         padding-left: 5%;
         padding-right: 5%;
-    }
-
-    .headerText {
-        display: none;
     }
 
     .search {
@@ -474,25 +336,9 @@ h1 {
         font-size: 12px;
     }
 
-    .aboutTable {
-        display: flex;
-        /* or inline-flex */
-
-        flex-direction: row;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        width: 100%;
-    }
-
     .about {
         padding-left: 5%;
         padding-right: 5%;
-    }
-
-    .aboutTable .item {
-        flex: 0 0 100%;
-        padding: 5px;
-        text-align: center;
     }
 
     .footer {
@@ -515,24 +361,8 @@ h1 {
         padding-right: 5%;
     }
 
-    .resultTable img {
-        max-width: 20px;
-    }
-
     .resultCity {
-        flex: 0 0 100%;
-        display: flex;
         order: 1;
-        border: 1px solid #028ea7;
-        display: flex;
-        border-radius: 5px;
-        background: #33afcc;
-        padding: 10px;
-        align-items: center;
-        font-family: "Amatic SC", cursive;
-        font-weight: 700;
-        font-size: 25px;
-        margin-center: auto;
     }
 
     .resultPrice {
@@ -558,7 +388,7 @@ h1 {
     }
 
     .resultTable {
-        display: flex;
+        display: flex; /* or inline-flex */
         flex-direction: row;
         flex-flow: row wrap;
         justify-content: space-between;
@@ -575,177 +405,113 @@ h1 {
     .btn {
         font-size: 10px;
     }
-
-    .searchOrigin {
-        flex: 0 0 100%;
-    }
-
-    .searchMaxPrice {
-        flex: 0 0 100%;
-    }
-
-    .searchStartDate {
-        flex: 0 0 100%;
-    }
-
-    .searchEndDate {
-        flex: 0 0 100%;
-    }
-
-    .searchDirectFlight {
-        flex: 0 0 50%;
-    }
-
-    .searchRoundTrip {
-        flex: 0 0 50%;
-    }
-
-    .searchAdults {
-        flex: 0 0 100%;
-
-    }
-
-    .searchTemperatureRange {
-        flex: 0 0 100%;
-        display: flex;
-    }
-
-    .searchNoRain {
-        flex: 0 0 50%;
-    }
-
-    .searchSunSafe {
-        flex: 0 0 50%;
-    }
-
-    .searchSubmit {
-        flex: 0 0 50%;
-    }
-
-    .searchClear {
-        flex: 0 0 50%;
-    }
 }
 
-
-.autocomplete {
-    color: black;
-    font-family: "Josefin Sans";
+section.range-slider {
+    position: relative;
+    margin: 0 auto;
+    height: 100px;
+    text-align: center;
+    outline: none;
 }
 
-.autocomplete:hover {
-    color: #000;
-}
-element.style:hover {
-    background-color: #028EA7;
-
-}
-
-.loader {
-    border: 10px solid #FFE067; /* Light grey */
-    border-top: 10px solid #02778B;
-    border-bottom: 10px solid #02778B;
-    border-radius: 50%;
-    width: 60px;
+section.range-slider:focus {
+    position: relative;
+    margin: 0 auto;
     height: 60px;
-    animation: spin 2s linear infinite;
-    margin: auto;
     text-align: center;
-align-items: center;}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    outline: none;
 }
 
-div#textloop {
-    opacity: 1;
-    transition: opacity 1s;
-    width: 100%;
-    font-family: Josefin Sans;
-    font-size: 30px;
+section.range-slider input {
+    pointer-events: none;
+    position: absolute;
+    overflow: hidden;
+    top: 60px;
     text-align: center;
-    padding-top: 15px;
-
-    align-items: center;
+    outline: none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
 }
 
-div#textloop.fade {
-    opacity:0;
+section.range-slider input::-webkit-slider-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 1;
+    outline: none;
+    height: 20px;
+    width: 20px;
+    bottom: 5px;
 }
 
-[id="datepicker"] {
-    background: #fff url(../img/inputcalendar.png) 3% 50% no-repeat;
+section.range-slider input::-moz-range-thumb {
+    pointer-events: all;
+    position: relative;
+    z-index: 10;
+    width: 20px;
+    outline: none;
+    height: 20px;
+    bottom: 5px;
 }
 
-[id="datepicker"]::-webkit-inner-spin-button {
-    display: none;
+section.range-slider input::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    background-image: linear-gradient(top, #4F364C, #fff);
+    border: 0;
+    outline: none;
 }
 
-[id="datepicker"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-}
-[id="adults"] {
-    background: #fff url(../img/inputpassenger.png) 3% 50% no-repeat;
-}
-
-[id="adults"]::-webkit-inner-spin-button {
-    display: none;
+section.range-slider input:last-of-type::-moz-range-track {
+    background: none transparent;
+    border: 0;
+    outline: none;
 }
 
-[id="adults"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-}[id="priceMax"] {
-    background: #fff url(../img/inputprice.png) 3% 50% no-repeat;
+section.range-slider input[type=range]::-moz-focus-outer {
+    border: 0;
+    outline: none;
 }
 
-[id="priceMax"]::-webkit-inner-spin-button {
-    display: none;
+input[type=range]::-webkit-slider-runnable-track {
+    background: rgb(51, 175, 204);
+    background: -moz-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(2, 119, 139)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
+    background: -webkit-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -o-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -ms-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
+    height: 12px;
 }
 
-[id="priceMax"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
+input[type=range]::-moz-range-track {
+    background: rgb(51, 175, 204);
+    background: -moz-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -webkit-gradient(left bottom, right top, color-stop(0%, rgb(2, 119, 139)), color-stop(25%, rgb(255, 255, 255)), color-stop(51%, rgb(255, 224, 103)), color-stop(100%, rgb(201, 36, 31)));
+    background: -webkit-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -o-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: -ms-linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    background: linear-gradient(45deg, rgb(2, 119, 139) 0%, rgb(255, 255, 255) 25%, rgb(255, 224, 103) 51%, rgb(201, 36, 31) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3bade3 ', endColorstr='#ff357f ', GradientType=1);
+    height: 12px;
+}
+#myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: red; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
 }
 
-[name="origin"] {
-    background: #fff url(../img/inputorigin.png) 3% 50% no-repeat;
+#myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
 }
-
-[name="origin"]::-webkit-inner-spin-button {
-    display: none;
-}
-
-[name="origin"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-}
-
-.slider {
-    width: 100%;
-    text-align: center;
-}
-
-input{
-    text-indent: 10%;
-}
-
-
-.fa {
-    font: normal normal normal 14px/1 FontAwesome;
-}
-
-.fa-calendar:before {
-    content: url(../img/inputcalendar.png);
-}
-
-.fa-chevron-right:before {
-    content: "\1F806";
-}
-
-.fa-chevron-left:before {
-    content: "\1F804";
-}
-
-select {
-    text-indent: 10%;
-}
-
