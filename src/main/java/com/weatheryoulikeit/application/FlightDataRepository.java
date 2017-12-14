@@ -38,6 +38,7 @@ public class FlightDataRepository {
     private String weatherkey;
 
     private Random rand = new Random();
+
     private double[] getLatLong(String isoCode) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT lat,long FROM GlobalAirportDatabase WHERE ISO3 = ?");) {
@@ -53,6 +54,7 @@ public class FlightDataRepository {
         }
         return null;
     }
+
     private double getPrecipitation(String isoCode, int month) {
         try (Connection conn = dataSource.getConnection();) {
             try (PreparedStatement pstmt = conn.prepareStatement("SELECT PRECIP FROM historical_climate_data WHERE COUNTRY = ? AND MONTH = ?");) {
@@ -177,7 +179,7 @@ public class FlightDataRepository {
     private void cropCityName(FlightSearchData fsd) {
         String cityNameToCrop = fsd.getOrigin();
         int positionOfSlash = cityNameToCrop.lastIndexOf('/');
-        cityNameToCrop = cityNameToCrop.substring(0,positionOfSlash);
+        cityNameToCrop = cityNameToCrop.substring(0, positionOfSlash);
         cityNameToCrop = convertCitytoISO(cityNameToCrop);
         fsd.setOrigin(cityNameToCrop);
     }
@@ -187,7 +189,7 @@ public class FlightDataRepository {
         JsonArray returnData = new JsonArray();
         int month = Integer.parseInt(fsd.getStartDate().substring(5, 7));
         List<String> filteredCountries = getCountriesByTemperatureRange(month, fsd.getTempMin(), fsd.getTempMax());
-        List<String> selectedCountries = nRandomItems(filteredCountries, 10);
+        List<String> selectedCountries = nUniqueRandomItems(filteredCountries, 10);
 
         for (String countryISO : selectedCountries) {
 
@@ -197,9 +199,9 @@ public class FlightDataRepository {
                 System.out.println("Found no cities in " + country);
                 continue;
             }
-            List<String> selectedCities = nRandomItems(cityISO, 1);
+            List<String> selectedCities = nUniqueRandomItems(cityISO, 1);
 
-            if(fsd.getOrigin().length() > 3) {
+            if (fsd.getOrigin().length() > 3) {
                 cropCityName(fsd);
             }
 
@@ -212,14 +214,14 @@ public class FlightDataRepository {
                         "&number_of_results=5" + "&adults=" + fsd.getNoadults() + "&children=" + fsd.getnChildren() +
                         "&infants=" + fsd.getnInfants() + "&currency=EUR";
                 double[] latLong = getLatLong(city);
-                String weatherInput = "https://api.darksky.net/forecast/"+ weatherkey +"/"+ latLong[0]
-                        + "," + latLong[1] +"?units=si&exclude=hourly,minutely,daily,flags,alerts";
+                String weatherInput = "https://api.darksky.net/forecast/" + weatherkey + "/" + latLong[0]
+                        + "," + latLong[1] + "?units=si&exclude=hourly,minutely,daily,flags,alerts";
 
-                    try {
+                try {
 
                     URL url2 = new URL(weatherInput);
 
-                    try(InputStream in = url2.openStream()) {
+                    try (InputStream in = url2.openStream()) {
                         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                         String inputBuffer;
                         while ((inputBuffer = reader.readLine()) != null) {
@@ -232,7 +234,7 @@ public class FlightDataRepository {
                     System.out.println(e);
                 }
 
-              try {
+                try {
 
                     URL url = new URL(searchInput);
 
@@ -252,12 +254,12 @@ public class FlightDataRepository {
                 }
 
                 JsonObject jsonObject = parseAmadeusResult(jsonBuilder);
-                    JsonObject weatherObject = parseWeather(weatherBuilder);
+                JsonObject weatherObject = parseWeather(weatherBuilder);
                 jsonObject.addProperty("origin", fsd.getOrigin());
                 jsonObject.addProperty("destination", convertISOtoCityName(city));
                 jsonObject.addProperty("country", country);
                 jsonObject.addProperty("temperature", getTemperature(countryISO, month));
-                jsonObject.addProperty("precipitation", getPrecipitation(countryISO,month)/30);
+                jsonObject.addProperty("precipitation", getPrecipitation(countryISO, month) / 30);
                 jsonObject.addProperty("temperatureToday", weatherObject.get("temperature").toString());
 
 
@@ -294,8 +296,7 @@ public class FlightDataRepository {
                 try {
                     valA = o1.get(KEY_NAME).getAsDouble();
                     valB = o2.get(KEY_NAME).getAsDouble();
-                }
-                catch (RuntimeException e) {
+                } catch (RuntimeException e) {
                     //do something
                 }
 
@@ -310,7 +311,7 @@ public class FlightDataRepository {
         return sortedJsonArray.toString();
     }
 
-    private JsonObject parseWeather (String result) {
+    private JsonObject parseWeather(String result) {
         JsonElement jelement = new JsonParser().parse(result);
         JsonObject jobject = jelement.getAsJsonObject();
         JsonObject currently = jobject.getAsJsonObject("currently");
@@ -321,6 +322,7 @@ public class FlightDataRepository {
 
         return jsonResult;
     }
+
     private JsonObject parseAmadeusResult(String result) {
         JsonElement jelement = new JsonParser().parse(result);
         JsonObject jobject = jelement.getAsJsonObject();
@@ -331,13 +333,16 @@ public class FlightDataRepository {
         JsonObject cheapestResult = jarray.get(0).getAsJsonObject();
 
         JsonObject fareResult = cheapestResult.get("fare").getAsJsonObject();
-        JsonElement fare = fareResult.getAsJsonPrimitive("total_price");
+        JsonElement fareTotal = fareResult.getAsJsonPrimitive("total_price");
+        JsonElement farePerPerson = fareResult.getAsJsonObject("price_per_adult")
+                .getAsJsonPrimitive("total_fare");
 
         JsonObject outboundFlight = getFlightData(cheapestResult, "outbound");
         JsonObject inboundFlight = getFlightData(cheapestResult, "inbound");
 
         JsonObject jsonResult = new JsonObject();
-        jsonResult.add("price", fare);
+        jsonResult.add("priceTotal", fareTotal);
+        jsonResult.add("pricePerPerson", farePerPerson);
         jsonResult.add("currency", currency);
         jsonResult.add("outboundDepartureDate", outboundFlight.getAsJsonPrimitive("date"));
         jsonResult.add("outboundDepartureTime", outboundFlight.getAsJsonPrimitive("time"));
@@ -377,10 +382,16 @@ public class FlightDataRepository {
         return json.toString().replaceAll("\"", "");
     }
 
-    private List<String> nRandomItems(List<String> list, int nItems) {
+    public List<String> nUniqueRandomItems(List<String> list, int nItems) {
+        List<String> listCopy = new ArrayList<>();
+        for (String item : list) {
+            listCopy.add(item);
+        }
+
         List<String> randomList = new ArrayList<>();
-        for (int i = 0; i < nItems; i++) {
-            randomList.add(list.get(rand.nextInt(list.size())));
+
+        while (randomList.size() < 10 && listCopy.size() > 0) {
+            randomList.add(listCopy.remove(rand.nextInt(listCopy.size())));
         }
         return randomList;
     }
