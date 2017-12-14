@@ -7,6 +7,14 @@
 	<artifactId>application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+<repositories>
+    <!--other repositories if any-->
+    <repository>
+        <id>project.local</id>
+        <name>project</name>
+        <url>file:${project.basedir}/repo</url>
+    </repository>
+</repositories>
 
 	<name>application</name>
 	<description>Weather You Like It website</description>
@@ -36,13 +44,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>sqljdbc</artifactId>
-			<version>6.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/com.microsoft.sqlserver/sqljdbc/6.0/sqljdbc42.jar</systemPath>
-			<optional>true</optional>
-		</dependency>
+    <groupId>com.weatheryoulikeit</groupId>
+    <artifactId>mylib</artifactId>
+    <version>1.0</version>
+</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

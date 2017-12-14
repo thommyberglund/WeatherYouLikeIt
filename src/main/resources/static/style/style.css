@@ -216,36 +216,43 @@ h1 {
 }
 
 .resultDurationTo {
+    flex: 0 0 33.33%;
     order: 2;
 }
 
 .resultDurationFrom {
     order: 3;
+    flex: 0 0 33.33%;
 }
 
 .resultTempToday {
     order: 4;
+    flex: 0 0 33.33%;
 }
 
 .resultTemp {
-    order: 7;
+    order: 5;
+    flex: 0 0 33.33%;
 }
 
 .resultRain {
     order: 6;
+    flex: 0 0 33.33%;
 }
 
-.resultSunHours {
-    order: 5;
-}
+/*.resultSunHours {*/
+    /*order: 5;*/
+/*}*/
 
 .resultPrice {
-    order: 8;
+    order: 4;
+    flex: 0 0 33.33%;
 }
 
 .resultBuy {
-    order: 9;
+    order: 8;
     justify-content: center;
+    flex: 0 0 100%;
 }
 
 .resultTable {
@@ -260,7 +267,6 @@ h1 {
 }
 
 .resultTable .item {
-    flex: 1 1 33%;
     border: 1px solid #028ea7;
     display: flex;
     border-radius: 5px;
@@ -722,6 +728,7 @@ input{
     text-indent: 10%;
 }
 
+
 .fa {
     font: normal normal normal 14px/1 FontAwesome;
 }
@@ -737,3 +744,8 @@ input{
 .fa-chevron-left:before {
     content: "\1F804";
 }
+
+select {
+    text-indent: 10%;
+}
+
