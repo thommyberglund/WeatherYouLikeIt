@@ -81,7 +81,7 @@ angmodule.controller('search', function ($scope, $http) {
         $scope.loader = 'loader';
         document.getElementById('textloop').innerText = 'Thanking you all for this time...';
         let arr = ['Waving goodbye to Senior...', 'Thinking about Juniors cats...', 'Packing the banana cake...', 'Saying farewell to Academy...', 'Loving you all...', 'Planning for reunion...', 'Cleaning the coffee machine one last time...', 'Beating C# in ping pong...', 'These lines will be changed after the presentation, no worries... :)'];
-            // 'Bargaining with the airlines...', 'Building airplanes...', 'Dusting off the passport...', 'Talking to the weather gods...', 'Grabbing the thermometer...', 'Turning off the rain...', 'Hiring pilots...', 'Polishing the runway...', 'Rehersing safety instructions...', 'Heating the tea water...' ];
+            // 'Bargaining with the airlines...', 'Building airplanes...', 'Dusting off the passport...', 'Talking to the weather gods...', 'Grabbing the thermometer...', 'Turning off the rain...', 'Hiring pilots...', 'Polishing the runway...', 'Rehearsing safety instructions...', 'Heating the tea water...' ];
         var index = 0;
         var textLoop = setInterval(function () {
             document.getElementById('textloop').innerText = arr[index++];
@@ -116,27 +116,34 @@ angmodule.controller('search', function ($scope, $http) {
             //     {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
             // ];
 
+            let result = "";
             let htmlResult = "";
-            data.forEach((d) => {
-                htmlResult +=
-                    '<div class="resultTable">' +
-                    '<div class="resultCity">' + d.destination + ', ' + d.country + '</div>' +
-                    '<div class="item resultDurationTo">Outbound: ' + d.outboundDepartureDate + ' ' + d.outboundDepartureTime +
-                    '<br>Stops: ' + d.outboundStops + '<img src="img/outbound.png"/>' + '</div>' +
-                    '<div class="item resultDurationFrom">Return: ' + d.inboundDepartureDate + ' ' + d.inboundDepartureTime +
-                    '<br>Stops: ' + d.inboundStops + '<img src="img/return.png"/>' + '</div>' +
-                    '<div class="item resultPrice">Price per person: €' + Math.round(d.pricePerPerson) +
-                    '<br>Total Price: €' + Math.round(d.priceTotal) + '<img src="img/euro.png"/>' + '</div>' +
-                    '<div class="item resultTemp">' + 'Expected temperature: ' +
-                    '<br>' + Math.round(d.temperature) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
-                    '<div class="item resultTempToday">' + 'Temperature today: ' +
-                    '<br>' + Math.round(d.temperatureToday) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
-                    '<div class="item resultRain">' + 'Expected precipitation:' +
-                    '<br>' + Math.round(d.precipitation *10)/10 + ' mm per day' + '<img src="img/rain.png"/>' + '</div>' +
-                    '<div class="item resultBuy">' + '<a class="btn btn-info" role="button">More information</a>' + '</div></div>'
-            });
 
-            let result = '<h1>Yay! We found ' + data.length + ' trips from ' + $scope.data.origin + '!</h1>';
+            if (Object.keys(data).length === 0) {
+                result = '<h1>Oh no! We found no trips from ' + $scope.data.origin + '! Try changing your budget.</h1>';
+            } else {
+
+                data.forEach((d) => {
+                    htmlResult +=
+                        '<div class="resultTable">' +
+                        '<div class="resultCity">' + d.destination + ', ' + d.country + '<img src="' + d.flagUrl + '"/>' + '</div>' +
+                        '<div class="item resultDurationTo">Outbound: ' + d.outboundDepartureDate + ' ' + d.outboundDepartureTime +
+                        '<br>Stops: ' + d.outboundStops + '<img src="img/outbound.png"/>' + '</div>' +
+                        '<div class="item resultDurationFrom">Return: ' + d.inboundDepartureDate + ' ' + d.inboundDepartureTime +
+                        '<br>Stops: ' + d.inboundStops + '<img src="img/return.png"/>' + '</div>' +
+                        '<div class="item resultPrice">Price per person: €' + Math.round(d.pricePerPerson) +
+                        '<br>Total Price: €' + Math.round(d.priceTotal) + '<img src="img/euro.png"/>' + '</div>' +
+                        '<div class="item resultTemp">' + 'Expected temperature: ' +
+                        '<br>' + Math.round(d.temperature) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
+                        '<div class="item resultTempToday">' + 'Temperature today: ' +
+                        '<br>' + Math.round(d.temperatureToday) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
+                        '<div class="item resultRain">' + 'Expected precipitation:' +
+                        '<br>' + Math.round(d.precipitation * 10) / 10 + ' mm per day' + '<img src="img/rain.png"/>' + '</div>' +
+                        '<div class="item resultBuy">' + '<a class="btn btn-info" role="button">More information</a>' + '</div></div>'
+                });
+
+                result = '<h1>Yay! We found ' + data.length + ' trips from ' + $scope.data.origin + '!</h1>';
+            }
 
             $scope.myHTML = result + htmlResult;
             $scope.loader = '';
