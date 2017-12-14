@@ -74,6 +74,10 @@ angmodule.controller('search', function ($scope, $http) {
 
     $scope.sendToBackEnd = () => {
 
+       if (document.getElementById("HTMLresult") != null) {
+           document.getElementById("HTMLresult").innerText = "";
+       }
+
         $scope.loader = 'loader';
         document.getElementById('textloop').innerText = 'Calling the pilot...';
         let arr = ['Bargaining with the airlines...', 'Building airplanes...', 'Dusting off the passport...', 'Talking to the weather gods...', 'Grabbing the thermometer...', 'Turning off the rain...', 'Hiring pilots...', 'Polishing the runway...', 'Rehersing safety instructions...', 'Heating the tea water...' ];
@@ -92,24 +96,24 @@ angmodule.controller('search', function ($scope, $http) {
 
         console.log($scope.data);
 
-        // $http.post('search', JSON.stringify($scope.data)).then(function (response) {
-        $http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
+        $http.post('search', JSON.stringify($scope.data)).then(function (response) {
+        //$http.get('http://rest-service.guides.spring.io/greeting', $scope.data).then(function (response) {
 
-            // let data = response.data;
+            let data = response.data;
             console.log(data);
-
-            let data = [
-                {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-                {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-                {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-                {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-                {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-                {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-                {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
-                {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
-                {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
-                {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
-            ];
+            //
+            // let data = [
+            //     {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+            //     {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+            //     {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+            //     {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+            //     {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+            //     {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+            //     {destination: "Stockholm", country: "Muffinland", temperature: 21, price: 1025},
+            //     {destination: "Stockholm", country: "Kaninland", temperature: 27, price: 2750},
+            //     {destination: "Stockholm", country: "Minland", temperature: 56, price: 2687},
+            //     {destination: "Stockholm", country: "Minland", temperature: 50, price: 1560}
+            // ];
 
             let htmlResult = "";
             data.forEach((d) => {
@@ -120,16 +124,15 @@ angmodule.controller('search', function ($scope, $http) {
                     '<br>Stops: ' + '1' + '<img src="img/outbound.png"/>' + '</div>' +
                     '<div class="item resultDurationFrom">Return: ' + $scope.data.startDate +
                     '<br>Stops: ' + '0' + '<img src="img/return.png"/>' + '</div>' +
-                    '<div class="item resultPrice">Price per person: €' + d.price +
-                    '<br>Total Price: €' + d.price * $scope.data.noadults + '<img src="img/euro.png"/>' + '</div>' +
+                    '<div class="item resultPrice">Price per person: €' + Math.round(d.price) +
+                    '<br>Total Price: €' + Math.round(d.price) * $scope.data.noadults + '<img src="img/euro.png"/>' + '</div>' +
                     '<div class="item resultTemp">' + 'Expected temperature: ' +
-                    '<br>' + d.temperature + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
+                    '<br>' + Math.round(d.temperature) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultTempToday">' + 'Temperature today: ' +
                     '<br>24' + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultRain">' + 'Expected precipitation:' +
-                    '<br>' + d.precipitation + ' mm per day' + '<img src="img/rain.png"/>' + '</div>' +
+                    '<br>' + Math.round(d.precipitation *10)/10 + ' mm per day' + '<img src="img/rain.png"/>' + '</div>' +
                     '<div class="item resultBuy">' + '<a class="btn btn-info" role="button">More information</a>' + '</div></div>'
-
             });
 
             let result = '<h1>Yay! We found ' + data.length + ' trips from ' + $scope.data.origin + '!</h1>';
