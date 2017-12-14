@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width"/>
+    <meta name=”description” content=”Weather You Like It is a flight search enginge where you can filter your results based on the weather on the destination.”>
+
 
     <title>Weather you like it</title>
 
@@ -30,22 +32,48 @@
 
         <form ng-submit="sendToBackEnd()">
             <div class="searchTable item">
-                <div class="searchOrigin item"><input type="text" ng-model="data.origin" name="origin"
+                <div class="searchOrigin item"><input required type="text" ng-model="data.origin" name="origin"
                                                       class="form-control"
                                                       placeholder="Origin" id="origin" autocomplete="off" autofocus/>
                 </div>
                 <div class="searchStartDate item">
-                    <input date-range-picker class="form-control date-picker" placeholder="Travel dates?"
+                    <input required date-range-picker class="form-control date-picker" placeholder="Travel dates?"
                            id="datepicker" type="text" ng-model="datePicker.date"/>
                 </div>
                 <div class="searchAdults item">
-                    <input type="number" step="1" min="1" max="6" name="noadults" class="form-control"
-                           ng-model="data.noadilts" id="adults" placeholder="How many passengers?"/>
+
+                    <select required name="noadults" class="form-control" ng-model="data.noadults" id="adults">
+                        <option value=""
+                                hidden
+                        >How many passengers?</option>
+
+                        <!-- normal options -->
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                    <!--<input type="number" step="1" min="1" max="6" name="noadults" class="form-control"-->
+                           <!--ng-model="data.noadults" id="adults" placeholder="How many passengers?"/>-->
                 </div>
 
                 <div class="searchMaxPrice item">
 
-                    <input type="number" step="100" min=100 max=1500 ng-model="data.priceMax" name="priceMax"
+                    <!--<select required name="noadults" class="form-control" ng-model="data.priceMax" id="priceMax" class="form-control">-->
+                        <!--<option value=""-->
+                                <!--hidden-->
+                        <!--&gt;Max price per passenger?</option>-->
+
+                        <!--&lt;!&ndash; normal options &ndash;&gt;-->
+                        <!--<option value="0-250">€250 or lower</option>-->
+                        <!--<option value="0-500">€500 or lower</option>-->
+                        <!--<option value="0-1000">€1000 or lower</option>-->
+                        <!--<option value="0-1500">€1500 or lower</option>-->
+
+                    <!--</select>-->
+                    <input type="number" ng-model="data.priceMax" name="priceMax"
                            class="form-control" id="priceMax" placeholder="Max price per passenger?"/>
                 </div>
 
@@ -70,17 +98,6 @@
                                     rz-slider-options="slider.options"></rzslider>
                             <span>Drag me!</span></h1>
                     </div>
-                </div>
-
-                <div class="searchNoRain item"><label><input type="checkbox" class="checkbox-inline" id="noRain"
-                                                             checked disabled/>
-                    No rain</label></div>
-
-                <div class="searchSunSafe item"><label><input type="checkbox" class="checkbox-inline"
-                                                              id="SunSafe"
-                                                              disabled/>
-                    Lots of sun</label>
-
                 </div>
 
                 <div class="searchSubmit item">
@@ -111,16 +128,15 @@
         <div class="aboutTwo item"><h1>2</h1>Yeah, you're right! No destination! Instead, let us find new, exciting and
             cheap travels to places with a weather exactly how you like it. Choose temperature, amount of rain
             (who likes rain?) and so on.
-
         </div>
         <div class="aboutThree item"><h1>Awesome!</h1>Our advanced algorithm now looks at historical weather data
             from like everywhere. We look at thing such as average temperatures, precipitation and hours of sun per day.
             And of
             course, the cheapest flights availiable.
         </div>
-
     </div>
 </div>
+
 <div class="wavethree"></div>
 <div class="footer">
     <div class="col"><a href="https://www.facebook.com"><img src="img/facebook.png" alt="Visit our Facebook"
