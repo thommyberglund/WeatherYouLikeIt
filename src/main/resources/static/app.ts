@@ -129,7 +129,7 @@ angmodule.controller('search', function ($scope, $http) {
                     '<div class="item resultTemp">' + 'Expected temperature: ' +
                     '<br>' + Math.round(d.temperature) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultTempToday">' + 'Temperature today: ' +
-                    '<br>24' + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
+                    '<br>' + Math.round(d.temperatureToday) + '°C' + '<img src="img/thermometer.png"/>' + '</div>' +
                     '<div class="item resultRain">' + 'Expected precipitation:' +
                     '<br>' + Math.round(d.precipitation *10)/10 + ' mm per day' + '<img src="img/rain.png"/>' + '</div>' +
                     '<div class="item resultBuy">' + '<a class="btn btn-info" role="button">More information</a>' + '</div></div>'
