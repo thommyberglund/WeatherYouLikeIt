@@ -721,3 +721,19 @@ div#textloop.fade {
 input{
     text-indent: 10%;
 }
+
+.fa {
+    font: normal normal normal 14px/1 FontAwesome;
+}
+
+.fa-calendar:before {
+    content: url(../img/inputcalendar.png);
+}
+
+.fa-chevron-right:before {
+    content: "\1F806";
+}
+
+.fa-chevron-left:before {
+    content: "\1F804";
+}
