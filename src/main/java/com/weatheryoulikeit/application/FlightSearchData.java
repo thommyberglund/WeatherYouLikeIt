@@ -8,7 +8,7 @@ public class FlightSearchData implements SearchData{
     private int tempMin;
     private int tempMax;
     private double priceMax;
-    private int nAdults;
+    private int noadults;
     private int nChildren;
     private int nInfants;
 
@@ -16,28 +16,28 @@ public class FlightSearchData implements SearchData{
 
     public FlightSearchData(String origin, String startDate, String endDate,
                             String tempMin, String tempMax, String priceMax,
-                            String nAdults, String nChildren, String nInfants) {
+                            String noadults) {
         this.origin = origin;
         this.startDate = startDate;
         this.endDate = endDate;
         this.tempMin = Integer.parseInt(tempMin);
         this.tempMax = Integer.parseInt(tempMax);
         this.priceMax = Double.parseDouble(priceMax);
-        this.nAdults = Integer.parseInt(nAdults);
-        this.nChildren = Integer.parseInt(nChildren);
-        this.nInfants = Integer.parseInt(nInfants);
+        this.noadults = Integer.parseInt(noadults);
+        this.nChildren = 0;
+        this.nInfants = 0;
     }
 
     public FlightSearchData(String origin, String startDate, String endDate,
                             int tempMin, int tempMax, double priceMax,
-                            int nAdults, int nChildren, int nInfants) {
+                            int noadults, int nChildren, int nInfants) {
         this.origin = origin;
         this.startDate = startDate;
         this.endDate = endDate;
         this.tempMin = tempMin;
         this.tempMax = tempMax;
         this.priceMax = priceMax;
-        this.nAdults = nAdults;
+        this.noadults = noadults;
         this.nChildren = nChildren;
         this.nInfants = nInfants;
     }
@@ -66,8 +66,8 @@ public class FlightSearchData implements SearchData{
         this.priceMax = priceMax;
     }
 
-    public void setnAdults(int nAdults) {
-        this.nAdults = nAdults;
+    public void setNoadults(int noadults) {
+        this.noadults = noadults;
     }
 
     public void setnChildren(int nChildren) {
@@ -102,8 +102,8 @@ public class FlightSearchData implements SearchData{
         return priceMax;
     }
 
-    public int getnAdults() {
-        return nAdults;
+    public int getNoadults() {
+        return noadults;
     }
 
     public int getnChildren() {

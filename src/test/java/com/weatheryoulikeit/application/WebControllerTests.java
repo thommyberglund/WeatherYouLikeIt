@@ -149,7 +149,7 @@ public class WebControllerTests {
         assertEquals("",fdr.parseWeather("{\"latitude\":25.907,\"longitude\":-97.426,\"timezone\":\"America/Chicago\",\"currently\":{\"time\":1513169526,\"summary\":\"Clear\",\"icon\":\"clear-night\",\"nearestStormDistance\":1588,\"nearestStormBearing\":358,\"precipIntensity\":0,\"precipProbability\":0,\"temperature\":7.36,\"apparentTemperature\":6.27,\"dewPoint\":4.77,\"humidity\":0.84,\"pressure\":1022.34,\"windSpeed\":1.83,\"windGust\":1.79,\"windBearing\":288,\"cloudCover\":0.01,\"uvIndex\":0,\"visibility\":16.09,\"ozone\":259.42},\"offset\":-6}"));
     }*/
 
-    @Test
+/*    @Test
     public void parseOneAmadeusFlight() {
         JsonElement jelement = new JsonParser().parse(amadeusResult);
         JsonObject jobject = jelement.getAsJsonObject();
@@ -175,7 +175,7 @@ public class WebControllerTests {
         String sorted = fdr.sortFlightArray(jsonArray);
         String correctResult = "[{\"price\":100,\"foo\":1},{\"price\":200,\"foo\":2},{\"price\":300,\"foo\":3},{\"price\":400,\"foo\":4},{\"price\":500,\"foo\":5}]";
         assertEquals(correctResult, sorted);
-    }
+    }*/
 
     private String amadeusResult = "\n" +
             "{\n" +

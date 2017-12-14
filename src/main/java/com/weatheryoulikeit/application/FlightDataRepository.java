@@ -209,7 +209,7 @@ public class FlightDataRepository {
                 String searchInput = "https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?" +
                         "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city +
                         "&departure_date=" + fsd.getStartDate() + "&return_date=" + fsd.getEndDate() +
-                        "&number_of_results=5" + "&adults=" + fsd.getnAdults() + "&children=" + fsd.getnChildren() +
+                        "&number_of_results=5" + "&adults=" + fsd.getNoadults() + "&children=" + fsd.getnChildren() +
                         "&infants=" + fsd.getnInfants();
                 double[] latLong = getLatLong(city);
                 String weatherInput = "https://api.darksky.net/forecast/"+ weatherkey +"/"+ latLong[0]
