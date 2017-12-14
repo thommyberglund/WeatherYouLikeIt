@@ -263,7 +263,7 @@ public class FlightDataRepository {
                 jsonObject.addProperty("temperatureToday", weatherObject.get("temperature").toString());
 
 
-                String price = jsonToStringNoQuotes(jsonObject.get("price"));
+                String price = jsonToStringNoQuotes(jsonObject.get("pricePerPerson"));
                 if (Double.parseDouble(price) > fsd.getPriceMax()) {
                     //Skip this result
                     System.out.println("Price " + price + " > maxprice");
@@ -390,7 +390,7 @@ public class FlightDataRepository {
 
         List<String> randomList = new ArrayList<>();
 
-        while (randomList.size() < 10 && listCopy.size() > 0) {
+        while (randomList.size() < nItems && listCopy.size() > 0) {
             randomList.add(listCopy.remove(rand.nextInt(listCopy.size())));
         }
         return randomList;
