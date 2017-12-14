@@ -210,7 +210,7 @@ public class FlightDataRepository {
                         "apikey=" + apikey + "&origin=" + fsd.getOrigin() + "&destination=" + city +
                         "&departure_date=" + fsd.getStartDate() + "&return_date=" + fsd.getEndDate() +
                         "&number_of_results=5" + "&adults=" + fsd.getNoadults() + "&children=" + fsd.getnChildren() +
-                        "&infants=" + fsd.getnInfants();
+                        "&infants=" + fsd.getnInfants() + "&currency=EUR";
                 double[] latLong = getLatLong(city);
                 String weatherInput = "https://api.darksky.net/forecast/"+ weatherkey +"/"+ latLong[0]
                         + "," + latLong[1] +"?units=si&exclude=hourly,minutely,daily,flags,alerts";
