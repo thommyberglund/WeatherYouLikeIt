@@ -5,7 +5,7 @@ angmodule.controller('search', function ($scope, $http) {
     $scope.datePicker = {};
     $scope.datePicker.date = {startDate: null, endDate: null};
 
-    $scope.slider = {
+    $scope.slider= {
         min: 23,
         max: 27,
         options: {
@@ -13,61 +13,89 @@ angmodule.controller('search', function ($scope, $http) {
             ceil: 35,
             minRange: 4,
             maxRange: 4,
+            showSelectionBar: true,
+            selectionBarGradient: {
+                from: '#FFE067',
+                to: '#c9241f'
+            },
             pushRange: true,
             onChange: function () {
-                var displayElement = document.getElementsByClassName("rangeValues")[0];
-                displayElement.innerHTML = "Min: " + $scope.slider.min + " °C" + " Max: " + $scope.slider.max + " °C";
-            },
+                             var displayElement = document.getElementsByClassName("rangeValues")[0];
+                             displayElement.innerHTML = "Min: " + $scope.slider.min + " °C" + " Max: " + $scope.slider.max + " °C";
+                         },
             hidePointerLabels: true,
             hideLimitLabels: true,
-            showTicks: 1,
-
-            getTickColor: function (value) {
-                if (value == 15)
-                    return '#FFE067';
-                if (value == 16)
-                    return '#FAD764';
-                if (value == 17)
-                    return '#F5CE62';
-                if (value == 18)
-                    return '#F0C660';
-                if (value == 19)
-                    return '#ECBD5E';
-                if (value == 20)
-                    return '#E7B55C';
-                if (value == 21)
-                    return '#E2AC5A';
-                if (value == 22)
-                    return '#DEA358';
-                if (value == 23)
-                    return '#D99B56';
-                if (value == 24)
-                    return '#D49254';
-                if (value == 25)
-                    return '#D08A52';
-                if (value == 26)
-                    return '#CB8150';
-                if (value == 27)
-                    return '#C6794E';
-                if (value == 28)
-                    return '#C2704C';
-                if (value == 29)
-                    return '#BD674A';
-                if (value == 30)
-                    return '#B85F48';
-                if (value == 31)
-                    return '#B45646';
-                if (value == 32)
-                    return '#AF4E44';
-                if (value == 33)
-                    return '#AA4542';
-                if (value == 34)
-                    return '#AA4541';
-                if (value == 35)
-                    return '#A63D40';
-            }
         }
     };
+
+    // $scope.slider = {
+    //     min: 23,
+    //     max: 27,
+    //     options: {
+    //         floor: 15,
+    //         ceil: 35,
+    //         minRange: 4,
+    //         maxRange: 4,
+    //         showselectioBar: true,
+    //         selectionBarGradient: {
+    //             from: '#FFE067',
+    //             to: '#A63D40'
+    //         },
+    //         pushRange: true,
+    //         onChange: function () {
+    //             var displayElement = document.getElementsByClassName("rangeValues")[0];
+    //             displayElement.innerHTML = "Min: " + $scope.slider.min + " °C" + " Max: " + $scope.slider.max + " °C";
+    //         },
+    //         hidePointerLabels: true,
+    //         hideLimitLabels: true,
+    //         showTicks: 1,
+    //
+    //         getTickColor: function (value) {
+    //             if (value == 15)
+    //                 return '#FFE067';
+    //             if (value == 16)
+    //                 return '#FAD764';
+    //             if (value == 17)
+    //                 return '#F5CE62';
+    //             if (value == 18)
+    //                 return '#F0C660';
+    //             if (value == 19)
+    //                 return '#ECBD5E';
+    //             if (value == 20)
+    //                 return '#E7B55C';
+    //             if (value == 21)
+    //                 return '#E2AC5A';
+    //             if (value == 22)
+    //                 return '#DEA358';
+    //             if (value == 23)
+    //                 return '#D99B56';
+    //             if (value == 24)
+    //                 return '#D49254';
+    //             if (value == 25)
+    //                 return '#D08A52';
+    //             if (value == 26)
+    //                 return '#CB8150';
+    //             if (value == 27)
+    //                 return '#C6794E';
+    //             if (value == 28)
+    //                 return '#C2704C';
+    //             if (value == 29)
+    //                 return '#BD674A';
+    //             if (value == 30)
+    //                 return '#B85F48';
+    //             if (value == 31)
+    //                 return '#B45646';
+    //             if (value == 32)
+    //                 return '#AF4E44';
+    //             if (value == 33)
+    //                 return '#AA4542';
+    //             if (value == 34)
+    //                 return '#AA4541';
+    //             if (value == 35)
+    //                 return '#A63D40';
+    //         }
+    //     }
+    // };
 
     var displayElement = document.getElementsByClassName("rangeValues")[0];
     displayElement.innerHTML = "Min: " + $scope.slider.min + " °C" + " Max: " + $scope.slider.max + " °C";
@@ -80,7 +108,7 @@ angmodule.controller('search', function ($scope, $http) {
 
         $scope.loader = 'loader';
         document.getElementById('textloop').innerText = 'Thanking you all for this time...';
-        let arr = ['Waving goodbye to Senior...', 'Thinking about Juniors cats...', 'Packing the banana cake...', 'Saying farewell to Academy...', 'Loving you all...', 'Planning for reunion...', 'Cleaning the coffee machine one last time...', 'Beating C# in ping pong...', 'These lines will be changed after the presentation, no worries... :)'];
+        let arr = ['Waving goodbye to Senior...', 'Thinking about Juniors cats...', ' the banana cake...', 'Saying farewell to Academy...', 'Loving you all...', 'Planning for reunion...', 'Cleaning the coffee machine one last time...', 'Beating C# in ping pong...', 'These lines will be changed after the presentation, no worries... :)'];
             // 'Bargaining with the airlines...', 'Building airplanes...', 'Dusting off the passport...', 'Talking to the weather gods...', 'Grabbing the thermometer...', 'Turning off the rain...', 'Hiring pilots...', 'Polishing the runway...', 'Rehearsing safety instructions...', 'Heating the tea water...' ];
         var index = 0;
         var textLoop = setInterval(function () {
@@ -217,7 +245,7 @@ angmodule.controller('search', function ($scope, $http) {
                     res.empty().hide();
                 })
                 p.mouseenter(function () {
-                    $(this).css("background-color", "#BA9EB0");
+                    $(this).css("background-color", "#999");
                 }).mouseleave(function () {
                     $(this).css("background-color", "white");
                 });
